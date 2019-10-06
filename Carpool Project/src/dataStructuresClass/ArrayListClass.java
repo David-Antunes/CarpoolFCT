@@ -4,7 +4,6 @@ import dataStructures.InvalidPositionException;
 import dataStructures.Iterator;
 import dataStructures.List;
 import dataStructures.NoElementException;
-import dataStructures.TwoWayIterator;
 
 public class ArrayListClass<E> implements List<E> {
 
