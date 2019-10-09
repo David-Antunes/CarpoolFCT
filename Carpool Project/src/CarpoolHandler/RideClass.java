@@ -9,6 +9,7 @@ public class RideClass implements Ride {
 	private User user;
 	private String origin;
 	private String destiny;
+	private Date date;
 	private int hour;
 	private int minutes;
 	private int duration;
