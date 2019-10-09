@@ -19,10 +19,9 @@ public interface Map<K, V> {
 	 
 	// Returns an iterator of the values in the map.
 	Iterator<V> values( ) throws NoElementException;
-
-	// Returns an iterator of the entries in the map.
-	Iterator<Entry<K,V>> iterator() throws NoElementException ;
 	
+	// Returns an iterator of the entries in the map.
+	Iterator<Entry<K,V>> iterator() throws NoElementException;
 	
 	// If there is an entry in the map whose key is the specified key,
 	// returns its value; otherwise, returns null.

@@ -1,26 +1,25 @@
 package dataStructures;
 
-public class MapWithJavaClass<K,V> implements Map<K,V> {
+public class LinearProbingHashTable<K, V> extends MapWithHashTable<K,V>{
 	
-	protected java.util.Map<K,V> elementos;
-	protected int capPrevista;
+		// The array of entries.
+		protected Entry<K,V>[] table;
+		
+		public LinearProbingHashTable(){
+			this(DEFAULTCAPACITY);
+		}
 
-	public MapWithJavaClass(int prevusers) {
-		elementos = new java.util.HashMap<K,V>(prevusers);
-		capPrevista =prevusers;
-	}
-
-	@Override
-	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+		@SuppressWarnings("unchecked")
+		public LinearProbingHashTable(int capacity) {
+			// Load factor is 1/2 (0.5)
+			int arraySize = MapWithHashTable.nextPrime((int) (2 * capacity));
+			// Compiler gives a warning.
+			table = (Entry<K,V>[]) new Entry[arraySize];
+			for ( int i = 0; i < arraySize; i++ )
+				table[i] = null;
+			maxSize = capacity;
+			currentSize = 0;
+		}
 
 	@Override
 	public Iterator<K> keys() throws NoElementException {

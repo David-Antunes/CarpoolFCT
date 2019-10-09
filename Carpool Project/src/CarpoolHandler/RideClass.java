@@ -1,8 +1,20 @@
 package CarpoolHandler;
 
 import dataStructures.Iterator;
+import dataStructures.List;
+import dataStructures.Queue;
 
 public class RideClass implements Ride {
+	
+	private User user;
+	private String origin;
+	private String destiny;
+	private int hour;
+	private int minutes;
+	private int duration;
+	private int seats;
+	private Queue<User> onHold;
+	private List<User> users;
 
 	@Override
 	public String getOrigin() {

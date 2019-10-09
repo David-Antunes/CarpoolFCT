@@ -120,6 +120,10 @@ public class Array<E> implements List<E>{
 		return counter == array.length;
 	}
 
+	public static <E> void xSort( E[] vec, int vecSize, Comparator<E> c){
+		//TODO
+	}
+
 	public int capacity() {
 		return array.length;
 	}

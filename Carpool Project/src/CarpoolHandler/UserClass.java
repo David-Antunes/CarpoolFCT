@@ -1,8 +1,12 @@
 package CarpoolHandler;
 
 import dataStructures.Iterator;
+import dataStructures.Map;
 
 public class UserClass implements User{
+	
+	private Map<Date, Ride> rides;
+	private Map<Date, Ride> lifts;
 
 	@Override
 	public String getName() {

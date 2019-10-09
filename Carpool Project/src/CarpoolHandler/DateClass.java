@@ -1,6 +1,10 @@
 package CarpoolHandler;
 
-public class DateClass implements Date{
+public class DateClass implements Date, Comparable {
+	
+	private String day;
+	private String month;
+	private String year;
 
 	@Override
 	public String getDay() {
@@ -30,6 +34,12 @@ public class DateClass implements Date{
 	public boolean isDateValid() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public int compareTo(Object o) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }
