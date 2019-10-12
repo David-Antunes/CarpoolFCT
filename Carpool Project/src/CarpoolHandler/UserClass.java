@@ -3,10 +3,11 @@ package CarpoolHandler;
 import dataStructures.Iterator;
 import dataStructures.Map;
 
-public class UserClass implements User{
+public class UserClass implements User, Comparable{
 	
 	private Map<Date, Ride> rides;
 	private Map<Date, Ride> lifts;
+	private int numberOfVisits;
 
 	@Override
 	public String getName() {
@@ -70,6 +71,12 @@ public class UserClass implements User{
 
 	@Override
 	public int getNumberOfRides() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int compareTo(Object o) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

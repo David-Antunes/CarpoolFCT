@@ -4,8 +4,8 @@ import dataStructures.Iterator;
 import dataStructures.List;
 import dataStructures.Queue;
 
-public class RideClass implements Ride {
-	
+public class RideClass implements Ride, Comparable{
+
 	private User user;
 	private String origin;
 	private String destiny;
@@ -15,7 +15,7 @@ public class RideClass implements Ride {
 	private int duration;
 	private int seats;
 	private Queue<User> onHold;
-	private List<User> users;
+	private Queue<User> users;
 
 	@Override
 	public String getOrigin() {
@@ -62,7 +62,7 @@ public class RideClass implements Ride {
 	@Override
 	public void addUser() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -75,6 +75,12 @@ public class RideClass implements Ride {
 	public Iterator<User> iterateUsers() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public int compareTo(Object o) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

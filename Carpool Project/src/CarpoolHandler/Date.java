@@ -1,6 +1,6 @@
 package CarpoolHandler;
 
-public interface Date {
+public interface Date extends Comparable {
 	
 	String getDay();
 	

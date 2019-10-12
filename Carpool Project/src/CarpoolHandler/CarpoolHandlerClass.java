@@ -1,14 +1,14 @@
 package CarpoolHandler;
 
 import dataStructures.Iterator;
+import dataStructures.List;
 import dataStructures.Map;
 import dataStructures.NoElementException;
-import dataStructures.SinglyLinkedList;
 
 public class CarpoolHandlerClass implements CarpoolHandler {
 	
 	private Map<String, User> users;
-	private Map<Date, SinglyLinkedList<Ride>> ridesInDates;
+	private Map<Date, List<Ride>> ridesInDates;
 	private User curUser;
 
 	@Override

@@ -3,6 +3,8 @@
  */
 package dataStructures;
 
+import java.util.Comparator;
+
 /**
  * @author AED_19_20
  *
