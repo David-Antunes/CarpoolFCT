@@ -2,7 +2,7 @@ package CarpoolHandler;
 
 import java.io.Serializable;
 
-public class DateClass implements Date, Comparable, Serializable {
+public class DateClass implements Date, Comparable<Object>, Serializable {
 
 	/**
 	 * 
