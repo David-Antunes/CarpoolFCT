@@ -1,12 +1,18 @@
 package CarpoolHandler;
 
+import java.io.Serializable;
+
 import dataStructures.Iterator;
 import dataStructures.List;
 import dataStructures.Map;
 import dataStructures.NoElementException;
 
-public class CarpoolHandlerClass implements CarpoolHandler {
+public class CarpoolHandlerClass implements CarpoolHandler,Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7927190217409345889L;
 	private Map<String, User> users;
 	private Map<Date, List<Ride>> ridesInDates;
 	private User curUser;

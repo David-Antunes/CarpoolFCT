@@ -1,10 +1,16 @@
 package CarpoolHandler;
 
+import java.io.Serializable;
+
 import dataStructures.Iterator;
 import dataStructures.Map;
 
-public class UserClass implements User, Comparable{
+public class UserClass implements User, Comparable, Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1733272791991809198L;
 	private Map<Date, Ride> rides;
 	private Map<Date, Ride> lifts;
 	private int numberOfVisits;

@@ -1,7 +1,13 @@
 package CarpoolHandler;
 
-public class DateClass implements Date, Comparable {
+import java.io.Serializable;
 
+public class DateClass implements Date, Comparable, Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8835144932380068567L;
 	private String day;
 	private String month;
 	private String year;

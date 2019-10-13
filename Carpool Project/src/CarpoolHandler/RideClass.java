@@ -1,11 +1,17 @@
 package CarpoolHandler;
 
+import java.io.Serializable;
+
 import dataStructures.Iterator;
 import dataStructures.List;
 import dataStructures.Queue;
 
-public class RideClass implements Ride, Comparable{
+public class RideClass implements Ride, Comparable, Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8079752577096162829L;
 	private User user;
 	private String origin;
 	private String destiny;
