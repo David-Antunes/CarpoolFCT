@@ -10,5 +10,5 @@ public interface Date{
 	
 	String getFullDate();
 	
-	boolean isDateValid();
+	boolean isDateValid(String date);
 }
