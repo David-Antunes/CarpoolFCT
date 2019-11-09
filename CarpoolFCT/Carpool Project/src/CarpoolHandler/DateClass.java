@@ -2,12 +2,8 @@ package CarpoolHandler;
 
 import java.io.Serializable;
 
-<<<<<<< HEAD
-public class DateClass implements Date, Comparable, Serializable {
-=======
-public class DateClass implements Date, Comparable<Object>, Serializable {
->>>>>>> branch 'master' of https://github.com/David-Antunes/CarpoolFCT.git
 
+public class DateClass implements Date, Comparable<Object>, Serializable {
 	/**
 	 * 
 	 */
