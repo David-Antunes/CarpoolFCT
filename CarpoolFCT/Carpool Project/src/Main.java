@@ -217,11 +217,23 @@ public class Main {
 		String date = in.next().trim();
 
 		try {
-			ch.addLift(email, new DateClass(date));
+			if (email.equals(ch.getCurrUser().getEmail()))
+				System.out.printf("%d  nao pode dar boleia a si proprio.\n", ch.getCurrUser().getName());
+			else {
+				int value = ch.addLift(email, new DateClass(date));
+				if (value != 0)
+					System.out.printf("Ficou na fila de espera %d.\n", value);
+				else
+					System.out.println("Boleia registada.");
+			}
 		} catch (NonExistingElementException e) {
-			
+			System.out.println("Utilizador inexistente.");
 		} catch (InvalidDateException e) {
+			System.out.println("Data invalida.");
 		} catch (NoRideException e) {
+			System.out.println("Deslocacao nao existe.");
+		} catch (AlreadyExistsElementException e) {
+			System.out.printf("%d ja registou uma boleia ou deslocacao nesta data.", ch.getCurrUser().getName());
 		}
 	}
 

@@ -124,12 +124,14 @@ public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 	}
 
 	public int addLift(String email, Date date)
-			throws NonExistingElementException, InvalidDateException, NoRideException {
+			throws NonExistingElementException, InvalidDateException, NoRideException, AlreadyExistsElementException {
 
 		if (!users.containsKey(email))
 			throw new NonExistingElementException();
 		if (!ridesInDates.containsKey(date))
 			throw new InvalidDateException();
+		if (currUser.hasSomething(date))
+			throw new AlreadyExistsElementException();
 
 		User user = users.get(email);
 
@@ -137,18 +139,19 @@ public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 			throw new NoRideException();
 
 		Ride ride = user.getRide(date);
+
 		currUser.registerRide(ride);
 		return ride.addUser(currUser);
 	}
 
 	@Override
 	public void removeFromRide() {
-		
+
 	}
 
 	@Override
 	public void check() {
-		
+
 	}
 
 	public String userEmail() throws NonExistingElementException {
