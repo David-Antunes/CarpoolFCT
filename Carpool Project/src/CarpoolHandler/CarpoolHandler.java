@@ -1,8 +1,7 @@
 package CarpoolHandler;
 
-import dataStructures.Iterator;
+import java.util.Iterator;
 import dataStructures.NoElementException;
-
 public interface CarpoolHandler {
 	
 	Iterator<Ride> iterateUserCreatedRides() throws NoElementException;
@@ -15,7 +14,7 @@ public interface CarpoolHandler {
 	
 	Iterator<Ride> iterateAll() throws NoElementException;
 	
-	void register();
+	public void register(String email, String name, String password) throws UserExistsException;
 	
 	void login();
 	

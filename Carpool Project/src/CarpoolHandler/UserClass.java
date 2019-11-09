@@ -1,54 +1,74 @@
 package CarpoolHandler;
 
 import java.io.Serializable;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.TreeMap;
 
-import dataStructures.Iterator;
-import dataStructures.Map;
+public class UserClass implements User, Comparable, Serializable {
 
-public class UserClass implements User, Comparable, Serializable{
-	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -1733272791991809198L;
 	private Map<Date, Ride> rides;
 	private Map<Date, Ride> lifts;
-	private int numberOfVisits;
+	private int visits;
+
+	private String email;
+	private String name;
+	private String password;
+
+	public UserClass(String email, String name, String password) {
+		this.email = email;
+		this.name = name;
+		this.password = password;
+		rides = new TreeMap<Date, Ride>();
+		lifts = new TreeMap<Date, Ride>();
+		visits = 0;
+	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return name;
 	}
 
 	@Override
 	public String getEmail() {
-		// TODO Auto-generated method stub
-		return null;
+		return email;
 	}
 
 	@Override
 	public String getPassword() {
-		// TODO Auto-generated method stub
-		return null;
+		return password;
+	}
+	
+	
+	@Override
+	public int getVisits() {
+		return visits;
+	}
+	
+	@Override
+	public void addVisit() {
+		visits++;
 	}
 
 	@Override
 	public boolean hasSomething() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public void registerRide() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void createRide() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -72,7 +92,7 @@ public class UserClass implements User, Comparable, Serializable{
 	@Override
 	public void removeJoinedRide() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override

@@ -1,14 +1,15 @@
 package CarpoolHandler;
 
 import java.io.Serializable;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
-import dataStructures.Iterator;
-import dataStructures.List;
-import dataStructures.Map;
 import dataStructures.NoElementException;
 
-public class CarpoolHandlerClass implements CarpoolHandler,Serializable {
-	
+public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
+
 	/**
 	 * 
 	 */
@@ -16,6 +17,12 @@ public class CarpoolHandlerClass implements CarpoolHandler,Serializable {
 	private Map<String, User> users;
 	private Map<Date, List<Ride>> ridesInDates;
 	private User curUser;
+
+	public CarpoolHandlerClass() {
+		curUser = null;
+		users = new TreeMap<String, User>();
+		ridesInDates = new TreeMap<Date, List<Ride>>();
+	}
 
 	@Override
 	public Iterator<Ride> iterateUserCreatedRides() throws NoElementException {
@@ -47,16 +54,27 @@ public class CarpoolHandlerClass implements CarpoolHandler,Serializable {
 		return null;
 	}
 
+	public boolean hasUser(String email) {
+		if (users.containsKey(email))
+			return true;
+		else
+			return false;
+	}
+
 	@Override
-	public void register() {
-		// TODO Auto-generated method stub
-		
+	public void register(String email, String name, String password) throws UserExistsException {
+
+		if (hasUser(email)) {
+			throw new UserExistsException();
+		}
+
+		User user = new UserClass(email, name, password);
 	}
 
 	@Override
 	public void login() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -74,19 +92,19 @@ public class CarpoolHandlerClass implements CarpoolHandler,Serializable {
 	@Override
 	public void Ride() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void removeFromRide() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void check() {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 }

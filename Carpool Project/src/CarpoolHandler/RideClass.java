@@ -6,7 +6,7 @@ import dataStructures.Iterator;
 import dataStructures.List;
 import dataStructures.Queue;
 
-public class RideClass implements Ride, Comparable, Serializable{
+public class RideClass implements Ride, Comparable<Object>, Serializable {
 
 	/**
 	 * 
@@ -21,7 +21,7 @@ public class RideClass implements Ride, Comparable, Serializable{
 	private int duration;
 	private int seats;
 	private Queue<User> onHold;
-	private Queue<User> users;
+	private List<User> users;
 
 	@Override
 	public String getOrigin() {

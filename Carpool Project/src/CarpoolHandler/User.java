@@ -1,6 +1,6 @@
 package CarpoolHandler;
 
-import dataStructures.Iterator;
+import java.util.Iterator;
 
 public interface User {
 
@@ -9,6 +9,10 @@ public interface User {
 	String getEmail();
 
 	String getPassword();
+	
+	int getVisits();
+	
+	void addVisit();
 
 	boolean hasSomething();
 
