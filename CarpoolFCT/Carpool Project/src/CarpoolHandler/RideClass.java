@@ -1,16 +1,10 @@
 package CarpoolHandler;
 
 import java.io.Serializable;
+import java.util.Iterator;
+import java.util.LinkedList;
 
-import dataStructures.Iterator;
-import dataStructures.List;
-import dataStructures.Queue;
-
-<<<<<<< HEAD
-public class RideClass implements Ride, Comparable, Serializable{
-=======
 public class RideClass implements Ride, Comparable<Object>, Serializable {
->>>>>>> branch 'master' of https://github.com/David-Antunes/CarpoolFCT.git
 
 	/**
 	 * 
@@ -24,72 +18,101 @@ public class RideClass implements Ride, Comparable<Object>, Serializable {
 	private int minutes;
 	private int duration;
 	private int seats;
-	private Queue<User> onHold;
-	private List<User> users;
+	private LinkedList<User> onHold;
+	private LinkedList<User> users;
+
+	public RideClass(User user, String origin, String destiny, Date date, int hour, int minutes, int duration,
+			int seats) {
+		this.user = user;
+		this.origin = origin;
+		this.destiny = destiny;
+		this.date = date;
+		this.hour = hour;
+		this.minutes = minutes;
+		this.duration = duration;
+		this.seats = seats;
+		onHold = new LinkedList<User>();
+		users = new LinkedList<User>();
+	}
+
+	@Override
+	public User getUser() {
+		return user;
+	}
 
 	@Override
 	public String getOrigin() {
-		// TODO Auto-generated method stub
-		return null;
+		return origin;
 	}
 
 	@Override
 	public String getDestination() {
-		// TODO Auto-generated method stub
-		return null;
+		return destiny;
 	}
 
 	@Override
 	public Date getDate() {
-		// TODO Auto-generated method stub
-		return null;
+		return date;
 	}
 
 	@Override
-	public String getHour() {
-		// TODO Auto-generated method stub
-		return null;
+	public int getHour() {
+		return hour;
 	}
 
 	@Override
-	public String getMinutes() {
-		// TODO Auto-generated method stub
-		return null;
+	public int getMinutes() {
+		return minutes;
 	}
 
 	@Override
-	public int getNumberOfSeats() {
-		// TODO Auto-generated method stub
-		return 0;
+	public int getSeats() {
+		return seats;
 	}
 
 	@Override
-	public User getUsersInQueue() {
-		// TODO Auto-generated method stub
-		return null;
+	public int getDuration() {
+		return duration;
 	}
 
 	@Override
-	public void addUser() {
-		// TODO Auto-generated method stub
-
+	public int getUsersInQueue() {
+		return onHold.size();
 	}
 
 	@Override
-	public User removeUser() {
-		// TODO Auto-generated method stub
-		return null;
+	public void addUser(User user) {
+		if (users.size() < seats)
+			users.addLast(user);
+		else
+			onHold.addLast(user);
+	}
+
+	@Override
+	public User removeUser(String name) {
+		Iterator<User> it = iterateUsers();
+		int i = 0;
+		User user = null;
+		boolean found = false;
+		while (it.hasNext() && !found) {
+			User aux = it.next();
+			if (aux.getName().equals(name)) {
+				found = true;
+				user = aux;
+			} else
+				i++;
+		}
+		users.remove(i);
+		return user;
 	}
 
 	@Override
 	public Iterator<User> iterateUsers() {
-		// TODO Auto-generated method stub
-		return null;
+		return users.iterator();
 	}
 
 	@Override
 	public int compareTo(Object o) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
