@@ -4,6 +4,7 @@ import java.util.concurrent.ThreadPoolExecutor.CallerRunsPolicy;
 import CarpoolHandler.AlreadyExistsElementException;
 import CarpoolHandler.CarpoolHandler;
 import CarpoolHandler.CarpoolHandlerClass;
+import CarpoolHandler.InvalidPasswordException;
 import CarpoolHandler.NonExistingElementException;
 
 public class Main {
@@ -45,6 +46,7 @@ public class Main {
 	private static final String PASSWORD = "password (entre 4 e 6 caracteres - digitos e letras): ";
 	private static final String NO_REGIST = "Registo nao efetuado" ;
 	private static final String USER_EXISTS = "Utilizador ja existente.";
+	private static final String N_USERS = "Registo %d efetuado";
 
 	public static void main(String[] args) {
 		
@@ -55,7 +57,7 @@ public class Main {
 		do { 
 			executeOption(option, in, ch);
 			option = readOption(in, ch);
-		} while (!option.equals(TERMINA) || ch.IsSectionStarted());
+		} while (!option.equals(TERMINA) || ch.hasCurUsar());
 		System.out.println(GOODBYE);
 		in.close();
 
@@ -75,10 +77,10 @@ public class Main {
 		private static void printPrompt(CarpoolHandler ch) {
 			
 			try {
-				System.out.println(ch.getSessionEmail + " " + PROMPT); // metodo para devolver email do utilizador
+				System.out.print(ch.userEmail() + " " + PROMPT); // metodo para devolver email do utilizador
 			}
 			catch(NonExistingElementException e) {
-				System.out.println(PROMPT);
+				System.out.print(PROMPT);
 			}
 		}
 
@@ -87,7 +89,7 @@ public class Main {
 		 */
 
 		private static void executeOption(String option, Scanner in, CarpoolHandler ch) {
-			if (ch.IsSectionStarted())  // este ou outro metodo para saber se a sessao esta iniciada
+			if (ch.hasCurUsar())  // este ou outro metodo para saber se a sessao esta iniciada
 				executeOptionSessionMode(option, in, ch);
 			else
 				executeOptionInicialMode(option, in, ch);
@@ -215,7 +217,7 @@ public class Main {
 		private static void ajuda(Scanner in, CarpoolHandler ch) {
 			System.out.println(COMM_AJUDA);
 
-			if (ch.IsSectionStarted()) { // arranjar metodo ou assim para "dividir"
+			if (!ch.hasCurUsar()) { // arranjar metodo ou assim para "dividir"
 				System.out.println(COMM_SAI);
 				System.out.println(COMM_NOVA);
 				System.out.println(COMM_LISTA);
@@ -249,33 +251,38 @@ public class Main {
 		 */
 
 		private static void regista(Scanner in, CarpoolHandler ch) {
-			boolean IsPassawordOk = false;
-			String nome;
+			boolean passValid = false;
+			String name;
 			String password = null;
 			String email = in.next();
 			in.nextLine();
 			
 			
 			try {
+				
+				ch.hasUser(email);
 				System.out.print(NAME);
-				nome = in.nextLine();
-				for (int i = 1; !IsPassawordOk && i <= 3; i++) { 
+				name = in.nextLine();
+				for (int i = 1;!passValid && i <= 3; i++) { 
 					System.out.print(PASSWORD);
 					password = in.nextLine();
-					
-					if(ch.metodoQueConfirma(password)) {
-						IsPassawordOk = true;
-						
-					}
-					else 
-						System.out.println(NO_REGIST);
-			}
-			}
+					if(ch.validPassaword(password, i))
+						passValid = true;
+						}
+				
+					ch.register(email, name, password);
+					System.out.printf(N_USERS, ch.nUsers());
+					in.nextLine();
+			
+				}
 				
 				catch (AlreadyExistsElementException e){
 					System.out.println(USER_EXISTS); 
 				}
-		}
+				
+				catch (InvalidPasswordException e) {
+					System.out.println(NO_REGIST);
+				}
 }	
-			
+}		
 
