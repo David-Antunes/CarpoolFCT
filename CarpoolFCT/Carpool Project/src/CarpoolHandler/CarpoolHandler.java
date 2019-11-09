@@ -4,6 +4,7 @@ import java.util.Iterator;
 import dataStructures.NoElementException;
 public interface CarpoolHandler {
 	
+	/**
 	Iterator<Ride> iterateUserCreatedRides() throws NoElementException;
 	
 	Iterator<Ride> iterateUserJoinedRides() throws NoElementException;
@@ -12,13 +13,16 @@ public interface CarpoolHandler {
 	
 	Iterator<Ride> iterateRidesThroDays() throws NoElementException;
 	
+
 	Iterator<Ride> iterateAll() throws NoElementException;
+	***/
+	public void register(String email, String name, String password) ;
 	
-	public void register(String email, String name, String password) throws UserExistsException;
+	void login(String email);
 	
-	void login();
+	void hasUser(String email) throws AlreadyExistsElementException;
 	
-	boolean hasUser();
+	void userExists(String email) throws NonExistingElementException;
 	
 	Ride remove();
 	
@@ -27,4 +31,19 @@ public interface CarpoolHandler {
 	void removeFromRide();
 	
 	void check();
-}
+	
+	boolean hasCurUsar();
+	
+	int nUsers();
+	
+	public String userEmail() throws NonExistingElementException;
+	
+	public boolean validPassaword(String password, int i) throws InvalidPasswordException;
+	
+	public boolean isPassCorrect(String email, String password, int i) throws InvalidPasswordException;
+
+	boolean hasUser();
+	
+	int nVisitas();
+
+	}

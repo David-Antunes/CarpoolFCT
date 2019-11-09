@@ -46,7 +46,10 @@ public class Main {
 	private static final String PASSWORD = "password (entre 4 e 6 caracteres - digitos e letras): ";
 	private static final String NO_REGIST = "Registo nao efetuado" ;
 	private static final String USER_EXISTS = "Utilizador ja existente.";
-	private static final String N_USERS = "Registo %d efetuado";
+	private static final String N_USERS = "Registo %d efetuado\n";
+	private static final String NO_USER_EXISTS = "Utilizador nao existente.";
+	private static final String NO_ENTRY = "Entrada nao realizada.";
+	private static final String VISIT_NUM = "Visita %d efetuada\n";
 
 	public static void main(String[] args) {
 		
@@ -77,7 +80,7 @@ public class Main {
 		private static void printPrompt(CarpoolHandler ch) {
 			
 			try {
-				System.out.print(ch.userEmail() + " " + PROMPT); // metodo para devolver email do utilizador
+				System.out.print(ch.userEmail() + " " + PROMPT); 
 			}
 			catch(NonExistingElementException e) {
 				System.out.print(PROMPT);
@@ -89,7 +92,7 @@ public class Main {
 		 */
 
 		private static void executeOption(String option, Scanner in, CarpoolHandler ch) {
-			if (ch.hasCurUsar())  // este ou outro metodo para saber se a sessao esta iniciada
+			if (ch.hasCurUsar())  
 				executeOptionSessionMode(option, in, ch);
 			else
 				executeOptionInicialMode(option, in, ch);
@@ -175,7 +178,31 @@ public class Main {
 		}
 		
 		private static void entrada(Scanner in, CarpoolHandler ch) {
-			// TODO Auto-generated method stub
+			boolean passCorrect = false;
+			String password = null;
+			String  email = in.next();
+			in.nextLine();
+			try {
+				ch.userExists(email);
+				for (int i = 1;!passCorrect && i <= 3; i++) { 
+					System.out.print(PASSWORD);
+					password = in.nextLine();
+					if(ch.isPassCorrect(email,password, i))
+						passCorrect = true;
+				}
+				
+				ch.login(email);
+				System.out.printf(VISIT_NUM, ch.nVisitas());
+		
+				
+			}
+			catch (NonExistingElementException e){
+				System.out.println(NO_USER_EXISTS);
+			} 
+			
+			catch (InvalidPasswordException e) {
+				System.out.println(NO_ENTRY);
+			}
 			
 		}
 
@@ -248,9 +275,10 @@ public class Main {
 		/**
 		 * Command REGISTA
 		 * register new user
+		 * @throws NonExistingElementException 
 		 */
 
-		private static void regista(Scanner in, CarpoolHandler ch) {
+		private static void regista(Scanner in, CarpoolHandler ch)  {
 			boolean passValid = false;
 			String name;
 			String password = null;
@@ -272,7 +300,8 @@ public class Main {
 				
 					ch.register(email, name, password);
 					System.out.printf(N_USERS, ch.nUsers());
-					in.nextLine();
+					
+					
 			
 				}
 				

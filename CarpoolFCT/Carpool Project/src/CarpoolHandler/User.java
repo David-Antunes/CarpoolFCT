@@ -19,11 +19,11 @@ public interface User {
 	void registerRide();
 
 	void createRide();
-
+/**
 	Iterator<Ride> iterateCreatedRides();
 
 	Iterator<Ride> iterateJoinedRides();
-
+*/
 	Ride removeCreatedRide();
 
 	void removeJoinedRide();

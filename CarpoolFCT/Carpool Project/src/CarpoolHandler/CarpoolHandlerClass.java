@@ -2,10 +2,11 @@ package CarpoolHandler;
 
 import java.io.Serializable;
 
-
+/**
 import dataStructures.Iterator;
 import dataStructures.List;
 import dataStructures.Map;
+*/
 
 import java.util.Iterator;
 import java.util.List;
@@ -23,8 +24,8 @@ public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 7927190217409345889L;
-	private Map<String, User> users;
-	private Map<Date, List<Ride>> ridesInDates;
+	private java.util.Map<String, User> users;
+	private java.util.Map<Date, List<Ride>> ridesInDates;
 	private User curUser;
 
 	public CarpoolHandlerClass() {
@@ -33,6 +34,7 @@ public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 		ridesInDates = new TreeMap<Date, List<Ride>>();
 	}
 
+	/**
 	@Override
 	public Iterator<Ride> iterateUserCreatedRides() throws NoElementException {
 		// TODO Auto-generated method stub
@@ -62,27 +64,42 @@ public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	public boolean hasUser(String email) {
-		if (users.containsKey(email))
+	**/
+	public void hasUser(String email) throws AlreadyExistsElementException
+	{
+		if (users.containsKey(email)) 
+			throw new AlreadyExistsElementException();
+		
+	
+	}
+	
+	public void userExists(String email) throws NonExistingElementException{
+		if(!users.containsKey(email))
+			throw new NonExistingElementException();
+	}
+	
+	public boolean hasCurUsar() {
+		if (curUser != null)
 			return true;
-		else
+		else 
 			return false;
 	}
 
 	@Override
-	public void register(String email, String name, String password) throws UserExistsException {
+	public void register(String email, String name, String password)  {
 
-		if (hasUser(email)) {
-			throw new UserExistsException();
-		}
 
 		User user = new UserClass(email, name, password);
+		users.put(email, user);
 	}
 
+	public int nUsers() {
+		return users.size();
+	}
 	@Override
-	public void login() {
-		// TODO Auto-generated method stub
+	public void login(String email) {
+		curUser = users.get(email);
+		curUser.addVisit();
 
 	}
 
@@ -115,5 +132,45 @@ public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 		// TODO Auto-generated method stub
 
 	}
+	
+	public String userEmail() throws NonExistingElementException {
+		if(curUser == null) {
+			throw new NonExistingElementException();
+		}
+		return curUser.getEmail();
+	}
+	
+	public boolean validPassaword(String password ,int i) throws InvalidPasswordException {
+		
+		
+		if (!(password.length() <= 6 && password.length() >= 4 && password.matches("[a-zA-Z0-9]*")) ) {
+			if(i == 3)
+				throw new InvalidPasswordException();
+			else 
+				return false;
+		}
+		else
+			return true;
+			
+		}
+	
+	public boolean isPassCorrect(String email, String password, int i) throws InvalidPasswordException {
+		
+		User user = users.get(email);
+		if(!user.getPassword().equals(password)) {
+			if(i == 3)
+				throw new InvalidPasswordException();
+			else
+				return false;
+		}
+		
+		else
+			return true;
+	}
+	
+	public int nVisitas() {
+		return curUser.getVisits();
+	}
+
 
 }

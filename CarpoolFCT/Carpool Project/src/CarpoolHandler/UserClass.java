@@ -1,29 +1,26 @@
 package CarpoolHandler;
 
 import java.io.Serializable;
-<<<<<<< HEAD
 
+/*
 import dataStructures.Iterator;
 import dataStructures.Map;
-=======
+*/
 import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
->>>>>>> branch 'master' of https://github.com/David-Antunes/CarpoolFCT.git
 
-<<<<<<< HEAD
 public class UserClass implements User, Comparable, Serializable{
 	
-=======
-public class UserClass implements User, Comparable, Serializable {
 
->>>>>>> branch 'master' of https://github.com/David-Antunes/CarpoolFCT.git
+
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -1733272791991809198L;
-	private Map<Date, Ride> rides;
-	private Map<Date, Ride> lifts;
+	private java.util.Map<Date, Ride> rides;
+	private java.util.Map<Date, Ride> lifts;
 	private int visits;
 
 	private String email;
@@ -81,7 +78,8 @@ public class UserClass implements User, Comparable, Serializable {
 		// TODO Auto-generated method stub
 
 	}
-
+	
+	/**
 	@Override
 	public Iterator<Ride> iterateCreatedRides() {
 		// TODO Auto-generated method stub
@@ -93,7 +91,7 @@ public class UserClass implements User, Comparable, Serializable {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	**/
 	@Override
 	public Ride removeCreatedRide() {
 		// TODO Auto-generated method stub
