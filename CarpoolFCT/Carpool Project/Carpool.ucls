@@ -1,0 +1,522 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.2.3" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+  associations="false" dependencies="false" nesting-relationships="true" router="FAN">  
+  <interface id="1" language="java" name="CarpoolHandler.Date" project="Carpool Project" 
+    file="/Carpool Project/src/CarpoolHandler/Date.java" binary="false" corner="BOTTOM_RIGHT">    
+<<<<<<< HEAD
+    <position height="-1" width="-1" x="544" y="247"/>    
+=======
+    <position height="58" width="103" x="502" y="333"/>    
+>>>>>>> branch 'master' of https://github.com/David-Antunes/CarpoolFCT.git
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="2" language="java" name="CarpoolHandler.CarpoolHandler" project="Carpool Project" 
+    file="/Carpool Project/src/CarpoolHandler/CarpoolHandler.java" binary="false" corner="BOTTOM_RIGHT">    
+<<<<<<< HEAD
+    <position height="-1" width="-1" x="1371" y="726"/>    
+=======
+    <position height="58" width="112" x="1116" y="333"/>    
+>>>>>>> branch 'master' of https://github.com/David-Antunes/CarpoolFCT.git
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="3" language="java" name="CarpoolHandler.RideClass" project="Carpool Project" 
+    file="/Carpool Project/src/CarpoolHandler/RideClass.java" binary="false" corner="BOTTOM_RIGHT">    
+<<<<<<< HEAD
+    <position height="-1" width="-1" x="356" y="500"/>    
+=======
+    <position height="-1" width="-1" x="393" y="627"/>    
+>>>>>>> branch 'master' of https://github.com/David-Antunes/CarpoolFCT.git
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="4" language="java" name="CarpoolHandler.Ride" project="Carpool Project" 
+    file="/Carpool Project/src/CarpoolHandler/Ride.java" binary="false" corner="BOTTOM_RIGHT">    
+<<<<<<< HEAD
+    <position height="-1" width="-1" x="595" y="754"/>    
+=======
+    <position height="-1" width="-1" x="692" y="549"/>    
+>>>>>>> branch 'master' of https://github.com/David-Antunes/CarpoolFCT.git
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="5" language="java" name="CarpoolHandler.UserClass" project="Carpool Project" 
+    file="/Carpool Project/src/CarpoolHandler/UserClass.java" binary="false" corner="BOTTOM_RIGHT">    
+<<<<<<< HEAD
+    <position height="-1" width="-1" x="903" y="446"/>    
+=======
+    <position height="-1" width="-1" x="785" y="93"/>    
+>>>>>>> branch 'master' of https://github.com/David-Antunes/CarpoolFCT.git
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="6" language="java" name="CarpoolHandler.User" project="Carpool Project" 
+    file="/Carpool Project/src/CarpoolHandler/User.java" binary="false" corner="BOTTOM_RIGHT">    
+<<<<<<< HEAD
+    <position height="-1" width="-1" x="1245" y="583"/>    
+=======
+    <position height="-1" width="-1" x="688" y="327"/>    
+>>>>>>> branch 'master' of https://github.com/David-Antunes/CarpoolFCT.git
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="7" language="java" name="CarpoolHandler.CarpoolHandlerClass" project="Carpool Project" 
+    file="/Carpool Project/src/CarpoolHandler/CarpoolHandlerClass.java" binary="false" corner="BOTTOM_RIGHT">    
+<<<<<<< HEAD
+    <position height="-1" width="-1" x="1619" y="294"/>    
+=======
+    <position height="-1" width="-1" x="1036" y="659"/>    
+>>>>>>> branch 'master' of https://github.com/David-Antunes/CarpoolFCT.git
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="8" language="java" name="CarpoolHandler.DateClass" project="Carpool Project" 
+    file="/Carpool Project/src/CarpoolHandler/DateClass.java" binary="false" corner="BOTTOM_RIGHT">    
+<<<<<<< HEAD
+    <position height="-1" width="-1" x="161" y="120"/>    
+=======
+    <position height="-1" width="-1" x="282" y="119"/>    
+>>>>>>> branch 'master' of https://github.com/David-Antunes/CarpoolFCT.git
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="9" language="java" name="dataStructures.List" project="Carpool Project" 
+    file="/Carpool Project/src/dataStructures/List.java" binary="false" corner="BOTTOM_RIGHT">    
+<<<<<<< HEAD
+    <position height="-1" width="-1" x="1784" y="553"/>    
+=======
+    <position height="58" width="103" x="973" y="333"/>    
+>>>>>>> branch 'master' of https://github.com/David-Antunes/CarpoolFCT.git
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="10" language="java" name="dataStructures.Queue" project="Carpool Project" 
+    file="/Carpool Project/src/dataStructures/Queue.java" binary="false" corner="BOTTOM_RIGHT">    
+<<<<<<< HEAD
+    <position height="-1" width="-1" x="105" y="479"/>    
+=======
+    <position height="58" width="103" x="41" y="333"/>    
+>>>>>>> branch 'master' of https://github.com/David-Antunes/CarpoolFCT.git
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="11" language="java" name="dataStructures.Map" project="Carpool Project" 
+    file="/Carpool Project/src/dataStructures/Map.java" binary="false" corner="BOTTOM_RIGHT">    
+<<<<<<< HEAD
+    <position height="-1" width="-1" x="1128" y="156"/>    
+=======
+    <position height="58" width="103" x="809" y="333"/>    
+>>>>>>> branch 'master' of https://github.com/David-Antunes/CarpoolFCT.git
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="12" language="java" name="Main" project="Carpool Project" file="/Carpool Project/src/Main.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+<<<<<<< HEAD
+    <position height="-1" width="-1" x="1664" y="700"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="13" language="java" name="java.lang.Comparable" project="Carpool Project" 
+    file="C:/Program Files/Java/jre1.8.0_181/lib/rt.jar" binary="true" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="883" y="169"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="14" language="java" name="java.io.Serializable" project="Carpool Project" 
+    file="C:/Program Files/Java/jre1.8.0_181/lib/rt.jar" binary="true" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1658" y="61"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <realization id="15">    
+=======
+    <position height="99" width="113" x="1115" y="37"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="13" language="java" name="java.lang.Comparable" project="Carpool Project" 
+    file="C:/Program Files/Java/jdk-12.0.1/lib/jrt-fs.jar" binary="true" corner="BOTTOM_RIGHT">    
+    <position height="81" width="114" x="205" y="333"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <interface id="14" language="java" name="java.io.Serializable" project="Carpool Project" 
+    file="C:/Program Files/Java/jdk-12.0.1/lib/jrt-fs.jar" binary="true" corner="BOTTOM_RIGHT">    
+    <position height="63" width="103" x="359" y="333"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </interface>  
+  <realization id="15">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="13"/>  
+  </realization>  
+  <realization id="16">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="13"/>  
+  </realization>  
+  <association id="17">    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="18" name="curUser">        
+        <position height="0" width="0" x="234" y="-216"/>      
+      </attribute>      
+      <multiplicity id="19" minimum="0" maximum="1">        
+        <position height="0" width="0" x="234" y="-216"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <association id="20">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="21" name="rides">        
+        <position height="0" width="0" x="-29" y="46"/>      
+      </attribute>      
+      <multiplicity id="22" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-29" y="46"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <realization id="23">    
+>>>>>>> branch 'master' of https://github.com/David-Antunes/CarpoolFCT.git
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="2"/>  
+  </realization>  
+<<<<<<< HEAD
+  <association id="16">    
+=======
+  <realization id="24">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="1"/>  
+  </realization>  
+  <dependency id="25">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="1"/>  
+  </dependency>  
+  <realization id="26">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="13"/>  
+  </realization>  
+  <realization id="27">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="6"/>  
+  </realization>  
+  <association id="28">    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="29" name="ridesInDates">        
+        <position height="0" width="0" x="-29" y="46"/>      
+      </attribute>      
+      <multiplicity id="30" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-29" y="46"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <realization id="31">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="14"/>  
+  </realization>  
+  <realization id="32">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="4"/>  
+  </realization>  
+  <association id="33">    
+>>>>>>> branch 'master' of https://github.com/David-Antunes/CarpoolFCT.git
+    <end type="SOURCE" refId="3" navigable="false">      
+<<<<<<< HEAD
+      <attribute id="17" name="user">        
+        <position height="0" width="0" x="263" y="-181"/>      
+      </attribute>      
+      <multiplicity id="18" minimum="0" maximum="1">        
+        <position height="0" width="0" x="263" y="-181"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <dependency id="19">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="9"/>  
+  </dependency>  
+  <dependency id="20">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="1"/>  
+  </dependency>  
+  <realization id="21">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="1"/>  
+  </realization>  
+  <dependency id="22">    
+    <bendpoint x="1088" y="514"/>    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="4"/>  
+  </dependency>  
+  <association id="23">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="24" name="onHold">        
+        <position height="0" width="0" x="-278" y="-13"/>      
+      </attribute>      
+      <multiplicity id="25" minimum="0" maximum="1">        
+=======
+      <attribute id="34" name="onHold">        
+        <position height="0" width="0" x="-278" y="-13"/>      
+      </attribute>      
+      <multiplicity id="35" minimum="0" maximum="1">        
+>>>>>>> branch 'master' of https://github.com/David-Antunes/CarpoolFCT.git
+        <position height="0" width="0" x="-278" y="-13"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+<<<<<<< HEAD
+  <dependency id="26">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="1"/>  
+  </dependency>  
+  <dependency id="27">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="4"/>  
+  </dependency>  
+  <realization id="28">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="14"/>  
+  </realization>  
+  <association id="29">    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="30" name="users">        
+        <position height="0" width="0" x="-29" y="46"/>      
+      </attribute>      
+      <multiplicity id="31" minimum="0" maximum="1">        
+=======
+  <dependency id="36">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="9"/>  
+  </dependency>  
+  <association id="37">    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="38" name="users">        
+        <position height="0" width="0" x="-29" y="46"/>      
+      </attribute>      
+      <multiplicity id="39" minimum="0" maximum="1">        
+>>>>>>> branch 'master' of https://github.com/David-Antunes/CarpoolFCT.git
+        <position height="0" width="0" x="-29" y="46"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+<<<<<<< HEAD
+=======
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <dependency id="40">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="1"/>  
+  </dependency>  
+  <realization id="41">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="14"/>  
+  </realization>  
+  <dependency id="42">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="4"/>  
+  </dependency>  
+  <association id="43">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="44" name="lifts">        
+        <position height="0" width="0" x="-29" y="46"/>      
+      </attribute>      
+      <multiplicity id="45" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-29" y="46"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <dependency id="46">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="2"/>  
+  </dependency>  
+  <realization id="47">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="14"/>  
+  </realization>  
+  <realization id="48">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="14"/>  
+  </realization>  
+  <dependency id="49">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="1"/>  
+  </dependency>  
+  <dependency id="50">    
+    <bendpoint x="824" y="629"/>    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="4"/>  
+  </dependency>  
+  <association id="51">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="52" name="user">        
+        <position height="0" width="0" x="234" y="-216"/>      
+      </attribute>      
+      <multiplicity id="53" minimum="0" maximum="1">        
+        <position height="0" width="0" x="234" y="-216"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+>>>>>>> branch 'master' of https://github.com/David-Antunes/CarpoolFCT.git
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <realization id="32">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="4"/>  
+  </realization>  
+  <association id="33">    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="34" name="curUser">        
+        <position height="0" width="0" x="263" y="-181"/>      
+      </attribute>      
+      <multiplicity id="35" minimum="0" maximum="1">        
+        <position height="0" width="0" x="263" y="-181"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <dependency id="36">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="1"/>  
+  </dependency>  
+  <realization id="37">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="13"/>  
+  </realization>  
+  <association id="38">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="39" name="lifts">        
+        <position height="0" width="0" x="-29" y="46"/>      
+      </attribute>      
+      <multiplicity id="40" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-29" y="46"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <realization id="41">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="13"/>  
+  </realization>  
+  <realization id="42">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="14"/>  
+  </realization>  
+  <dependency id="43">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="4"/>  
+  </dependency>  
+  <association id="44">    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="45" name="ridesInDates">        
+        <position height="0" width="0" x="-29" y="46"/>      
+      </attribute>      
+      <multiplicity id="46" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-29" y="46"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <realization id="47">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="14"/>  
+  </realization>  
+  <association id="48">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="49" name="rides">        
+        <position height="0" width="0" x="-29" y="46"/>      
+      </attribute>      
+      <multiplicity id="50" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-29" y="46"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="false" multiplicity="false"/>  
+  </association>  
+  <dependency id="51">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="2"/>  
+  </dependency>  
+  <realization id="52">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="6"/>  
+  </realization>  
+  <realization id="53">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="14"/>  
+  </realization>  
+  <realization id="54">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="13"/>  
+  </realization>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="false" multiplicity="false"/>
+</class-diagram>
