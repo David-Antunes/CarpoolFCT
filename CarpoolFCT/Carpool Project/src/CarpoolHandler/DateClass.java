@@ -2,11 +2,7 @@ package CarpoolHandler;
 
 import java.io.Serializable;
 
-<<<<<<< HEAD
-public class DateClass implements Date, Comparable, Serializable {
-=======
 public class DateClass implements Date, Comparable<Object>, Serializable {
->>>>>>> branch 'master' of https://github.com/David-Antunes/CarpoolFCT.git
 
 	/**
 	 * 
@@ -16,40 +12,43 @@ public class DateClass implements Date, Comparable<Object>, Serializable {
 	private String month;
 	private String year;
 
+	public DateClass(String date) {
+		String[] split = date.split("-");
+		day = split[0];
+		month = split[1];
+		year = split[2];
+	}
+
 	@Override
 	public String getDay() {
-		// TODO Auto-generated method stub
-		return null;
+		return day;
 	}
 
 	@Override
 	public String getMonth() {
-		// TODO Auto-generated method stub
-		return null;
+		return month;
 	}
 
 	@Override
 	public String getYear() {
-		// TODO Auto-generated method stub
-		return null;
+		return year;
 	}
 
 	@Override
 	public String getFullDate() {
-		// TODO Auto-generated method stub
-		return null;
+		return day + "-" + month + "-" + year;
 	}
 
 	@Override
 	public boolean isDateValid() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public int compareTo(Object o) {
-		// TODO Auto-generated method stub
-		return 0;
+
+		Date aux = (Date) o;
+		return getFullDate().compareTo(aux.getFullDate());
 	}
 
 }
