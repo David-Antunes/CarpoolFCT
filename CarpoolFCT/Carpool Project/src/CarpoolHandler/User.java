@@ -14,9 +14,13 @@ public interface User {
 
 	boolean hasSomething(Date date);
 
+	boolean hasRide(Date date);
+
 	void registerRide(Ride lift);
 
 	void createRide(Ride ride);
+
+	Ride getRide(Date date);
 
 	/**
 	 * Iterator<Ride> iterateCreatedRides();

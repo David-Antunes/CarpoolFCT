@@ -81,11 +81,14 @@ public class RideClass implements Ride, Comparable<Object>, Serializable {
 	}
 
 	@Override
-	public void addUser(User user) {
-		if (users.size() < seats)
+	public int addUser(User user) {
+		if (users.size() < seats) {
 			users.addLast(user);
-		else
+			return 0;
+		} else {
 			onHold.addLast(user);
+			return onHold.size();
+		}
 	}
 
 	@Override

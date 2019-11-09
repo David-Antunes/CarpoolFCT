@@ -1,6 +1,7 @@
 package CarpoolHandler;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 
@@ -112,18 +113,42 @@ public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 
 		Ride ride = new RideClass(currUser, origin, destiny, date, hour, minutes, duration, seats);
 		currUser.createRide(ride);
+
+		if (ridesInDates.containsKey(date)) {
+			ridesInDates.get(date).add(ride);
+		} else {
+			List<Ride> list = new ArrayList<Ride>();
+			list.add(ride);
+			ridesInDates.put(date, list);
+		}
+	}
+
+	public int addLift(String email, Date date)
+			throws NonExistingElementException, InvalidDateException, NoRideException {
+
+		if (!users.containsKey(email))
+			throw new NonExistingElementException();
+		if (!ridesInDates.containsKey(date))
+			throw new InvalidDateException();
+
+		User user = users.get(email);
+
+		if (!user.hasRide(date))
+			throw new NoRideException();
+
+		Ride ride = user.getRide(date);
+		currUser.registerRide(ride);
+		return ride.addUser(currUser);
 	}
 
 	@Override
 	public void removeFromRide() {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void check() {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 	public String userEmail() throws NonExistingElementException {

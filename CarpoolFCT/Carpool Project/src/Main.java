@@ -7,6 +7,7 @@ import CarpoolHandler.DateClass;
 import CarpoolHandler.InvalidArgsException;
 import CarpoolHandler.InvalidDateException;
 import CarpoolHandler.InvalidPasswordException;
+import CarpoolHandler.NoRideException;
 import CarpoolHandler.NonExistingElementException;
 
 public class Main {
@@ -212,7 +213,16 @@ public class Main {
 	}
 
 	private static void boleia(Scanner in, CarpoolHandler ch) {
+		String email = in.next().trim();
+		String date = in.next().trim();
 
+		try {
+			ch.addLift(email, new DateClass(date));
+		} catch (NonExistingElementException e) {
+			
+		} catch (InvalidDateException e) {
+		} catch (NoRideException e) {
+		}
 	}
 
 	private static void lista(Scanner in, CarpoolHandler ch) {
@@ -222,7 +232,7 @@ public class Main {
 
 	private static void nova(Scanner in, CarpoolHandler ch) {
 		try {
-
+			in.nextLine();
 			String origin = in.nextLine();
 			String destiny = in.nextLine();
 			String line = in.nextLine();

@@ -22,7 +22,7 @@ public interface Ride {
 
 	int getUsersInQueue();
 
-	void addUser(User user);
+	int addUser(User user);
 
 	User removeUser(String user);
 

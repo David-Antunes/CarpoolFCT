@@ -29,6 +29,8 @@ public interface CarpoolHandler {
 	
 	void removeFromRide();
 	
+	int addLift(String email, Date date) throws NonExistingElementException, InvalidDateException, NoRideException;
+	
 	void check();
 	
 	boolean hasCurrUser();

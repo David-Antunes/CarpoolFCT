@@ -1,23 +1,17 @@
 package CarpoolHandler;
 
 import java.io.Serializable;
-
-/*
-import dataStructures.Iterator;
-import dataStructures.Map;
-*/
-import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class UserClass implements User, Comparable, Serializable {
+public class UserClass implements User, Comparable<Object>, Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -1733272791991809198L;
-	private java.util.Map<Date, Ride> rides;
-	private java.util.Map<Date, Ride> lifts;
+	private Map<Date, Ride> rides;
+	private Map<Date, Ride> lifts;
 	private int visits;
 
 	private String email;
@@ -68,6 +62,11 @@ public class UserClass implements User, Comparable, Serializable {
 	}
 
 	@Override
+	public boolean hasRide(Date date) {
+		return rides.containsKey(date);
+	}
+
+	@Override
 	public void registerRide(Ride lift) {
 		lifts.put(lift.getDate(), lift);
 	}
@@ -75,6 +74,11 @@ public class UserClass implements User, Comparable, Serializable {
 	@Override
 	public void createRide(Ride ride) {
 		rides.put(ride.getDate(), ride);
+	}
+
+	@Override
+	public Ride getRide(Date date) {
+		return rides.get(date);
 	}
 
 	/**
@@ -98,8 +102,7 @@ public class UserClass implements User, Comparable, Serializable {
 
 	@Override
 	public int getNumberOfRides() {
-		// TODO Auto-generated method stub
-		return 0;
+		return rides.size();
 	}
 
 	@Override
