@@ -79,6 +79,9 @@ public class RideClass implements Ride, Comparable<Object>, Serializable {
 	public int getUsersInQueue() {
 		return onHold.size();
 	}
+	public int getRemainingSeats() {
+		return seats - users.size();
+	}
 
 	@Override
 	public int addUser(User user) {

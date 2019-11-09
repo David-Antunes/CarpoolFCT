@@ -150,8 +150,19 @@ public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 	}
 
 	@Override
-	public void check() {
+	public Ride check(String email, Date date)
+			throws NoRideException, NonExistingElementException, InvalidDateException {
 
+		if (!users.containsKey(email))
+			throw new NonExistingElementException();
+		if (!date.isDateValid(date.getFullDate()))
+			throw new InvalidDateException();
+		User user = users.get(email);
+
+		if (!user.hasRide(date))
+			throw new NoRideException();
+
+		return user.getRide(date);
 	}
 
 	public String userEmail() throws NonExistingElementException {

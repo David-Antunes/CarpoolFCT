@@ -32,7 +32,7 @@ public interface CarpoolHandler {
 	int addLift(String email, Date date)
 			throws NonExistingElementException, InvalidDateException, NoRideException, AlreadyExistsElementException;
 
-	void check();
+	Ride check(String email, Date date) throws NoRideException, NonExistingElementException, InvalidDateException;
 
 	boolean hasCurrUser();
 

@@ -27,4 +27,6 @@ public interface Ride {
 	User removeUser(String user);
 
 	Iterator<User> iterateUsers();
+	
+	int getRemainingSeats();
 }

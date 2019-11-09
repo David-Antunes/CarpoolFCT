@@ -1,3 +1,4 @@
+import java.util.Iterator;
 import java.util.Scanner;
 
 import CarpoolHandler.AlreadyExistsElementException;
@@ -9,6 +10,8 @@ import CarpoolHandler.InvalidDateException;
 import CarpoolHandler.InvalidPasswordException;
 import CarpoolHandler.NoRideException;
 import CarpoolHandler.NonExistingElementException;
+import CarpoolHandler.Ride;
+import CarpoolHandler.User;
 
 public class Main {
 
@@ -208,8 +211,35 @@ public class Main {
 	}
 
 	private static void consulta(Scanner in, CarpoolHandler ch) {
-		// TODO Auto-generated method stub
+		String email = in.next().trim();
+		String date = in.next().trim();
+		in.nextLine();
 
+		try {
+			Ride ride = ch.check(email, new DateClass(date));
+
+			System.out.println(ride.getUser().getEmail());
+			System.out.println(ride.getOrigin());
+			System.out.println(ride.getDestination());
+			System.out.printf("%d %d:%d %d\n", ride.getDate(), ride.getHour(), ride.getMinutes(), ride.getDuration());
+			System.out.printf("Lugares vagos: %d\n", ride.getRemainingSeats());
+			Iterator<User> it = ride.iterateUsers();
+			System.out.print("Boleias: ");
+			while (it.hasNext()) {
+				System.out.print(it.next().getEmail());
+				if (it.hasNext())
+					System.out.print("; ");
+			}
+			System.out.print("\n");
+			System.out.printf("Em espera: %d\n", ride.getUsersInQueue());
+
+		} catch (NoRideException e) {
+			System.out.println("Deslocacao nao existe.");
+		} catch (NonExistingElementException e) {
+			System.out.println("Utilizador inexistente.");
+		} catch (InvalidDateException e) {
+			System.out.println("Data invalida.");
+		}
 	}
 
 	private static void boleia(Scanner in, CarpoolHandler ch) {
@@ -238,7 +268,6 @@ public class Main {
 	}
 
 	private static void lista(Scanner in, CarpoolHandler ch) {
-		// TODO Auto-generated method stub
 
 	}
 
