@@ -1,7 +1,5 @@
 package CarpoolHandler;
 
-import java.util.Iterator;
-import dataStructures.NoElementException;
 public interface CarpoolHandler {
 	
 	/**
@@ -26,17 +24,20 @@ public interface CarpoolHandler {
 	
 	Ride remove();
 	
-	void Ride();
+	void Ride(String origin, String destiny, Date date, int hour, int minutes, int duration,
+			int seats) throws InvalidArgsException, InvalidDateException;
 	
 	void removeFromRide();
 	
 	void check();
 	
-	boolean hasCurUsar();
+	boolean hasCurrUser();
 	
 	int nUsers();
 	
 	public String userEmail() throws NonExistingElementException;
+	
+	public User getCurrUser();
 	
 	public boolean validPassaword(String password, int i) throws InvalidPasswordException;
 	

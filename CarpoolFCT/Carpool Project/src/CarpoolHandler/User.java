@@ -1,7 +1,5 @@
 package CarpoolHandler;
 
-import java.util.Iterator;
-
 public interface User {
 
 	String getName();
@@ -9,21 +7,22 @@ public interface User {
 	String getEmail();
 
 	String getPassword();
-	
+
 	int getVisits();
-	
+
 	void addVisit();
 
-	boolean hasSomething();
+	boolean hasSomething(Date date);
 
-	void registerRide();
+	void registerRide(Ride lift);
 
-	void createRide();
-/**
-	Iterator<Ride> iterateCreatedRides();
+	void createRide(Ride ride);
 
-	Iterator<Ride> iterateJoinedRides();
-*/
+	/**
+	 * Iterator<Ride> iterateCreatedRides();
+	 * 
+	 * Iterator<Ride> iterateJoinedRides();
+	 */
 	Ride removeCreatedRide();
 
 	void removeJoinedRide();

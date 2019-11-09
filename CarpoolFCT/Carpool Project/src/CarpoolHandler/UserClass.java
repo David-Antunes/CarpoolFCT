@@ -10,10 +10,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class UserClass implements User, Comparable, Serializable{
-	
-
-
+public class UserClass implements User, Comparable, Serializable {
 
 	/**
 	 * 
@@ -50,48 +47,43 @@ public class UserClass implements User, Comparable, Serializable{
 	public String getPassword() {
 		return password;
 	}
-	
-	
+
 	@Override
 	public int getVisits() {
 		return visits;
 	}
-	
+
 	@Override
 	public void addVisit() {
 		visits++;
 	}
 
 	@Override
-	public boolean hasSomething() {
-		return false;
+	public boolean hasSomething(Date date) {
+		if (rides.containsKey(date))
+			return false;
+		if (lifts.containsKey(date))
+			return false;
+		return true;
 	}
 
 	@Override
-	public void registerRide() {
-		// TODO Auto-generated method stub
-
+	public void registerRide(Ride lift) {
+		lifts.put(lift.getDate(), lift);
 	}
 
 	@Override
-	public void createRide() {
-		// TODO Auto-generated method stub
-
+	public void createRide(Ride ride) {
+		rides.put(ride.getDate(), ride);
 	}
-	
+
 	/**
-	@Override
-	public Iterator<Ride> iterateCreatedRides() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Iterator<Ride> iterateJoinedRides() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	**/
+	 * @Override public Iterator<Ride> iterateCreatedRides() { // TODO
+	 *           Auto-generated method stub return null; }
+	 * 
+	 * @Override public Iterator<Ride> iterateJoinedRides() { // TODO Auto-generated
+	 *           method stub return null; }
+	 **/
 	@Override
 	public Ride removeCreatedRide() {
 		// TODO Auto-generated method stub
