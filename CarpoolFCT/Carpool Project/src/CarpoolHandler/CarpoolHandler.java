@@ -1,19 +1,21 @@
 package CarpoolHandler;
 
+import java.util.Iterator;
+
+import dataStructures.NoElementException;
+
 public interface CarpoolHandler {
 
-	/**
-	 * Iterator<Ride> iterateUserCreatedRides() throws NoElementException;
-	 * 
-	 * Iterator<Ride> iterateUserJoinedRides() throws NoElementException;
-	 * 
-	 * Iterator<Ride> iterateRidesThroEmails() throws NoElementException;
-	 * 
-	 * Iterator<Ride> iterateRidesThroDays() throws NoElementException;
-	 * 
-	 * 
-	 * Iterator<Ride> iterateAll() throws NoElementException;
-	 ***/
+	Iterator<Ride> iterateUserCreatedRides() throws NoElementException;
+
+	Iterator<Ride> iterateUserJoinedRides() throws NoElementException;
+
+	Iterator<Ride> iterateRidesThroEmails(String email) throws NoElementException;
+
+	Iterator<Ride> iterateRidesThroDays(Date date) throws NoElementException;
+
+	Iterator<Ride> iterateAll() throws NoElementException;
+
 	public void register(String email, String name, String password);
 
 	void login(String email);

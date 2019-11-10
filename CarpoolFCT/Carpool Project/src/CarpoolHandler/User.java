@@ -1,5 +1,9 @@
-  
+
 package CarpoolHandler;
+
+import java.util.Iterator;
+
+import dataStructures.NoElementException;
 
 public interface User {
 
@@ -16,7 +20,7 @@ public interface User {
 	boolean hasSomething(Date date);
 
 	boolean hasRide(Date date);
-	
+
 	public boolean hasLift(Date date);
 
 	void registerRide(Ride lift);
@@ -25,16 +29,15 @@ public interface User {
 
 	Ride getRide(Date date);
 
-	/**
-	 * Iterator<Ride> iterateCreatedRides();
-	 * 
-	 * Iterator<Ride> iterateJoinedRides();
-	 */
+	Iterator<Ride> iterateCreatedRides() throws NoElementException;
+
+	Iterator<Ride> iterateJoinedRides() throws NoElementException;
+
 	Ride removeCreatedRide(Date date);
 
 	Ride removeJoinedRide(Date date);
 
 	int getNumberOfRides();
-	
+
 	public boolean rideHasLift(Date date);
 }

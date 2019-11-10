@@ -1,8 +1,11 @@
 package CarpoolHandler;
 
 import java.io.Serializable;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
+
+import dataStructures.NoElementException;
 
 public class UserClass implements User, Comparable<Object>, Serializable {
 
@@ -65,7 +68,7 @@ public class UserClass implements User, Comparable<Object>, Serializable {
 	public boolean hasRide(Date date) {
 		return rides.containsKey(date);
 	}
-	
+
 	public boolean hasLift(Date date) {
 		return lifts.containsKey(date);
 	}
@@ -84,28 +87,21 @@ public class UserClass implements User, Comparable<Object>, Serializable {
 	public Ride getRide(Date date) {
 		return rides.get(date);
 	}
-	
+
 	public boolean rideHasLift(Date date) {
 		Ride ride = rides.get(date);
 		return ride.hasUsers();
 	}
 
-	/**
-	 * @Override public Iterator<Ride> iterateCreatedRides() { // TODO
-	 *           Auto-generated method stub return null; }
-	 * 
-	 * @Override public Iterator<Ride> iterateJoinedRides() { // TODO Auto-generated
-	 *           method stub return null; }
-	 **/
 	@Override
 	public Ride removeCreatedRide(Date date) {
-		
+
 		return rides.remove(date);
 	}
 
 	@Override
 	public Ride removeJoinedRide(Date date) {
-		
+
 		return lifts.remove(date);
 
 	}
@@ -119,6 +115,24 @@ public class UserClass implements User, Comparable<Object>, Serializable {
 	public int compareTo(Object o) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public Iterator<Ride> iterateCreatedRides() throws NoElementException {
+		if (rides.isEmpty())
+			throw new NoElementException();
+
+		return rides.values().iterator();
+
+	}
+
+	@Override
+	public Iterator<Ride> iterateJoinedRides() throws NoElementException {
+		if (lifts.isEmpty())
+			throw new NoElementException();
+
+		return lifts.values().iterator();
+
 	}
 
 }

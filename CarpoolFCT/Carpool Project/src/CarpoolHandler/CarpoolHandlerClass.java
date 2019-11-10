@@ -2,10 +2,13 @@ package CarpoolHandler;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.TreeMap;
 
 import javax.sql.rowset.spi.TransactionalWriter;
+
+import dataStructures.NoElementException;
 
 public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 
@@ -22,27 +25,6 @@ public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 		users = new TreeMap<String, User>();
 		ridesInDates = new TreeMap<Date, List<Ride>>();
 	}
-
-	/**
-	 * @Override public Iterator<Ride> iterateUserCreatedRides() throws
-	 *           NoElementException { // TODO Auto-generated method stub return
-	 *           null; }
-	 * 
-	 * @Override public Iterator<Ride> iterateUserJoinedRides() throws
-	 *           NoElementException { // TODO Auto-generated method stub return
-	 *           null; }
-	 * 
-	 * @Override public Iterator<Ride> iterateRidesThroEmails() throws
-	 *           NoElementException { // TODO Auto-generated method stub return
-	 *           null; }
-	 * 
-	 * @Override public Iterator<Ride> iterateRidesThroDays() throws
-	 *           NoElementException { // TODO Auto-generated method stub return
-	 *           null; }
-	 * 
-	 * @Override public Iterator<Ride> iterateAll() throws NoElementException { //
-	 *           TODO Auto-generated method stub return null; }
-	 **/
 
 	public User getCurrUser() {
 		return currUser;
@@ -91,20 +73,20 @@ public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 	}
 
 	@Override
-	public void remove(Date date) 
+	public void remove(Date date)
 			throws InvalidDateException, NonExistingElementException, AlreadyExistsElementException {
-		
-		if(!date.isDateValid(date.getFullDate()))
+
+		if (!date.isDateValid(date.getFullDate()))
 			throw new InvalidDateException();
-		if(!currUser.hasRide(date))
+		if (!currUser.hasRide(date))
 			throw new NonExistingElementException();
-		if(currUser.rideHasLift(date)) {
+		if (currUser.rideHasLift(date)) {
 			throw new AlreadyExistsElementException();
 		}
-		
+
 		Ride ride = currUser.removeCreatedRide(date);
 		ridesInDates.get(date).remove(ride);
-		if(ridesInDates.get(date).isEmpty())
+		if (ridesInDates.get(date).isEmpty())
 			ridesInDates.remove(date);
 	}
 
@@ -160,12 +142,12 @@ public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 
 	@Override
 	public void removeFromRide(Date date) throws InvalidDateException, NonExistingElementException {
-		
-		if(!date.isDateValid(date.getFullDate()))
+
+		if (!date.isDateValid(date.getFullDate()))
 			throw new InvalidDateException();
-		if(!currUser.hasLift(date))
+		if (!currUser.hasLift(date))
 			throw new NonExistingElementException();
-		
+
 		Ride ride = currUser.removeJoinedRide(date);
 		ride.removeUser(currUser.getName());
 	}
@@ -228,6 +210,36 @@ public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 		String name = currUser.getName();
 		currUser = null;
 		return name;
+	}
+
+	@Override
+	public Iterator<Ride> iterateUserCreatedRides() {
+		return currUser.iterateCreatedRides();
+	}
+
+	@Override
+	public Iterator<Ride> iterateUserJoinedRides() {
+		return currUser.iterateJoinedRides();
+	}
+
+	@Override
+	public Iterator<Ride> iterateRidesThroEmails(String email) throws NoElementException {
+		if (!users.containsKey(email))
+			throw new NoElementException();
+		return users.get(email).iterateCreatedRides();
+	}
+
+	@Override
+	public Iterator<Ride> iterateRidesThroDays(Date date) throws NoElementException {
+		if (!ridesInDates.containsKey(date))
+			throw new NoElementException();
+		return ridesInDates.get(date).iterator();
+	}
+
+	@Override
+	public Iterator<Ride> iterateAll() throws NoElementException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

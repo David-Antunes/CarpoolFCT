@@ -1,10 +1,10 @@
 import java.util.Iterator;
 import java.util.Scanner;
-import java.util.zip.DataFormatException;
 
 import CarpoolHandler.AlreadyExistsElementException;
 import CarpoolHandler.CarpoolHandler;
 import CarpoolHandler.CarpoolHandlerClass;
+import CarpoolHandler.Date;
 import CarpoolHandler.DateClass;
 import CarpoolHandler.InvalidArgsException;
 import CarpoolHandler.InvalidDateException;
@@ -13,6 +13,7 @@ import CarpoolHandler.NoRideException;
 import CarpoolHandler.NonExistingElementException;
 import CarpoolHandler.Ride;
 import CarpoolHandler.User;
+import dataStructures.NoElementException;
 
 public class Main {
 
@@ -173,7 +174,7 @@ public class Main {
 		case REMOVE:
 			remove(in, ch);
 			break;
-			
+
 		case RETIRA:
 			retira(in, ch);
 			break;
@@ -189,20 +190,20 @@ public class Main {
 	private static void retira(Scanner in, CarpoolHandler ch) {
 		String date = in.next().trim();
 		in.nextLine();
-		
+
 		try {
 			ch.removeFromRide(new DateClass(date));
-			System.out.println(ch.getCurrUser().getName() +" boleia retirada.");
+			System.out.println(ch.getCurrUser().getName() + " boleia retirada.");
 		}
-	
+
 		catch (InvalidDateException e) {
 			System.out.println("Data invalida.");
 		}
-		
+
 		catch (NonExistingElementException e) {
 			System.out.println(ch.getCurrUser().getName() + " nesta data nao tem registo de boleia.");
 		}
-		
+
 	}
 
 	private static void entrada(Scanner in, CarpoolHandler ch) {
@@ -235,18 +236,15 @@ public class Main {
 	private static void remove(Scanner in, CarpoolHandler ch) {
 		String date = in.next().trim();
 		in.nextLine();
-		
+
 		try {
 			ch.remove(new DateClass(date));
 			System.out.println(RIDE_REMOVE);
-		}
-		catch(InvalidDateException e) {
+		} catch (InvalidDateException e) {
 			System.out.println("Data invalida.");
-		}
-		catch(NonExistingElementException e) {
+		} catch (NonExistingElementException e) {
 			System.out.println(ch.getCurrUser().getName() + " nesta data nao tem registo de deslocacao.");
-		}
-		catch(AlreadyExistsElementException e) {
+		} catch (AlreadyExistsElementException e) {
 			System.out.println(ch.getCurrUser().getName() + " ja nao pode eliminar esta deslocacao.");
 		}
 
@@ -261,9 +259,8 @@ public class Main {
 			Ride ride = ch.check(email, new DateClass(date));
 
 			System.out.println(ride.getUser().getEmail());
-			System.out.println(ride.getOrigin());
-			System.out.println(ride.getDestination());
-			System.out.printf("%d %d:%d %d\n", ride.getDate(), ride.getHour(), ride.getMinutes(), ride.getDuration());
+			System.out.printf("%s-%s\n", ride.getOrigin(), ride.getDestination());
+			System.out.printf("%s %d:%d %d\n", ride.getDate(), ride.getHour(), ride.getMinutes(), ride.getDuration());
 			System.out.printf("Lugares vagos: %d\n", ride.getRemainingSeats());
 			Iterator<User> it = ride.iterateUsers();
 			System.out.print("Boleias: ");
@@ -290,7 +287,7 @@ public class Main {
 
 		try {
 			if (email.equals(ch.getCurrUser().getEmail()))
-				System.out.printf("%d  nao pode dar boleia a si proprio.\n", ch.getCurrUser().getName());
+				System.out.printf("%s  nao pode dar boleia a si proprio.\n", ch.getCurrUser().getName());
 			else {
 				int value = ch.addLift(email, new DateClass(date));
 				if (value != 0)
@@ -305,11 +302,115 @@ public class Main {
 		} catch (NoRideException e) {
 			System.out.println("Deslocacao nao existe.");
 		} catch (AlreadyExistsElementException e) {
-			System.out.printf("%d ja registou uma boleia ou deslocacao nesta data.", ch.getCurrUser().getName());
+			System.out.printf("%s ja registou uma boleia ou deslocacao nesta data.", ch.getCurrUser().getName());
 		}
 	}
 
 	private static void lista(Scanner in, CarpoolHandler ch) {
+		String arg = in.next().trim();
+		in.nextLine();
+
+		String[] split;
+		split = arg.split("@");
+		if (split.length == 2) {
+			listaEmail(ch, arg);
+		} else {
+			split = arg.split("-");
+			if (split.length == 3) {
+				listaData(ch, new DateClass(arg));
+			} else {
+				switch (arg) {
+				case "minhas":
+					listaMinhas(ch);
+					break;
+				case "boleias":
+					listaBoleias(ch, arg);
+					break;
+				case "todas":
+					listaTodas(ch);
+				default:
+					System.out.println(INV_COMM);
+				}
+
+			}
+		}
+
+	}
+
+	private static void listaEmail(CarpoolHandler ch, String arg) {
+		try {
+			Iterator<Ride> it = ch.iterateRidesThroEmails(arg);
+			while (it.hasNext()) {
+				Ride ride = it.next();
+				System.out.println(ride.getUser().getEmail());
+				System.out.printf("%s-%s\n", ride.getOrigin(), ride.getDestination());
+				System.out.printf("%s %d:%d %d\n", ride.getDate().getFullDate(), ride.getHour(), ride.getMinutes(),
+						ride.getDuration());
+				System.out.println();
+			}
+		} catch (NoElementException e) {
+			System.out.println("Nao existe o utilizador dado.");
+		}
+	}
+
+	private static void listaData(CarpoolHandler ch, Date arg) {
+		try {
+			Iterator<Ride> it = ch.iterateRidesThroDays(arg);
+			while (it.hasNext()) {
+				System.out.println(it.next().getUser().getEmail());
+			}
+		} catch (NoElementException e) {
+			System.out.println("Data invalida.");
+		}
+	}
+
+	private static void listaBoleias(CarpoolHandler ch, String arg) {
+		try {
+			Iterator<Ride> it = ch.iterateUserJoinedRides();
+			while (it.hasNext()) {
+				Ride ride = it.next();
+				System.out.println(ride.getUser().getEmail());
+				System.out.printf("%s-%s\n", ride.getOrigin(), ride.getDestination());
+				System.out.printf("%s %d:%d %d\n", ride.getDate().getFullDate(), ride.getHour(), ride.getMinutes(),
+						ride.getDuration());
+				System.out.println();
+			}
+		} catch (NoElementException e) {
+			System.out.println("Sem boleias.");
+		}
+	}
+
+	private static void listaMinhas(CarpoolHandler ch) {
+		try {
+			Iterator<Ride> it = ch.iterateUserCreatedRides();
+			while (it.hasNext()) {
+				Ride ride = it.next();
+				System.out.println(ride.getUser().getEmail());
+				System.out.printf("%s-%s\n", ride.getOrigin(), ride.getDestination());
+				System.out.printf("%s %d:%d %d\n", ride.getDate().getFullDate(), ride.getHour(), ride.getMinutes(),
+						ride.getDuration());
+				System.out.printf("Lugares vagos: %d\n", ride.getRemainingSeats());
+
+				Iterator<User> users = ride.iterateUsers();
+				if (users.hasNext()) {
+					System.out.print("Boleias: ");
+					while (users.hasNext()) {
+						System.out.print(users.next().getEmail());
+						if (users.hasNext())
+							System.out.print("; ");
+					}
+				} else {
+					System.out.print("Sem boleias registadas.");
+				}
+				System.out.print("\n");
+				System.out.printf("Em espera: %d\n", ride.getUsersInQueue());
+			}
+		} catch (NoElementException e) {
+			System.out.println("Sem deslocacoes.");
+		}
+	}
+
+	private static void listaTodas(CarpoolHandler ch) {
 
 	}
 
