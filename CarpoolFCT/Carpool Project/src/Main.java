@@ -411,6 +411,16 @@ public class Main {
 	}
 
 	private static void listaTodas(CarpoolHandler ch) {
+		
+		Iterator<Date> dates = ch.iterateAll();
+		while(dates.hasNext()) {
+			Date date = dates.next();
+			Iterator<Ride> ride = ch.iterateRidesThroDays(date);
+			while(ride.hasNext()) {
+				System.out.println(date.getFullDate() + " " + ride.next().getUser().getEmail());
+			}
+			
+		}
 
 	}
 

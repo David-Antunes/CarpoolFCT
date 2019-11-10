@@ -14,7 +14,7 @@ public interface CarpoolHandler {
 
 	Iterator<Ride> iterateRidesThroDays(Date date) throws NoElementException;
 
-	Iterator<Ride> iterateAll() throws NoElementException;
+	Iterator<Date> iterateAll() ;
 
 	public void register(String email, String name, String password);
 

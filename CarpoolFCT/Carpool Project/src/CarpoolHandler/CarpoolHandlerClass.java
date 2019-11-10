@@ -237,9 +237,9 @@ public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 	}
 
 	@Override
-	public Iterator<Ride> iterateAll() throws NoElementException {
-		// TODO Auto-generated method stub
-		return null;
+	public Iterator<Date> iterateAll() {
+		
+		return ridesInDates.keySet().iterator();
 	}
 
 }
