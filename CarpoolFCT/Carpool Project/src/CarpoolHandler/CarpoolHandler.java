@@ -22,12 +22,12 @@ public interface CarpoolHandler {
 
 	void userExists(String email) throws NonExistingElementException;
 
-	Ride remove();
+	void remove(Date date) throws InvalidDateException, NonExistingElementException, AlreadyExistsElementException;
 
 	void Ride(String origin, String destiny, Date date, int hour, int minutes, int duration, int seats)
 			throws InvalidArgsException, InvalidDateException;
 
-	void removeFromRide();
+	void removeFromRide(Date date) throws InvalidDateException, NonExistingElementException;
 
 	int addLift(String email, Date date)
 			throws NonExistingElementException, InvalidDateException, NoRideException, AlreadyExistsElementException;
@@ -49,5 +49,7 @@ public interface CarpoolHandler {
 	boolean hasUser();
 
 	int nVisitas();
+
+	String leave();
 
 }

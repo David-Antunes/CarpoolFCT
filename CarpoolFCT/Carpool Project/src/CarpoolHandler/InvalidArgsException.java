@@ -1,6 +1,14 @@
+/**
+ * 
+ */
 package CarpoolHandler;
 
+/**
+ * @author Carolina
+ *
+ */
 public class InvalidArgsException extends Exception {
+
 
 	/**
 	 * 
@@ -14,5 +22,6 @@ public class InvalidArgsException extends Exception {
 	public InvalidArgsException(String msg) {
 		super(msg);
 	}
+
 
 }

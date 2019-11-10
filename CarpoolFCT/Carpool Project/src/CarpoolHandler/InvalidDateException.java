@@ -1,5 +1,12 @@
+/**
+ * 
+ */
 package CarpoolHandler;
 
+/**
+ * @author Carolina
+ *
+ */
 public class InvalidDateException extends Exception {
 
 	/**

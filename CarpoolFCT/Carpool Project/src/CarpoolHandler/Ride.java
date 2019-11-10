@@ -29,4 +29,6 @@ public interface Ride {
 	Iterator<User> iterateUsers();
 	
 	int getRemainingSeats();
+	
+	public boolean hasUsers();
 }

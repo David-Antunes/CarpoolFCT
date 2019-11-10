@@ -1,5 +1,6 @@
 import java.util.Iterator;
 import java.util.Scanner;
+import java.util.zip.DataFormatException;
 
 import CarpoolHandler.AlreadyExistsElementException;
 import CarpoolHandler.CarpoolHandler;
@@ -27,6 +28,7 @@ public class Main {
 	private static final String BOLEIA = "BOLEIA";
 	private static final String CONSULTA = "CONSULTA";
 	private static final String REMOVE = "REMOVE";
+	private static final String RETIRA = "RETIRA";
 
 	// Help menu constants
 	private static final String COMM_AJUDA = "ajuda - Mostra os comandos existentes";
@@ -54,6 +56,8 @@ public class Main {
 	private static final String NO_USER_EXISTS = "Utilizador nao existente.";
 	private static final String NO_ENTRY = "Entrada nao realizada.";
 	private static final String VISIT_NUM = "Visita %d efetuada\n";
+	private static final String LEAVE_SESSION = "Ate a proxima %s.\n";
+	private static final String RIDE_REMOVE = "Deslocacao removida.";
 
 	public static void main(String[] args) {
 
@@ -169,6 +173,10 @@ public class Main {
 		case REMOVE:
 			remove(in, ch);
 			break;
+			
+		case RETIRA:
+			retira(in, ch);
+			break;
 
 		default:
 			System.out.println(INV_COMM);
@@ -176,6 +184,25 @@ public class Main {
 			break;
 
 		}
+	}
+
+	private static void retira(Scanner in, CarpoolHandler ch) {
+		String date = in.next().trim();
+		in.nextLine();
+		
+		try {
+			ch.removeFromRide(new DateClass(date));
+			System.out.println(ch.getCurrUser().getName() +" boleia retirada.");
+		}
+	
+		catch (InvalidDateException e) {
+			System.out.println("Data invalida.");
+		}
+		
+		catch (NonExistingElementException e) {
+			System.out.println(ch.getCurrUser().getName() + " nesta data nao tem registo de boleia.");
+		}
+		
 	}
 
 	private static void entrada(Scanner in, CarpoolHandler ch) {
@@ -206,7 +233,22 @@ public class Main {
 	}
 
 	private static void remove(Scanner in, CarpoolHandler ch) {
-		// TODO Auto-generated method stub
+		String date = in.next().trim();
+		in.nextLine();
+		
+		try {
+			ch.remove(new DateClass(date));
+			System.out.println(RIDE_REMOVE);
+		}
+		catch(InvalidDateException e) {
+			System.out.println("Data invalida.");
+		}
+		catch(NonExistingElementException e) {
+			System.out.println(ch.getCurrUser().getName() + " nesta data nao tem registo de deslocacao.");
+		}
+		catch(AlreadyExistsElementException e) {
+			System.out.println(ch.getCurrUser().getName() + " ja nao pode eliminar esta deslocacao.");
+		}
 
 	}
 
@@ -299,7 +341,7 @@ public class Main {
 	}
 
 	private static void sai(CarpoolHandler ch) {
-		// TODO Auto-generated method stub
+		System.out.printf(LEAVE_SESSION, ch.leave());
 
 	}
 

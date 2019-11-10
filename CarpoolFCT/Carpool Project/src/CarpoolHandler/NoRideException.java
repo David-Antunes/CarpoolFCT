@@ -11,8 +11,5 @@ public class NoRideException extends Exception {
 		super();
 	}
 
-	public NoRideException(String msg) {
-		super(msg);
-	}
 
 }

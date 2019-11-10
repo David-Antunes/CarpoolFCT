@@ -109,6 +109,13 @@ public class RideClass implements Ride, Comparable<Object>, Serializable {
 				i++;
 		}
 		users.remove(i);
+		
+		if(!onHold.isEmpty()) {
+			User userInLine = onHold.getFirst();
+			addUser(userInLine);
+			onHold.removeFirst();
+		}
+		
 		return user;
 	}
 
@@ -122,4 +129,7 @@ public class RideClass implements Ride, Comparable<Object>, Serializable {
 		return 0;
 	}
 
+	public boolean hasUsers() {
+		return !users.isEmpty();
+	}
 }

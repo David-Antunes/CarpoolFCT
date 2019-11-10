@@ -1,3 +1,4 @@
+  
 package CarpoolHandler;
 
 public interface User {
@@ -15,6 +16,8 @@ public interface User {
 	boolean hasSomething(Date date);
 
 	boolean hasRide(Date date);
+	
+	public boolean hasLift(Date date);
 
 	void registerRide(Ride lift);
 
@@ -27,9 +30,11 @@ public interface User {
 	 * 
 	 * Iterator<Ride> iterateJoinedRides();
 	 */
-	Ride removeCreatedRide();
+	Ride removeCreatedRide(Date date);
 
-	void removeJoinedRide();
+	Ride removeJoinedRide(Date date);
 
 	int getNumberOfRides();
+	
+	public boolean rideHasLift(Date date);
 }

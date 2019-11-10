@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 
+import javax.sql.rowset.spi.TransactionalWriter;
+
 public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 
 	/**
@@ -89,9 +91,21 @@ public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 	}
 
 	@Override
-	public Ride remove() {
-		// TODO Auto-generated method stub
-		return null;
+	public void remove(Date date) 
+			throws InvalidDateException, NonExistingElementException, AlreadyExistsElementException {
+		
+		if(!date.isDateValid(date.getFullDate()))
+			throw new InvalidDateException();
+		if(!currUser.hasRide(date))
+			throw new NonExistingElementException();
+		if(currUser.rideHasLift(date)) {
+			throw new AlreadyExistsElementException();
+		}
+		
+		Ride ride = currUser.removeCreatedRide(date);
+		ridesInDates.get(date).remove(ride);
+		if(ridesInDates.get(date).isEmpty())
+			ridesInDates.remove(date);
 	}
 
 	@Override
@@ -145,8 +159,15 @@ public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 	}
 
 	@Override
-	public void removeFromRide() {
-
+	public void removeFromRide(Date date) throws InvalidDateException, NonExistingElementException {
+		
+		if(!date.isDateValid(date.getFullDate()))
+			throw new InvalidDateException();
+		if(!currUser.hasLift(date))
+			throw new NonExistingElementException();
+		
+		Ride ride = currUser.removeJoinedRide(date);
+		ride.removeUser(currUser.getName());
 	}
 
 	@Override
@@ -200,6 +221,13 @@ public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 
 	public int nVisitas() {
 		return currUser.getVisits();
+	}
+
+	@Override
+	public String leave() {
+		String name = currUser.getName();
+		currUser = null;
+		return name;
 	}
 
 }
