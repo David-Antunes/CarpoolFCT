@@ -372,7 +372,7 @@ public class Main {
 					Ride ride = it.next();
 					if (ride.getRemainingSeats() > 0) {
 						System.out.println(ride.getUser().getEmail());
-					System.out.println();
+						System.out.println();
 					}
 				}
 			}
@@ -386,11 +386,13 @@ public class Main {
 			Iterator<Ride> it = ch.iterateUserJoinedRides();
 			while (it.hasNext()) {
 				Ride ride = it.next();
-				System.out.println(ride.getUser().getEmail());
-				System.out.printf("%s-%s\n", ride.getOrigin(), ride.getDestination());
-				System.out.printf("%s %d:%d %d\n", ride.getDate().getFullDate(), ride.getHour(), ride.getMinutes(),
-						ride.getDuration());
-				System.out.println();
+				if (ride.hasSeat(ch.getCurrUser())) {
+					System.out.println(ride.getUser().getEmail());
+					System.out.printf("%s-%s\n", ride.getOrigin(), ride.getDestination());
+					System.out.printf("%s %d:%d %d\n", ride.getDate().getFullDate(), ride.getHour(), ride.getMinutes(),
+							ride.getDuration());
+					System.out.println();
+				}
 			}
 		} catch (NoElementException e) {
 			System.out.println("Sem deslocacoes.");

@@ -27,8 +27,10 @@ public interface Ride {
 	User removeUser(String user);
 
 	Iterator<User> iterateUsers();
-	
+
 	int getRemainingSeats();
-	
+
 	public boolean hasUsers();
+
+	public boolean hasSeat(User user);
 }

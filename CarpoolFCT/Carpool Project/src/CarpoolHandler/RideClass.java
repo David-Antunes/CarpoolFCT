@@ -159,4 +159,14 @@ public class RideClass implements Ride, Comparable<Object>, Serializable {
 		}
 		return 0;
 	}
+
+	@Override
+	public boolean hasSeat(User user) {
+		boolean found = false;
+		Iterator<User> it = users.iterator();
+		while (it.hasNext())
+			if (it.next().getEmail().equals(user.getEmail()))
+				found = true;
+		return found;
+	}
 }

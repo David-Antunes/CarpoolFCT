@@ -115,6 +115,9 @@ public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 			list.add(ride);
 			ridesInDates.put(date, list);
 		}
+		if (currUser.hasLift(date)) {
+			currUser.removeJoinedRide(date);
+		}
 	}
 
 	public int addLift(String email, Date date) throws SameUserException, NonExistingElementException,

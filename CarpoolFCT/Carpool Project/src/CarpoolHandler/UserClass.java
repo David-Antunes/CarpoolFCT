@@ -60,8 +60,13 @@ public class UserClass implements User, Comparable<Object>, Serializable {
 	public boolean hasSomething(Date date) {
 		if (rides.containsKey(date))
 			return true;
-		if (lifts.containsKey(date))
-			return true;
+		if (lifts.containsKey(date)) {
+			Ride ride = lifts.get(date);
+			if (ride.hasSeat(this))
+				return true;
+			else
+				return false;
+		}
 		return false;
 	}
 
