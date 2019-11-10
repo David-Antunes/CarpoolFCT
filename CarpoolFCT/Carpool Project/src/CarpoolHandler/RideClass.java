@@ -79,6 +79,7 @@ public class RideClass implements Ride, Comparable<Object>, Serializable {
 	public int getUsersInQueue() {
 		return onHold.size();
 	}
+
 	public int getRemainingSeats() {
 		return seats - users.size();
 	}
@@ -109,13 +110,13 @@ public class RideClass implements Ride, Comparable<Object>, Serializable {
 				i++;
 		}
 		users.remove(i);
-		
-		if(!onHold.isEmpty()) {
+
+		if (!onHold.isEmpty()) {
 			User userInLine = onHold.getFirst();
 			addUser(userInLine);
 			onHold.removeFirst();
 		}
-		
+
 		return user;
 	}
 
@@ -124,12 +125,26 @@ public class RideClass implements Ride, Comparable<Object>, Serializable {
 		return users.iterator();
 	}
 
-	@Override
-	public int compareTo(Object o) {
-		return 0;
-	}
-
 	public boolean hasUsers() {
 		return !users.isEmpty();
+	}
+
+	@Override
+	public int compareTo(Object o) {
+		if (this == o) {
+			return 0;
+		} else {
+			Ride cmp = (Ride) o;
+			@SuppressWarnings("unchecked")
+			int value = ((Comparable<Date>) date).compareTo(cmp.getDate());
+			if (value != 0) {
+				return value;
+			} else {
+				value = user.getEmail().compareTo(cmp.getUser().getEmail());
+				if (value != 0)
+					return value;
+			}
+		}
+		return 0;
 	}
 }

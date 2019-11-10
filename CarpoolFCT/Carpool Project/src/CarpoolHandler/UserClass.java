@@ -1,4 +1,4 @@
-  
+
 package CarpoolHandler;
 
 import java.io.Serializable;
@@ -114,7 +114,25 @@ public class UserClass implements User, Comparable<Object>, Serializable {
 
 	@Override
 	public int compareTo(Object o) {
-		// TODO Auto-generated method stub
+		if (this == o)
+			return 0;
+		else {
+			User cmp = (User) o;
+			int value = email.compareTo(cmp.getEmail());
+			if (value != 0) {
+				return value;
+			} else {
+				value = name.compareTo(cmp.getName());
+				if (value != 0) {
+					return value;
+				} else {
+					value = password.compareTo(cmp.getPassword());
+					if (value != 0) {
+						return value;
+					}
+				}
+			}
+		}
 		return 0;
 	}
 

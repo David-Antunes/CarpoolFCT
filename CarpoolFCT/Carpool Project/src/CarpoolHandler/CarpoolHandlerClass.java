@@ -1,12 +1,10 @@
 package CarpoolHandler;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
+import java.util.Set;
 import java.util.TreeMap;
-
-import javax.sql.rowset.spi.TransactionalWriter;
+import java.util.TreeSet;
 
 import dataStructures.NoElementException;
 
@@ -17,13 +15,13 @@ public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 	 */
 	private static final long serialVersionUID = 7927190217409345889L;
 	private java.util.Map<String, User> users;
-	private java.util.Map<Date, List<Ride>> ridesInDates;
+	private java.util.Map<Date, Set<Ride>> ridesInDates;
 	private User currUser;
 
 	public CarpoolHandlerClass() {
 		currUser = null;
 		users = new TreeMap<String, User>();
-		ridesInDates = new TreeMap<Date, List<Ride>>();
+		ridesInDates = new TreeMap<Date, Set<Ride>>();
 	}
 
 	public User getCurrUser() {
@@ -113,7 +111,7 @@ public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 		if (ridesInDates.containsKey(date)) {
 			ridesInDates.get(date).add(ride);
 		} else {
-			List<Ride> list = new ArrayList<Ride>();
+			Set<Ride> list = new TreeSet<Ride>();
 			list.add(ride);
 			ridesInDates.put(date, list);
 		}
@@ -238,7 +236,7 @@ public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 
 	@Override
 	public Iterator<Date> iterateAll() {
-		
+
 		return ridesInDates.keySet().iterator();
 	}
 
