@@ -109,6 +109,18 @@ public class RideClass implements Ride, Comparable<Object>, Serializable {
 			} else
 				i++;
 		}
+		if (!found) {
+			it = onHold.iterator();
+			i = 0;
+			while (it.hasNext()) {
+				User aux = it.next();
+				if (aux.getName().equals(name)) {
+					found = true;
+					user = aux;
+				} else
+					i++;
+			}
+		}
 		users.remove(i);
 
 		if (!onHold.isEmpty()) {

@@ -58,7 +58,7 @@ public class Main {
 	private static final String GOODBYE = "Obrigado. Ate a proxima.";
 	private static final String NAME = "nome (maximo 50 caracteres): ";
 	private static final String PASSWORD = "password (entre 4 e 6 caracteres - digitos e letras): ";
-	private static final String NO_REGIST = "Registo nao efetuado";
+	private static final String NO_REGIST = "Registo nao realizado.";
 	private static final String USER_EXISTS = "Utilizador ja existente.";
 	private static final String N_USERS = "Registo %d efetuado.\n";
 	private static final String NO_USER_EXISTS = "Utilizador nao existente.";
@@ -301,7 +301,7 @@ public class Main {
 
 			int value = ch.addLift(email, new DateClass(date));
 			if (value != 0)
-				System.out.printf("Ficou na fila de espera %d.\n", value);
+				System.out.printf("Ficou na fila de espera (posicao %d).\n", value);
 			else
 				System.out.println("Boleia registada.");
 		} catch (SameUserException e) {
@@ -356,6 +356,8 @@ public class Main {
 				System.out.println();
 			}
 		} catch (NoElementException e) {
+			System.out.println("Sem deslocacoes.");
+		} catch (NonExistingElementException e) {
 			System.out.println("Nao existe o utilizador dado.");
 		}
 	}
@@ -367,8 +369,11 @@ public class Main {
 			else {
 				Iterator<Ride> it = ch.iterateRidesThroDays(arg);
 				while (it.hasNext()) {
-					System.out.println(it.next().getUser().getEmail());
+					Ride ride = it.next();
+					if (ride.getRemainingSeats() > 0) {
+						System.out.println(ride.getUser().getEmail());
 					System.out.println();
+					}
 				}
 			}
 		} catch (NoElementException e) {

@@ -98,7 +98,7 @@ public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 			throw new InvalidDateException();
 		if (hour <= 0 || hour >= 24)
 			throw new InvalidArgsException();
-		if (minutes <= 0 || minutes >= 60)
+		if (minutes < 0 || minutes >= 60)
 			throw new InvalidArgsException();
 		if (duration <= 0)
 			throw new InvalidArgsException();
@@ -137,6 +137,7 @@ public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 
 		if (currUser.hasSomething(date))
 			throw new AlreadyExistsElementException();
+
 		currUser.registerRide(ride);
 		return ride.addUser(currUser);
 	}
@@ -225,9 +226,9 @@ public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 	}
 
 	@Override
-	public Iterator<Ride> iterateRidesThroEmails(String email) throws NoElementException {
+	public Iterator<Ride> iterateRidesThroEmails(String email) throws NonExistingElementException, NoElementException {
 		if (!users.containsKey(email))
-			throw new NoElementException();
+			throw new NonExistingElementException();
 		return users.get(email).iterateCreatedRides();
 	}
 

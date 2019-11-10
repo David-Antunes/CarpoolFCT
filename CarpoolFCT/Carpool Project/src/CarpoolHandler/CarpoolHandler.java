@@ -10,7 +10,7 @@ public interface CarpoolHandler {
 
 	Iterator<Ride> iterateUserJoinedRides() throws NoElementException;
 
-	Iterator<Ride> iterateRidesThroEmails(String email) throws NoElementException;
+	Iterator<Ride> iterateRidesThroEmails(String email) throws NonExistingElementException, NoElementException;
 
 	Iterator<Ride> iterateRidesThroDays(Date date) throws NoElementException;
 

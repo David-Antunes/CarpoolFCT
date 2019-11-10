@@ -96,13 +96,11 @@ public class UserClass implements User, Comparable<Object>, Serializable {
 
 	@Override
 	public Ride removeCreatedRide(Date date) {
-
 		return rides.remove(date);
 	}
 
 	@Override
 	public Ride removeJoinedRide(Date date) {
-
 		return lifts.remove(date);
 
 	}
