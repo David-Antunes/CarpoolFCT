@@ -1,3 +1,9 @@
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Iterator;
 import java.util.Scanner;
 
@@ -12,6 +18,7 @@ import CarpoolHandler.InvalidPasswordException;
 import CarpoolHandler.NoRideException;
 import CarpoolHandler.NonExistingElementException;
 import CarpoolHandler.Ride;
+import CarpoolHandler.SameUserException;
 import CarpoolHandler.User;
 import dataStructures.NoElementException;
 
@@ -63,8 +70,7 @@ public class Main {
 	public static void main(String[] args) {
 
 		Scanner in = new Scanner(System.in);
-
-		CarpoolHandler ch = new CarpoolHandlerClass();
+		CarpoolHandler ch = loadFile();
 		String option = readOption(in, ch);
 		do {
 			executeOption(option, in, ch);
@@ -72,6 +78,7 @@ public class Main {
 		} while (!option.equals(TERMINA) || ch.hasCurrUser());
 		System.out.println(GOODBYE);
 		in.close();
+		writeFile(ch);
 
 	}
 
@@ -261,18 +268,22 @@ public class Main {
 
 			System.out.println(ride.getUser().getEmail());
 			System.out.printf("%s-%s\n", ride.getOrigin(), ride.getDestination());
-			System.out.printf("%s %d:%d %d\n", ride.getDate(), ride.getHour(), ride.getMinutes(), ride.getDuration());
+			System.out.printf("%s %d:%d %d\n", ride.getDate().getFullDate(), ride.getHour(), ride.getMinutes(),
+					ride.getDuration());
 			System.out.printf("Lugares vagos: %d\n", ride.getRemainingSeats());
 			Iterator<User> it = ride.iterateUsers();
-			System.out.print("Boleias: ");
-			while (it.hasNext()) {
-				System.out.print(it.next().getEmail());
-				if (it.hasNext())
-					System.out.print("; ");
+			if (it.hasNext()) {
+				System.out.print("Boleias: ");
+				while (it.hasNext()) {
+					System.out.print(it.next().getEmail());
+					if (it.hasNext())
+						System.out.print("; ");
+				}
+			} else {
+				System.out.print("Sem boleias registadas.");
 			}
 			System.out.print("\n");
 			System.out.printf("Em espera: %d\n", ride.getUsersInQueue());
-
 		} catch (NoRideException e) {
 			System.out.println("Deslocacao nao existe.");
 		} catch (NonExistingElementException e) {
@@ -287,15 +298,14 @@ public class Main {
 		String date = in.next().trim();
 
 		try {
-			if (email.equals(ch.getCurrUser().getEmail()))
-				System.out.printf("%s  nao pode dar boleia a si proprio.\n", ch.getCurrUser().getName());
-			else {
-				int value = ch.addLift(email, new DateClass(date));
-				if (value != 0)
-					System.out.printf("Ficou na fila de espera %d.\n", value);
-				else
-					System.out.println("Boleia registada.");
-			}
+
+			int value = ch.addLift(email, new DateClass(date));
+			if (value != 0)
+				System.out.printf("Ficou na fila de espera %d.\n", value);
+			else
+				System.out.println("Boleia registada.");
+		} catch (SameUserException e) {
+			System.out.printf("%s nao pode dar boleia a si proprio.\n", ch.getCurrUser().getName());
 		} catch (NonExistingElementException e) {
 			System.out.println("Utilizador inexistente.");
 		} catch (InvalidDateException e) {
@@ -303,7 +313,7 @@ public class Main {
 		} catch (NoRideException e) {
 			System.out.println("Deslocacao nao existe.");
 		} catch (AlreadyExistsElementException e) {
-			System.out.printf("%s ja registou uma boleia ou deslocacao nesta data.", ch.getCurrUser().getName());
+			System.out.printf("%s ja registou uma boleia ou deslocacao nesta data.\n", ch.getCurrUser().getName());
 		}
 	}
 
@@ -312,30 +322,26 @@ public class Main {
 		in.nextLine();
 
 		String[] split;
-		split = arg.split("@");
-		if (split.length == 2) {
-			listaEmail(ch, arg);
+		split = arg.split("-");
+		if (split.length == 3) {
+			listaData(ch, new DateClass(arg));
 		} else {
-			split = arg.split("-");
-			if (split.length == 3) {
-				listaData(ch, new DateClass(arg));
-			} else {
-				switch (arg) {
-				case "minhas":
-					listaMinhas(ch);
-					break;
-				case "boleias":
-					listaBoleias(ch, arg);
-					break;
-				case "todas":
-					listaTodas(ch);
-				default:
-					System.out.println(INV_COMM);
-				}
-
+			String cmd = arg.toLowerCase();
+			switch (cmd) {
+			case "minhas":
+				listaMinhas(ch);
+				break;
+			case "boleias":
+				listaBoleias(ch, arg);
+				break;
+			case "todas":
+				listaTodas(ch);
+				break;
+			default:
+				listaEmail(ch, arg);
 			}
-		}
 
+		}
 	}
 
 	private static void listaEmail(CarpoolHandler ch, String arg) {
@@ -356,12 +362,17 @@ public class Main {
 
 	private static void listaData(CarpoolHandler ch, Date arg) {
 		try {
-			Iterator<Ride> it = ch.iterateRidesThroDays(arg);
-			while (it.hasNext()) {
-				System.out.println(it.next().getUser().getEmail());
+			if (!arg.isDateValid(arg.getFullDate()))
+				System.out.println("Data invalida.");
+			else {
+				Iterator<Ride> it = ch.iterateRidesThroDays(arg);
+				while (it.hasNext()) {
+					System.out.println(it.next().getUser().getEmail());
+					System.out.println();
+				}
 			}
 		} catch (NoElementException e) {
-			System.out.println("Data invalida.");
+			System.out.println("Sem deslocacoes.");
 		}
 	}
 
@@ -377,7 +388,7 @@ public class Main {
 				System.out.println();
 			}
 		} catch (NoElementException e) {
-			System.out.println("Sem boleias.");
+			System.out.println("Sem deslocacoes.");
 		}
 	}
 
@@ -405,6 +416,7 @@ public class Main {
 				}
 				System.out.print("\n");
 				System.out.printf("Em espera: %d\n", ride.getUsersInQueue());
+				System.out.println();
 			}
 		} catch (NoElementException e) {
 			System.out.println("Sem deslocacoes.");
@@ -419,6 +431,7 @@ public class Main {
 			Iterator<Ride> ride = ch.iterateRidesThroDays(date);
 			while (ride.hasNext()) {
 				System.out.println(date.getFullDate() + " " + ride.next().getUser().getEmail());
+				System.out.println();
 			}
 
 		}
@@ -466,7 +479,7 @@ public class Main {
 	private static void ajuda(Scanner in, CarpoolHandler ch) {
 		System.out.println(COMM_AJUDA);
 
-		if (!ch.hasCurrUser()) { // arranjar metodo ou assim para "dividir"
+		if (ch.hasCurrUser()) { // arranjar metodo ou assim para "dividir"
 			System.out.println(COMM_SAI);
 			System.out.println(COMM_NOVA);
 			System.out.println(COMM_LISTA);
@@ -529,5 +542,42 @@ public class Main {
 		catch (InvalidPasswordException e) {
 			System.out.println(NO_REGIST);
 		}
+	}
+
+	private static CarpoolHandler loadFile() {
+
+		ObjectInputStream inStream;
+		CarpoolHandler ch = null;
+		try {
+			inStream = new ObjectInputStream(new FileInputStream("savefile"));
+			ch = (CarpoolHandler) inStream.readObject();
+			inStream.close();
+			return ch;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			ch = new CarpoolHandlerClass();
+			return ch;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return ch;
+	}
+
+	private static void writeFile(CarpoolHandler ch) {
+
+		ObjectOutputStream outStream;
+
+		try {
+			outStream = new ObjectOutputStream(new FileOutputStream("savefile"));
+			outStream.writeObject(ch);
+			outStream.flush();
+			outStream.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 }

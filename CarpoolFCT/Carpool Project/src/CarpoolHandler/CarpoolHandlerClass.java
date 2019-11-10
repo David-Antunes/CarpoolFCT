@@ -117,15 +117,13 @@ public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 		}
 	}
 
-	public int addLift(String email, Date date)
-			throws NonExistingElementException, InvalidDateException, NoRideException, AlreadyExistsElementException {
+	public int addLift(String email, Date date) throws SameUserException, NonExistingElementException,
+			InvalidDateException, NoRideException, AlreadyExistsElementException {
 
 		if (!users.containsKey(email))
 			throw new NonExistingElementException();
-		if (!ridesInDates.containsKey(date))
+		if (!date.isDateValid(date.getFullDate()))
 			throw new InvalidDateException();
-		if (currUser.hasSomething(date))
-			throw new AlreadyExistsElementException();
 
 		User user = users.get(email);
 
@@ -134,6 +132,11 @@ public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 
 		Ride ride = user.getRide(date);
 
+		if (ride.getUser().getEmail().equals(currUser.getEmail()))
+			throw new SameUserException();
+
+		if (currUser.hasSomething(date))
+			throw new AlreadyExistsElementException();
 		currUser.registerRide(ride);
 		return ride.addUser(currUser);
 	}
@@ -158,6 +161,7 @@ public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 			throw new NonExistingElementException();
 		if (!date.isDateValid(date.getFullDate()))
 			throw new InvalidDateException();
+
 		User user = users.get(email);
 
 		if (!user.hasRide(date))

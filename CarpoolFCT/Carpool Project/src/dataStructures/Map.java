@@ -1,19 +1,15 @@
-/**
- * 
- */
+
 package dataStructures;
 
-/**
- * @author AED_19_20
- *
- */
+
 public interface Map<K, V> {
+	
 	// Returns true iff the map contains no entries.
 	boolean isEmpty( );
 	 
 	// Returns the number of entries in the map.
 	int size( );
-	 
+	  
 	// Returns an iterator of the keys in the map.
 	Iterator<K> keys( ) throws NoElementException;
 	 

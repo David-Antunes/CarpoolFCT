@@ -4,12 +4,12 @@
 package dataStructures;
 
 /**
- * @author AED_19_20
+ * @author AED
  *
  */
-public class EntryClass<K, V> implements Entry<K, V> {
-	private K key;
-	private V value;
+public class EntryClass<K, V> implements Entry<K, V>{
+	protected K key;
+	protected V value;
 	
 	public EntryClass(K k, V v){
 		key=k;
@@ -25,5 +25,7 @@ public class EntryClass<K, V> implements Entry<K, V> {
 	public V getValue() {
 		return value;
 	}
+	
+	
 
 }

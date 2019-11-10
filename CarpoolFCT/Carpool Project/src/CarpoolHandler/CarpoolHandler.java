@@ -31,8 +31,8 @@ public interface CarpoolHandler {
 
 	void removeFromRide(Date date) throws InvalidDateException, NonExistingElementException;
 
-	int addLift(String email, Date date)
-			throws NonExistingElementException, InvalidDateException, NoRideException, AlreadyExistsElementException;
+	int addLift(String email, Date date) throws SameUserException, NonExistingElementException, InvalidDateException,
+			NoRideException, AlreadyExistsElementException;
 
 	Ride check(String email, Date date) throws NoRideException, NonExistingElementException, InvalidDateException;
 
