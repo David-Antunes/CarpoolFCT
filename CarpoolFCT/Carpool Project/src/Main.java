@@ -44,25 +44,26 @@ public class Main {
 	private static final String COMM_REGISTA = "regista - Regista um novo utilizador no programa";
 	private static final String COMM_ENTRADA = "entrada - Permite a entrada (\"login\") dum utilizador no programa";
 
-	private static final String PROMPT = ">";
+	private static final String PROMPT = "> ";
 
-	private static final String INV_COMM = "Comando invalido";
+	private static final String INV_COMM = "Comando invalido.";
 
 	private static final String GOODBYE = "Obrigado. Ate a proxima.";
 	private static final String NAME = "nome (maximo 50 caracteres): ";
 	private static final String PASSWORD = "password (entre 4 e 6 caracteres - digitos e letras): ";
 	private static final String NO_REGIST = "Registo nao efetuado";
 	private static final String USER_EXISTS = "Utilizador ja existente.";
-	private static final String N_USERS = "Registo %d efetuado\n";
+	private static final String N_USERS = "Registo %d efetuado.\n";
 	private static final String NO_USER_EXISTS = "Utilizador nao existente.";
 	private static final String NO_ENTRY = "Entrada nao realizada.";
-	private static final String VISIT_NUM = "Visita %d efetuada\n";
+	private static final String VISIT_NUM = "Visita %d efetuada.\n";
 	private static final String LEAVE_SESSION = "Ate a proxima %s.\n";
 	private static final String RIDE_REMOVE = "Deslocacao removida.";
 
 	public static void main(String[] args) {
 
 		Scanner in = new Scanner(System.in);
+
 		CarpoolHandler ch = new CarpoolHandlerClass();
 		String option = readOption(in, ch);
 		do {
@@ -214,7 +215,7 @@ public class Main {
 		try {
 			ch.userExists(email);
 			for (int i = 1; !passCorrect && i <= 3; i++) {
-				System.out.print(PASSWORD);
+				System.out.print("password: ");
 				password = in.nextLine();
 				if (ch.isPassCorrect(email, password, i))
 					passCorrect = true;
@@ -440,6 +441,8 @@ public class Main {
 			int seats = Integer.parseInt(split[3]);
 
 			ch.Ride(origin, destiny, new DateClass(date), hour, minutes, duration, seats);
+			System.out.printf("Deslocacao %d registada. Obrigado %s.\n", ch.getCurrUser().getNumberOfRides(),
+					ch.getCurrUser().getName());
 
 		} catch (NumberFormatException e) {
 			System.out.println("Dados Invalidos.");

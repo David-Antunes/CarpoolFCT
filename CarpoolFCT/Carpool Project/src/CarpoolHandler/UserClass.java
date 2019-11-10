@@ -59,10 +59,10 @@ public class UserClass implements User, Comparable<Object>, Serializable {
 	@Override
 	public boolean hasSomething(Date date) {
 		if (rides.containsKey(date))
-			return false;
+			return true;
 		if (lifts.containsKey(date))
-			return false;
-		return true;
+			return true;
+		return false;
 	}
 
 	@Override
