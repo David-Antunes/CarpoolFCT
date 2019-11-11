@@ -1,13 +1,20 @@
 package dataStructures;
 
-public class MapWithJavaClass<K,V> implements Map<K,V> {
-	
-	protected java.util.Map<K,V> elementos;
+import java.io.Serializable;
+
+public class MapWithJavaClass<K, V> implements Map<K, V>, Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	protected java.util.Map<K, V> elementos;
 	protected int capPrevista;
 
 	public MapWithJavaClass(int prevusers) {
-		elementos = new java.util.HashMap<K,V>(prevusers);
-		capPrevista =prevusers;
+		elementos = new java.util.HashMap<K, V>(prevusers);
+		capPrevista = prevusers;
 	}
 
 	@Override

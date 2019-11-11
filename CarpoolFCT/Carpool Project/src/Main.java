@@ -26,6 +26,32 @@ import dataStructures.SortedMap;
 
 public class Main {
 
+	private static final String FILENAME = "savefile";
+	private static final String NAO_EXISTE_O_UTILIZADOR_DADO = "Nao existe o utilizador dado.";
+	private static final String SEM_DESLOCACOES = "Sem deslocacoes.";
+	private static final String TODAS = "todas";
+	private static final String BOLEIAS_ARG = "boleias";
+	private static final String MINHAS = "minhas";
+	private static final String EM_ESPERA_D = "Em espera: %d\n";
+	private static final String SEM_BOLEIAS_REGISTADAS = "Sem boleias registadas.";
+	private static final String LUGARES_VAGOS_D = "Lugares vagos: %d\n";
+	private static final String BOLEIAS = "Boleias: ";
+	private static final String RIDE_INFO_FORMAT = "%s %d:%d %d\n";
+	private static final String LOCATION_FORMAT = "%s-%s\n";
+	private static final String S_NESTA_DATA_NAO_TEM_REGISTO_DE_BOLEIA = "%s nesta data nao tem registo de boleia.\n";
+	private static final String S_BOLEIA_RETIRADA = "%s boleia retirada.\n";
+	private static final String S_JA_REGISTOU_UMA_BOLEIA_OU_DESLOCACAO_NESTA_DATA = "%s ja registou uma boleia ou deslocacao nesta data.\n";
+	private static final String DESLOCACAO_NAO_EXISTE = "Deslocacao nao existe.";
+	private static final String UTILIZADOR_INEXISTENTE = "Utilizador inexistente.";
+	private static final String S_NAO_PODE_DAR_BOLEIA_A_SI_PROPRIO = "%s nao pode dar boleia a si proprio.\n";
+	private static final String BOLEIA_REGISTADA = "Boleia registada.";
+	private static final String FICOU_NA_FILA_DE_ESPERA_POSICAO_D = "Ficou na fila de espera (posicao %d).\n";
+	private static final String S_JA_NAO_PODE_ELIMINAR_ESTA_DESLOCACAO = "%s ja nao pode eliminar esta deslocacao.\n";
+	private static final String S_NESTA_DATA_NAO_TEM_REGISTO_DE_DESLOCACAO = "%s nesta data nao tem registo de deslocacao.\n";
+	private static final String DATA_INVALIDA = "Data invalida.";
+	private static final String S_JA_TEM_UMA_DESLOCACAO_OU_BOLEIA_REGISTADA_NESTA_DATA = "%s ja tem uma deslocacao ou boleia registada nesta data.\n";
+	private static final String DADOS_INVALIDOS = "Dados Invalidos.";
+	private static final String DESLOCACAO_D_REGISTADA_OBRIGADO_S = "Deslocacao %d registada. Obrigado %s.\n";
 	// Command Constants
 
 	private static final String AJUDA = "AJUDA";
@@ -217,6 +243,20 @@ public class Main {
 		}
 	}
 
+	/**
+	 * After executing command REGISTA, the user must input an email, a name and a
+	 * password. If the provided email already exists, it will print the
+	 * corresponding message. If the email is unique, then the program will prompt
+	 * for the user to write its name, the name must not be over 50 characters.
+	 * After that, the user must input a password that has more than 4 and less than
+	 * 6 (both inclusive) with only letters or numbers. If the password does not
+	 * meet the requirements, the user will be prompted 2 more times till the
+	 * program returns to its initial state before running REGISTA command.
+	 * 
+	 * @param in - Object that handles the I/O needed for the user
+	 * @param ch - The object that handles the users, and the operations regarding
+	 *           rides
+	 */
 	private static void regista(Scanner in, CarpoolHandler ch) {
 		boolean passValid = false;
 		String name;
@@ -316,15 +356,15 @@ public class Main {
 			int seats = Integer.parseInt(split[3]);
 
 			ch.Ride(origin, destiny, new DateClass(date), hour, minutes, duration, seats);
-			System.out.printf("Deslocacao %d registada. Obrigado %s.\n", ch.getCurrUser().getNumberOfRides(),
+			System.out.printf(DESLOCACAO_D_REGISTADA_OBRIGADO_S, ch.getCurrUser().getNumberOfRides(),
 					ch.getCurrUser().getName());
 
 		} catch (NumberFormatException e) {
-			System.out.println("Dados Invalidos.");
+			System.out.println(DADOS_INVALIDOS);
 		} catch (InvalidArgsException e) {
-			System.out.println("Dados Invalidos.");
+			System.out.println(DADOS_INVALIDOS);
 		} catch (InvalidDateException e) {
-			System.out.println(ch.getCurrUser().getName() + " ja tem uma deslocacao ou boleia registada nesta data.");
+			System.out.printf(S_JA_TEM_UMA_DESLOCACAO_OU_BOLEIA_REGISTADA_NESTA_DATA, ch.getCurrUser().getName());
 		}
 
 	}
@@ -353,11 +393,11 @@ public class Main {
 			ch.remove(new DateClass(date));
 			System.out.println(RIDE_REMOVE);
 		} catch (InvalidDateException e) {
-			System.out.println("Data invalida.");
+			System.out.println(DATA_INVALIDA);
 		} catch (NonExistingElementException e) {
-			System.out.printf("%s nesta data nao tem registo de deslocacao.\n", ch.getCurrUser().getName());
+			System.out.printf(S_NESTA_DATA_NAO_TEM_REGISTO_DE_DESLOCACAO, ch.getCurrUser().getName());
 		} catch (AlreadyExistsElementException e) {
-			System.out.printf("%s ja nao pode eliminar esta deslocacao.\n", ch.getCurrUser().getName());
+			System.out.printf(S_JA_NAO_PODE_ELIMINAR_ESTA_DESLOCACAO, ch.getCurrUser().getName());
 		}
 
 	}
@@ -381,19 +421,19 @@ public class Main {
 
 			int value = ch.addLift(email, new DateClass(date));
 			if (value != 0)
-				System.out.printf("Ficou na fila de espera (posicao %d).\n", value);
+				System.out.printf(FICOU_NA_FILA_DE_ESPERA_POSICAO_D, value);
 			else
-				System.out.println("Boleia registada.");
+				System.out.println(BOLEIA_REGISTADA);
 		} catch (SameUserException e) {
-			System.out.printf("%s nao pode dar boleia a si proprio.\n", ch.getCurrUser().getName());
+			System.out.printf(S_NAO_PODE_DAR_BOLEIA_A_SI_PROPRIO, ch.getCurrUser().getName());
 		} catch (NonExistingElementException e) {
-			System.out.println("Utilizador inexistente.");
+			System.out.println(UTILIZADOR_INEXISTENTE);
 		} catch (InvalidDateException e) {
-			System.out.println("Data invalida.");
+			System.out.println(DATA_INVALIDA);
 		} catch (NoRideException e) {
-			System.out.println("Deslocacao nao existe.");
+			System.out.println(DESLOCACAO_NAO_EXISTE);
 		} catch (AlreadyExistsElementException e) {
-			System.out.printf("%s ja registou uma boleia ou deslocacao nesta data.\n", ch.getCurrUser().getName());
+			System.out.printf(S_JA_REGISTOU_UMA_BOLEIA_OU_DESLOCACAO_NESTA_DATA, ch.getCurrUser().getName());
 		}
 	}
 
@@ -416,15 +456,15 @@ public class Main {
 
 		try {
 			ch.removeFromRide(new DateClass(date));
-			System.out.printf("%s boleia retirada.\n", ch.getCurrUser().getName());
+			System.out.printf(S_BOLEIA_RETIRADA, ch.getCurrUser().getName());
 		}
 
 		catch (InvalidDateException e) {
-			System.out.println("Data invalida.");
+			System.out.println(DATA_INVALIDA);
 		}
 
 		catch (NonExistingElementException e) {
-			System.out.printf("%s nesta data nao tem registo de boleia.\n", ch.getCurrUser().getName());
+			System.out.printf(S_NESTA_DATA_NAO_TEM_REGISTO_DE_BOLEIA, ch.getCurrUser().getName());
 		}
 
 	}
@@ -453,29 +493,29 @@ public class Main {
 			Ride ride = ch.check(email, new DateClass(date));
 
 			System.out.println(ride.getUser().getEmail());
-			System.out.printf("%s-%s\n", ride.getOrigin(), ride.getDestination());
-			System.out.printf("%s %d:%d %d\n", ride.getDate().getFullDate(), ride.getHour(), ride.getMinutes(),
+			System.out.printf(LOCATION_FORMAT, ride.getOrigin(), ride.getDestination());
+			System.out.printf(RIDE_INFO_FORMAT, ride.getDate().getFullDate(), ride.getHour(), ride.getMinutes(),
 					ride.getDuration());
-			System.out.printf("Lugares vagos: %d\n", ride.getRemainingSeats());
-			Iterator<User> it = ride.iterateUsers();
-			if (it.hasNext()) {
-				System.out.print("Boleias: ");
+			System.out.printf(LUGARES_VAGOS_D, ride.getRemainingSeats());
+			if (ride.hasUsers()) {
+				Iterator<User> it = ride.iterateUsers();
+				System.out.print(BOLEIAS);
 				while (it.hasNext()) {
 					System.out.print(it.next().getEmail());
 					if (it.hasNext())
 						System.out.print("; ");
 				}
 			} else {
-				System.out.print("Sem boleias registadas.");
+				System.out.print(SEM_BOLEIAS_REGISTADAS);
 			}
 			System.out.print("\n");
-			System.out.printf("Em espera: %d\n", ride.getUsersInQueue());
+			System.out.printf(EM_ESPERA_D, ride.getUsersInQueue());
 		} catch (NoRideException e) {
-			System.out.println("Deslocacao nao existe.");
+			System.out.println(DESLOCACAO_NAO_EXISTE);
 		} catch (NonExistingElementException e) {
-			System.out.println("Utilizador inexistente.");
+			System.out.println(UTILIZADOR_INEXISTENTE);
 		} catch (InvalidDateException e) {
-			System.out.println("Data invalida.");
+			System.out.println(DATA_INVALIDA);
 		}
 	}
 
@@ -500,13 +540,13 @@ public class Main {
 		} else {
 			String cmd = arg.toLowerCase();
 			switch (cmd) {
-			case "minhas":
+			case MINHAS:
 				listaMinhas(ch);
 				break;
-			case "boleias":
+			case BOLEIAS_ARG:
 				listaBoleias(ch);
 				break;
-			case "todas":
+			case TODAS:
 				listaTodas(ch);
 				break;
 			default:
@@ -533,15 +573,15 @@ public class Main {
 			while (it.hasNext()) {
 				Ride ride = it.next();
 				System.out.println(ride.getUser().getEmail());
-				System.out.printf("%s-%s\n", ride.getOrigin(), ride.getDestination());
-				System.out.printf("%s %d:%d %d\n", ride.getDate().getFullDate(), ride.getHour(), ride.getMinutes(),
+				System.out.printf(LOCATION_FORMAT, ride.getOrigin(), ride.getDestination());
+				System.out.printf(RIDE_INFO_FORMAT, ride.getDate().getFullDate(), ride.getHour(), ride.getMinutes(),
 						ride.getDuration());
 				System.out.println();
 			}
 		} catch (NoElementException e) {
-			System.out.println("Sem deslocacoes.");
+			System.out.println(SEM_DESLOCACOES);
 		} catch (NonExistingElementException e) {
-			System.out.println("Nao existe o utilizador dado.");
+			System.out.println(NAO_EXISTE_O_UTILIZADOR_DADO);
 		}
 	}
 
@@ -558,7 +598,7 @@ public class Main {
 	private static void listaData(CarpoolHandler ch, Date arg) {
 		try {
 			if (!arg.isDateValid(arg.getFullDate()))
-				System.out.println("Data invalida.");
+				System.out.println(DATA_INVALIDA);
 			else {
 				Iterator<Ride> it = ch.iterateRidesThroDays(arg);
 				while (it.hasNext()) {
@@ -570,7 +610,7 @@ public class Main {
 				}
 			}
 		} catch (NoElementException e) {
-			System.out.println("Sem deslocacoes.");
+			System.out.println(SEM_DESLOCACOES);
 		}
 	}
 
@@ -590,14 +630,14 @@ public class Main {
 				Ride ride = it.next();
 				if (ride.hasSeat(ch.getCurrUser())) {
 					System.out.println(ride.getUser().getEmail());
-					System.out.printf("%s-%s\n", ride.getOrigin(), ride.getDestination());
-					System.out.printf("%s %d:%d %d\n", ride.getDate().getFullDate(), ride.getHour(), ride.getMinutes(),
+					System.out.printf(LOCATION_FORMAT, ride.getOrigin(), ride.getDestination());
+					System.out.printf(RIDE_INFO_FORMAT, ride.getDate().getFullDate(), ride.getHour(), ride.getMinutes(),
 							ride.getDuration());
 					System.out.println();
 				}
 			}
 		} catch (NoElementException e) {
-			System.out.println("Sem deslocacoes.");
+			System.out.println(SEM_DESLOCACOES);
 		}
 	}
 
@@ -618,28 +658,28 @@ public class Main {
 			while (it.hasNext()) {
 				Ride ride = it.next();
 				System.out.println(ride.getUser().getEmail());
-				System.out.printf("%s-%s\n", ride.getOrigin(), ride.getDestination());
-				System.out.printf("%s %d:%d %d\n", ride.getDate().getFullDate(), ride.getHour(), ride.getMinutes(),
+				System.out.printf(LOCATION_FORMAT, ride.getOrigin(), ride.getDestination());
+				System.out.printf(RIDE_INFO_FORMAT, ride.getDate().getFullDate(), ride.getHour(), ride.getMinutes(),
 						ride.getDuration());
-				System.out.printf("Lugares vagos: %d\n", ride.getRemainingSeats());
+				System.out.printf(LUGARES_VAGOS_D, ride.getRemainingSeats());
 
-				Iterator<User> users = ride.iterateUsers();
-				if (users.hasNext()) {
-					System.out.print("Boleias: ");
+				if (ride.hasUsers()) {
+					Iterator<User> users = ride.iterateUsers();
+					System.out.print(BOLEIAS);
 					while (users.hasNext()) {
 						System.out.print(users.next().getEmail());
 						if (users.hasNext())
 							System.out.print("; ");
 					}
 				} else {
-					System.out.print("Sem boleias registadas.");
+					System.out.print(SEM_BOLEIAS_REGISTADAS);
 				}
 				System.out.print("\n");
-				System.out.printf("Em espera: %d\n", ride.getUsersInQueue());
+				System.out.printf(EM_ESPERA_D, ride.getUsersInQueue());
 				System.out.println();
 			}
 		} catch (NoElementException e) {
-			System.out.println("Sem deslocacoes.");
+			System.out.println(SEM_DESLOCACOES);
 		}
 	}
 
@@ -724,7 +764,7 @@ public class Main {
 		ObjectInputStream inStream;
 		CarpoolHandler ch = null;
 		try {
-			inStream = new ObjectInputStream(new FileInputStream("savefile"));
+			inStream = new ObjectInputStream(new FileInputStream(FILENAME));
 			ch = (CarpoolHandler) inStream.readObject();
 			inStream.close();
 			return ch;
@@ -750,7 +790,7 @@ public class Main {
 		ObjectOutputStream outStream;
 
 		try {
-			outStream = new ObjectOutputStream(new FileOutputStream("savefile"));
+			outStream = new ObjectOutputStream(new FileOutputStream(FILENAME));
 			outStream.writeObject(ch);
 			outStream.flush();
 			outStream.close();

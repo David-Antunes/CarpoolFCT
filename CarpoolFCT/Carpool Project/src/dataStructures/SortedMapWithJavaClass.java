@@ -1,20 +1,24 @@
 package dataStructures;
 
+import java.io.Serializable;
 
+public class SortedMapWithJavaClass<K, V> implements SortedMap<K, V>, Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
-public class SortedMapWithJavaClass<K,V> implements SortedMap<K, V> {
-	
-	java.util.Map<K,V> sortedMap;
-	
+	java.util.Map<K, V> sortedMap;
+
 	public SortedMapWithJavaClass() {
-		
+
 		sortedMap = new java.util.TreeMap<>();
 	}
 
 	@Override
 	public boolean isEmpty() {
-		
+
 		return sortedMap.isEmpty();
 	}
 
@@ -36,7 +40,7 @@ public class SortedMapWithJavaClass<K,V> implements SortedMap<K, V> {
 
 	@Override
 	public Iterator<Entry<K, V>> iterator() throws NoElementException {
-		
+
 		return new EntryIteratorClass<>(sortedMap.entrySet());
 	}
 
@@ -57,13 +61,16 @@ public class SortedMapWithJavaClass<K,V> implements SortedMap<K, V> {
 
 	@Override
 	public Entry<K, V> minEntry() throws NoElementException {
-		return null;
+		return iterator().next();
 	}
 
 	@Override
 	public Entry<K, V> maxEntry() throws NoElementException {
-		// TODO Auto-generated method stub
-		return null;
+		Iterator<Entry<K, V>> it = iterator();
+		Entry<K, V> entry = it.next();
+		while (it.hasNext())
+			entry = it.next();
+		return entry;
 	}
 
 }

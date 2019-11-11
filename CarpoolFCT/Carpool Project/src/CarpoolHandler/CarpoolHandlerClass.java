@@ -77,8 +77,7 @@ public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 		}
 
 		ridesInDates.find(date).remove(currUser.getEmail());
-		if (ridesInDates.find(date).isEmpty())
-			ridesInDates.remove(date);
+		currUser.removeCreatedRide(date);
 	}
 
 	@Override

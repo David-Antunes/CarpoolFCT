@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import dataStructures.Iterator;
 import dataStructures.List;
+import dataStructures.NoElementException;
 import dataStructures.SinglyLinkedList;
 
 public class RideClass implements Ride, Comparable<Ride>, Serializable {
@@ -135,7 +136,9 @@ public class RideClass implements Ride, Comparable<Ride>, Serializable {
 	}
 
 	@Override
-	public Iterator<User> iterateUsers() {
+	public Iterator<User> iterateUsers() throws NoElementException {
+		if (users.isEmpty())
+			throw new NoElementException();
 		return users.iterator();
 	}
 
