@@ -1,8 +1,10 @@
 package CarpoolHandler;
 
 
+import dataStructures.Entry;
 import dataStructures.Iterator;
 import dataStructures.NoElementException;
+import dataStructures.SortedMap;
 
 public interface CarpoolHandler {
 
@@ -41,7 +43,7 @@ public interface CarpoolHandler {
 	 * Returns a iterator with all the date where are rides
 	 * @return iterator of dates
 	 */
-	Iterator<Date> iterateAll();
+	Iterator<Entry<Date, SortedMap<String, Ride>>> iterateAll();
 
 	/**
 	 * Registers a new user to the program with the given email, name ande password

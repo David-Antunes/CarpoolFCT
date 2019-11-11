@@ -19,8 +19,10 @@ import CarpoolHandler.NonExistingElementException;
 import CarpoolHandler.Ride;
 import CarpoolHandler.SameUserException;
 import CarpoolHandler.User;
+import dataStructures.Entry;
 import dataStructures.Iterator;
 import dataStructures.NoElementException;
+import dataStructures.SortedMap;
 
 public class Main {
 
@@ -288,33 +290,41 @@ public class Main {
 	}
 
 	/**
-	 * After executing command RETIRA while in session mode, the user must provide a
-	 * date in the format d-m-y, being d day, m month, y year. Given the date, if
-	 * the date is not correctly formatted, it will print on console "Data
-	 * invalida.". If the date is correctly formatted the user does not have a lift
-	 * in that date it will print on console "UserName nesta data nao tem registo de
-	 * boleia.". If there is a lift in the provided date, the lift will be removed
-	 * and then it will be printed on console "UserName boleia retirada."
+	 * After executing command NOVA while in session mode, the user must provide the
+	 * name of the origin and destination of the ride; a date in the format d-m-y,
+	 * being d day, m month, y year; a timer in the format hh:mm; the duration of
+	 * the ride; and its available seats. If there are errors in the input the ride
+	 * will not be registered.
 	 * 
 	 * @param in - Object that handles the I/O needed for the user
 	 * @param ch - The object that handles the users, and the operations regarding
 	 *           rides
 	 */
-	private static void retira(Scanner in, CarpoolHandler ch) {
-		String date = in.next().trim();
-		in.nextLine();
-
+	private static void nova(Scanner in, CarpoolHandler ch) {
 		try {
-			ch.removeFromRide(new DateClass(date));
-			System.out.printf("%s boleia retirada.\n", ch.getCurrUser().getName());
-		}
+			in.nextLine();
+			String origin = in.nextLine();
+			String destiny = in.nextLine();
+			String line = in.nextLine();
+			String[] split = line.split(" ");
+			String date = split[0];
 
-		catch (InvalidDateException e) {
-			System.out.println("Data invalida.");
-		}
+			String[] time = split[1].split(":");
+			int hour = Integer.parseInt(time[0]);
+			int minutes = Integer.parseInt(time[1]);
+			int duration = Integer.parseInt(split[2]);
+			int seats = Integer.parseInt(split[3]);
 
-		catch (NonExistingElementException e) {
-			System.out.printf("%s nesta data nao tem registo de boleia.\n", ch.getCurrUser().getName());
+			ch.Ride(origin, destiny, new DateClass(date), hour, minutes, duration, seats);
+			System.out.printf("Deslocacao %d registada. Obrigado %s.\n", ch.getCurrUser().getNumberOfRides(),
+					ch.getCurrUser().getName());
+
+		} catch (NumberFormatException e) {
+			System.out.println("Dados Invalidos.");
+		} catch (InvalidArgsException e) {
+			System.out.println("Dados Invalidos.");
+		} catch (InvalidDateException e) {
+			System.out.println(ch.getCurrUser().getName() + " ja tem uma deslocacao ou boleia registada nesta data.");
 		}
 
 	}
@@ -354,7 +364,81 @@ public class Main {
 
 	/**
 	 * After executing command REMOVE while in session mode, the user must provide a
+	 * date in the format d-m-y, being d day, m month, y year, and a valid email. If
+	 * the user with the given email has a ride created in the given date, the
+	 * current user will join the ride. If the ride is full, the current user will
+	 * be put on the waiting line.
+	 * 
+	 * @param in - Object that handles the I/O needed for the user
+	 * @param ch - The object that handles the users, and the operations regarding
+	 *           rides
+	 */
+	private static void boleia(Scanner in, CarpoolHandler ch) {
+		String email = in.next().trim();
+		String date = in.next().trim();
+
+		try {
+
+			int value = ch.addLift(email, new DateClass(date));
+			if (value != 0)
+				System.out.printf("Ficou na fila de espera (posicao %d).\n", value);
+			else
+				System.out.println("Boleia registada.");
+		} catch (SameUserException e) {
+			System.out.printf("%s nao pode dar boleia a si proprio.\n", ch.getCurrUser().getName());
+		} catch (NonExistingElementException e) {
+			System.out.println("Utilizador inexistente.");
+		} catch (InvalidDateException e) {
+			System.out.println("Data invalida.");
+		} catch (NoRideException e) {
+			System.out.println("Deslocacao nao existe.");
+		} catch (AlreadyExistsElementException e) {
+			System.out.printf("%s ja registou uma boleia ou deslocacao nesta data.\n", ch.getCurrUser().getName());
+		}
+	}
+
+	/**
+	 * After executing command RETIRA while in session mode, the user must provide a
+	 * date in the format d-m-y, being d day, m month, y year. Given the date, if
+	 * the date is not correctly formatted, it will print on console "Data
+	 * invalida.". If the date is correctly formatted the user does not have a lift
+	 * in that date it will print on console "UserName nesta data nao tem registo de
+	 * boleia.". If there is a lift in the provided date, the lift will be removed
+	 * and then it will be printed on console "UserName boleia retirada."
+	 * 
+	 * @param in - Object that handles the I/O needed for the user
+	 * @param ch - The object that handles the users, and the operations regarding
+	 *           rides
+	 */
+	private static void retira(Scanner in, CarpoolHandler ch) {
+		String date = in.next().trim();
+		in.nextLine();
+
+		try {
+			ch.removeFromRide(new DateClass(date));
+			System.out.printf("%s boleia retirada.\n", ch.getCurrUser().getName());
+		}
+
+		catch (InvalidDateException e) {
+			System.out.println("Data invalida.");
+		}
+
+		catch (NonExistingElementException e) {
+			System.out.printf("%s nesta data nao tem registo de boleia.\n", ch.getCurrUser().getName());
+		}
+
+	}
+
+	/**
+	 * After executing command REMOVE while in session mode, the user must provide a
 	 * date in the format d-m-y, being d day, m month, y year, and a valid email.
+	 * Then it will print the information of the corresponding ride with the given
+	 * email and date.
+	 * 
+	 * "(user email)\n" "(origin)-(destination)\n" "(date) (hour):(minutes)
+	 * (duration)\n" "Lugares vagos: (remaining seats)\n" "Boleias : (user email
+	 * n1); (user email n2); ...\n" if there are no users on registered users; "Sem
+	 * boleias registadas.\n"
 	 * 
 	 * @param in - Object that handles the I/O needed for the user
 	 * @param ch - The object that handles the users, and the operations regarding
@@ -395,30 +479,16 @@ public class Main {
 		}
 	}
 
-	private static void boleia(Scanner in, CarpoolHandler ch) {
-		String email = in.next().trim();
-		String date = in.next().trim();
-
-		try {
-
-			int value = ch.addLift(email, new DateClass(date));
-			if (value != 0)
-				System.out.printf("Ficou na fila de espera (posicao %d).\n", value);
-			else
-				System.out.println("Boleia registada.");
-		} catch (SameUserException e) {
-			System.out.printf("%s nao pode dar boleia a si proprio.\n", ch.getCurrUser().getName());
-		} catch (NonExistingElementException e) {
-			System.out.println("Utilizador inexistente.");
-		} catch (InvalidDateException e) {
-			System.out.println("Data invalida.");
-		} catch (NoRideException e) {
-			System.out.println("Deslocacao nao existe.");
-		} catch (AlreadyExistsElementException e) {
-			System.out.printf("%s ja registou uma boleia ou deslocacao nesta data.\n", ch.getCurrUser().getName());
-		}
-	}
-
+	/**
+	 * After executing command REMOVE while in session mode, the user must provide a
+	 * a valid argument. A valid argument is: a valid email; a valid date in the
+	 * format d-m-y, being d day, m month, y year; "minhas", "todas", "boleias".
+	 * Provided the respective argument, it will be run the respective command.
+	 * 
+	 * @param in - Object that handles the I/O needed for the user
+	 * @param ch - The object that handles the users, and the operations regarding
+	 *           rides
+	 */
 	private static void lista(Scanner in, CarpoolHandler ch) {
 		String arg = in.next().trim();
 		in.nextLine();
@@ -434,7 +504,7 @@ public class Main {
 				listaMinhas(ch);
 				break;
 			case "boleias":
-				listaBoleias(ch, arg);
+				listaBoleias(ch);
 				break;
 			case "todas":
 				listaTodas(ch);
@@ -446,9 +516,20 @@ public class Main {
 		}
 	}
 
-	private static void listaEmail(CarpoolHandler ch, String arg) {
+	/**
+	 * Prints the respective information about the rides created of the user with
+	 * the corresponding email.
+	 * 
+	 * * "(user email)\n" "(origin)-(destination)\n" "(date) (hour):(minutes)
+	 * (duration)\n"
+	 * 
+	 * @param email - email to show the information of its rides
+	 * @param ch    - The object that handles the users, and the operations
+	 *              regarding rides
+	 */
+	private static void listaEmail(CarpoolHandler ch, String email) {
 		try {
-			Iterator<Ride> it = ch.iterateRidesThroEmails(arg);
+			Iterator<Ride> it = ch.iterateRidesThroEmails(email);
 			while (it.hasNext()) {
 				Ride ride = it.next();
 				System.out.println(ride.getUser().getEmail());
@@ -464,6 +545,16 @@ public class Main {
 		}
 	}
 
+	/**
+	 * Prints the respective emails of the rides with the given date.
+	 * 
+	 * * "(user email)\n" "(origin)-(destination)\n" "(date) (hour):(minutes)
+	 * (duration)\n"
+	 * 
+	 * @param arg - date of the rides to be shown
+	 * @param ch  - The object that handles the users, and the operations regarding
+	 *            rides
+	 */
 	private static void listaData(CarpoolHandler ch, Date arg) {
 		try {
 			if (!arg.isDateValid(arg.getFullDate()))
@@ -483,7 +574,16 @@ public class Main {
 		}
 	}
 
-	private static void listaBoleias(CarpoolHandler ch, String arg) {
+	/**
+	 * Prints the respective information about the current user lifts.
+	 * 
+	 * * "(user email)\n" "(origin)-(destination)\n" "(date) (hour):(minutes)
+	 * (duration)\n"
+	 * 
+	 * @param ch - The object that handles the users, and the operations regarding
+	 *           rides
+	 */
+	private static void listaBoleias(CarpoolHandler ch) {
 		try {
 			Iterator<Ride> it = ch.iterateUserJoinedRides();
 			while (it.hasNext()) {
@@ -501,6 +601,17 @@ public class Main {
 		}
 	}
 
+	/**
+	 * Prints the respective information about the current user rides.
+	 * 
+	 * * "(user email)\n" "(origin)-(destination)\n" "(date) (hour):(minutes)
+	 * (duration)\n" "Lugares vagos: (remaining seats)\n" "Boleias : (user email
+	 * n1); (user email n2); ...\n" if there are no users on registered users; "Sem
+	 * boleias registadas.\n"
+	 * 
+	 * @param ch - The object that handles the users, and the operations regarding
+	 *           rides
+	 */
 	private static void listaMinhas(CarpoolHandler ch) {
 		try {
 			Iterator<Ride> it = ch.iterateUserCreatedRides();
@@ -532,12 +643,21 @@ public class Main {
 		}
 	}
 
+	/**
+	 * Prints the date and email of the users that have created rides.
+	 * 
+	 * * "(user email) (date)\n"
+	 * 
+	 * @param ch - The object that handles the users, and the operations regarding
+	 *           rides
+	 */
 	private static void listaTodas(CarpoolHandler ch) {
 
-		Iterator<Date> dates = ch.iterateAll();
+		Iterator<Entry<Date, SortedMap<String, Ride>>> dates = ch.iterateAll();
 		while (dates.hasNext()) {
-			Date date = dates.next();
-			Iterator<Ride> ride = ch.iterateRidesThroDays(date);
+			Entry<Date, SortedMap<String, Ride>> entry = dates.next();
+			Iterator<Ride> ride = entry.getValue().values();
+			Date date = entry.getKey();
 			while (ride.hasNext()) {
 				System.out.println(date.getFullDate() + " " + ride.next().getUser().getEmail());
 				System.out.println();
@@ -547,44 +667,24 @@ public class Main {
 
 	}
 
-	private static void nova(Scanner in, CarpoolHandler ch) {
-		try {
-			in.nextLine();
-			String origin = in.nextLine();
-			String destiny = in.nextLine();
-			String line = in.nextLine();
-			String[] split = line.split(" ");
-			String date = split[0];
-
-			String[] time = split[1].split(":");
-			int hour = Integer.parseInt(time[0]);
-			int minutes = Integer.parseInt(time[1]);
-			int duration = Integer.parseInt(split[2]);
-			int seats = Integer.parseInt(split[3]);
-
-			ch.Ride(origin, destiny, new DateClass(date), hour, minutes, duration, seats);
-			System.out.printf("Deslocacao %d registada. Obrigado %s.\n", ch.getCurrUser().getNumberOfRides(),
-					ch.getCurrUser().getName());
-
-		} catch (NumberFormatException e) {
-			System.out.println("Dados Invalidos.");
-		} catch (InvalidArgsException e) {
-			System.out.println("Dados Invalidos.");
-		} catch (InvalidDateException e) {
-			System.out.println(ch.getCurrUser().getName() + " ja tem uma deslocacao ou boleia registada nesta data.");
-		}
-
-	}
-
+	/**
+	 * Prints a message when the user session ends
+	 * 
+	 * @param ch - The object that handles the users, and the operations regarding
+	 *           rides
+	 */
 	private static void sai(CarpoolHandler ch) {
 		System.out.printf(LEAVE_SESSION, ch.leave());
 
 	}
 
 	/**
-	 * Command AJUDA Prints menus when the session is and is not initiated
+	 * Command AJUDA Prints menus when the program is in session or not
+	 * 
+	 * @param arg - date of the rides to be shown
+	 * @param ch  - The object that handles the users, and the operations regarding
+	 *            rides
 	 */
-
 	private static void ajuda(Scanner in, CarpoolHandler ch) {
 		System.out.println(COMM_AJUDA);
 
@@ -605,15 +705,20 @@ public class Main {
 	}
 
 	/**
-	 * Command TERMINA Pints goodbye message when the program stops executing
+	 * Command TERMINA prints goodbye message when the program stops executing
 	 */
-
 	private static void terminar() {
 
 		System.out.println(GOODBYE);
 
 	}
 
+	/**
+	 * Loads a CarpoolHandler object from the file "savefile" if it is created. If
+	 * there is no file, returns an empty CarpoolHandler object.
+	 * 
+	 * @return CarpoolHandler object
+	 */
 	private static CarpoolHandler loadFile() {
 
 		ObjectInputStream inStream;
@@ -634,6 +739,12 @@ public class Main {
 		return ch;
 	}
 
+	/**
+	 * Writes the CarpoolHandler Object into the file "savefile".
+	 * 
+	 * @param ch - The object that handles the users, and the operations regarding
+	 *           rides
+	 */
 	private static void writeFile(CarpoolHandler ch) {
 
 		ObjectOutputStream outStream;
@@ -650,4 +761,5 @@ public class Main {
 		}
 
 	}
+
 }

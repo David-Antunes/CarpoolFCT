@@ -1,9 +1,8 @@
 package CarpoolHandler;
 
 import java.io.Serializable;
-import java.util.Set;
-import java.util.TreeSet;
 
+import dataStructures.Entry;
 import dataStructures.Iterator;
 import dataStructures.NoElementException;
 import dataStructures.SortedMap;
@@ -135,8 +134,11 @@ public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 		if (currUser.hasSomething(date))
 			throw new AlreadyExistsElementException();
 
-		currUser.registerRide(ride);
-		return ride.addUser(currUser);
+		int value = ride.addUser(currUser);
+		if (value == 0)
+			currUser.registerRide(ride);
+
+		return value;
 	}
 
 	@Override
@@ -238,10 +240,10 @@ public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 	}
 
 	@Override
-	public Iterator<Date> iterateAll() {
+	public Iterator<Entry<Date, SortedMap<String, Ride>>> iterateAll() {
 
-		return ridesInDates.values().values();
-		
+		return ridesInDates.iterator();
+
 	}
 
 }
