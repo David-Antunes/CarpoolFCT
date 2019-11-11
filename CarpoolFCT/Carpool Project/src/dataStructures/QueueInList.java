@@ -30,4 +30,7 @@ public class QueueInList<E> implements Queue<E> {
 		return elements.removeFirst();
 	}
 
+	
+	
+
 }

@@ -20,5 +20,7 @@ public interface Queue<E> {
 	// Removes and returns the element at the front of the queue.
 	//@throws NoElementException if isEmpty()
 	E dequeue( ) throws NoElementException;
+	
+
 
 }

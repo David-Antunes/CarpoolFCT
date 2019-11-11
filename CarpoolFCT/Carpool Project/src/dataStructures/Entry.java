@@ -4,7 +4,7 @@
 package dataStructures;
 
 /**
- * @author fernanda
+ * @author AED_19_20
  *
  */
 public interface Entry<K, V> {
