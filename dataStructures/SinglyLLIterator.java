@@ -1,0 +1,42 @@
+package dataStructures;
+
+public class SinglyLLIterator<E> implements Iterator<E> {
+
+	// Node with the first element in the iteration.
+	private SListNode<E> firstNode;
+	// Node with the next element in the iteration.
+	private SListNode<E> nextToReturn;
+	
+	
+	public SinglyLLIterator(SListNode<E> head) {
+		firstNode = head;
+		rewind();
+	}
+
+	@Override
+	public boolean hasNext() {
+		// TODO Auto-generated method stub
+		return nextToReturn != null;
+	}
+
+	@Override
+	public E next() throws NoSuchElementException {
+		// TODO Auto-generated method stub
+		if ( !this.hasNext() )
+			throw new NoSuchElementException("No more elements.");
+		E element = nextToReturn.getElement();
+		//TODO
+		nextToReturn = nextToReturn.getNext();
+	
+		
+		return element;
+	}
+
+	@Override
+	public void rewind() {
+		// TODO Auto-generated method stub
+		nextToReturn = firstNode;
+
+	}
+
+}
