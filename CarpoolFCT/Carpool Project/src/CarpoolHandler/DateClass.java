@@ -3,7 +3,7 @@ package CarpoolHandler;
 
 import java.io.Serializable;
 
-public class DateClass implements Date, Comparable<Object>, Serializable {
+public class DateClass implements Date, Comparable<Date>, Serializable {
 
 	/**
 	 * 
@@ -79,9 +79,9 @@ public class DateClass implements Date, Comparable<Object>, Serializable {
 	}
 
 	@Override
-	public int compareTo(Object o) {
+	public int compareTo(Date o) {
 
-		String date = ((Date) o).getFullDate();
+		String date = o.getFullDate();
 		String[] split = date.split("-");
 		int auxDay = Integer.parseInt(split[0]);
 		int auxMonth = Integer.parseInt(split[1]);

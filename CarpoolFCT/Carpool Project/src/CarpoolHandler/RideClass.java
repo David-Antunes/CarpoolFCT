@@ -1,10 +1,12 @@
 package CarpoolHandler;
 
 import java.io.Serializable;
-import java.util.Iterator;
-import java.util.LinkedList;
 
-public class RideClass implements Ride, Comparable<Object>, Serializable {
+import dataStructures.Iterator;
+import dataStructures.List;
+import dataStructures.SinglyLinkedList;
+
+public class RideClass implements Ride, Comparable<Ride>, Serializable {
 
 	/**
 	 * 
@@ -18,8 +20,8 @@ public class RideClass implements Ride, Comparable<Object>, Serializable {
 	private int minutes;
 	private int duration;
 	private int seats;
-	private LinkedList<User> onHold;
-	private LinkedList<User> users;
+	private List<User> onHold;
+	private List<User> users;
 
 	public RideClass(User user, String origin, String destiny, Date date, int hour, int minutes, int duration,
 			int seats) {
@@ -31,8 +33,8 @@ public class RideClass implements Ride, Comparable<Object>, Serializable {
 		this.minutes = minutes;
 		this.duration = duration;
 		this.seats = seats;
-		onHold = new LinkedList<User>();
-		users = new LinkedList<User>();
+		onHold = new SinglyLinkedList<User>();
+		users = new SinglyLinkedList<User>();
 	}
 
 	@Override
@@ -142,17 +144,16 @@ public class RideClass implements Ride, Comparable<Object>, Serializable {
 	}
 
 	@Override
-	public int compareTo(Object o) {
+	public int compareTo(Ride o) {
 		if (this == o) {
 			return 0;
 		} else {
-			Ride cmp = (Ride) o;
 			@SuppressWarnings("unchecked")
-			int value = ((Comparable<Date>) date).compareTo(cmp.getDate());
+			int value = ((Comparable<Date>) date).compareTo(o.getDate());
 			if (value != 0) {
 				return value;
 			} else {
-				value = user.getEmail().compareTo(cmp.getUser().getEmail());
+				value = user.getEmail().compareTo(o.getUser().getEmail());
 				if (value != 0)
 					return value;
 			}

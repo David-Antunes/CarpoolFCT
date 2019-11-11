@@ -1,12 +1,13 @@
 package CarpoolHandler;
 
 import java.io.Serializable;
-import java.util.Iterator;
 import java.util.Set;
-import java.util.TreeMap;
 import java.util.TreeSet;
 
+import dataStructures.Iterator;
 import dataStructures.NoElementException;
+import dataStructures.SortedMap;
+import dataStructures.SortedMapWithJavaClass;
 
 public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 
@@ -14,14 +15,14 @@ public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 7927190217409345889L;
-	private java.util.Map<String, User> users;
-	private java.util.Map<Date, Set<Ride>> ridesInDates;
+	private SortedMap<String, User> users;
+	private SortedMap<Date, SortedMap<String, Ride>> ridesInDates;
 	private User currUser;
 
 	public CarpoolHandlerClass() {
 		currUser = null;
-		users = new TreeMap<String, User>();
-		ridesInDates = new TreeMap<Date, Set<Ride>>();
+		users = new SortedMapWithJavaClass<String, User>();
+		ridesInDates = new SortedMapWithJavaClass<Date, SortedMap<String, Ride>>();
 	}
 
 	public User getCurrUser() {
@@ -29,13 +30,13 @@ public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 	}
 
 	public void hasUser(String email) throws AlreadyExistsElementException {
-		if (users.containsKey(email))
+		if (users.find(email) != null)
 			throw new AlreadyExistsElementException();
 
 	}
 
 	public void userExists(String email) throws NonExistingElementException {
-		if (!users.containsKey(email))
+		if (users.find(email) == null)
 			throw new NonExistingElementException();
 	}
 
@@ -50,7 +51,7 @@ public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 	public void register(String email, String name, String password) {
 
 		User user = new UserClass(email, name, password);
-		users.put(email, user);
+		users.insert(email, user);
 	}
 
 	public int nUsers() {
@@ -59,15 +60,9 @@ public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 
 	@Override
 	public void login(String email) {
-		currUser = users.get(email);
+		currUser = users.find(email);
 		currUser.addVisit();
 
-	}
-
-	@Override
-	public boolean hasUser() {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 	@Override
@@ -82,9 +77,8 @@ public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 			throw new AlreadyExistsElementException();
 		}
 
-		Ride ride = currUser.removeCreatedRide(date);
-		ridesInDates.get(date).remove(ride);
-		if (ridesInDates.get(date).isEmpty())
+		ridesInDates.find(date).remove(currUser.getEmail());
+		if (ridesInDates.find(date).isEmpty())
 			ridesInDates.remove(date);
 	}
 
@@ -108,12 +102,12 @@ public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 		Ride ride = new RideClass(currUser, origin, destiny, date, hour, minutes, duration, seats);
 		currUser.createRide(ride);
 
-		if (ridesInDates.containsKey(date)) {
-			ridesInDates.get(date).add(ride);
+		if (ridesInDates.find(date) != null) {
+			ridesInDates.find(date).insert(currUser.getEmail(), ride);
 		} else {
-			Set<Ride> list = new TreeSet<Ride>();
-			list.add(ride);
-			ridesInDates.put(date, list);
+			SortedMap<String, Ride> list = new SortedMapWithJavaClass<String, Ride>();
+			list.insert(currUser.getEmail(), ride);
+			ridesInDates.insert(date, list);
 		}
 		if (currUser.hasLift(date)) {
 			currUser.removeJoinedRide(date);
@@ -123,12 +117,12 @@ public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 	public int addLift(String email, Date date) throws SameUserException, NonExistingElementException,
 			InvalidDateException, NoRideException, AlreadyExistsElementException {
 
-		if (!users.containsKey(email))
+		if (users.find(email) == null)
 			throw new NonExistingElementException();
 		if (!date.isDateValid(date.getFullDate()))
 			throw new InvalidDateException();
 
-		User user = users.get(email);
+		User user = users.find(email);
 
 		if (!user.hasRide(date))
 			throw new NoRideException();
@@ -161,12 +155,12 @@ public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 	public Ride check(String email, Date date)
 			throws NoRideException, NonExistingElementException, InvalidDateException {
 
-		if (!users.containsKey(email))
+		if (users.find(email) == null)
 			throw new NonExistingElementException();
 		if (!date.isDateValid(date.getFullDate()))
 			throw new InvalidDateException();
 
-		User user = users.get(email);
+		User user = users.find(email);
 
 		if (!user.hasRide(date))
 			throw new NoRideException();
@@ -195,7 +189,7 @@ public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 
 	public boolean isPassCorrect(String email, String password, int i) throws InvalidPasswordException {
 
-		User user = users.get(email);
+		User user = users.find(email);
 		if (!user.getPassword().equals(password)) {
 			if (i == 3)
 				throw new InvalidPasswordException();
@@ -230,22 +224,24 @@ public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 
 	@Override
 	public Iterator<Ride> iterateRidesThroEmails(String email) throws NonExistingElementException, NoElementException {
-		if (!users.containsKey(email))
+		if (users.find(email) == null)
 			throw new NonExistingElementException();
-		return users.get(email).iterateCreatedRides();
+		return users.find(email).iterateCreatedRides();
 	}
 
 	@Override
 	public Iterator<Ride> iterateRidesThroDays(Date date) throws NoElementException {
-		if (!ridesInDates.containsKey(date))
+		if (ridesInDates.find(date) == null)
 			throw new NoElementException();
-		return ridesInDates.get(date).iterator();
+
+		return ridesInDates.find(date).values();
 	}
 
 	@Override
 	public Iterator<Date> iterateAll() {
 
-		return ridesInDates.keySet().iterator();
+		return ridesInDates.values().values();
+		
 	}
 
 }

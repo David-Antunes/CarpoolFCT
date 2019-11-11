@@ -4,7 +4,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.Iterator;
 import java.util.Scanner;
 
 import CarpoolHandler.AlreadyExistsElementException;
@@ -20,6 +19,7 @@ import CarpoolHandler.NonExistingElementException;
 import CarpoolHandler.Ride;
 import CarpoolHandler.SameUserException;
 import CarpoolHandler.User;
+import dataStructures.Iterator;
 import dataStructures.NoElementException;
 
 public class Main {
@@ -82,8 +82,14 @@ public class Main {
 
 	}
 
-	// Reads the command that we want to execute
-
+	/**
+	 * Writes the respective prompt, regarding if it is in session mode or not, and
+	 * reads the command that we want to execute
+	 * 
+	 * @param in
+	 * @param ch
+	 * @return the
+	 */
 	private static String readOption(Scanner in, CarpoolHandler ch) {
 		printPrompt(ch);
 		return in.next().toUpperCase();
@@ -92,8 +98,10 @@ public class Main {
 	/**
 	 * Prints prompt whit email if session is initiated and without it if the
 	 * session is not
+	 * 
+	 * @param ch - The object that handles the users, and the operations regarding
+	 *           rides
 	 */
-
 	private static void printPrompt(CarpoolHandler ch) {
 
 		try {
@@ -106,8 +114,12 @@ public class Main {
 	/**
 	 * Executes the option with two different ways depending if the session is
 	 * initiated or not
+	 * 
+	 * @param option - the command to be run
+	 * @param in     - Object that handles the I/O needed for the user
+	 * @param ch     - The object that handles the users, and the operations
+	 *               regarding rides
 	 */
-
 	private static void executeOption(String option, Scanner in, CarpoolHandler ch) {
 		if (ch.hasCurrUser())
 			executeOptionSessionMode(option, in, ch);
@@ -118,8 +130,12 @@ public class Main {
 	/**
 	 * Executes commands when session is not initiated Commands are AJUDA TERMINA
 	 * REGISTA ENTRADA
+	 * 
+	 * @param option - the command to be run
+	 * @param in     - Object that handles the I/O needed for the user
+	 * @param ch     - The object that handles the users, and the operations
+	 *               regarding rides
 	 */
-
 	private static void executeOptionInicialMode(String option, Scanner in, CarpoolHandler ch) {
 		switch (option) {
 
@@ -150,8 +166,12 @@ public class Main {
 	/**
 	 * Executes commands when session is not initiated Commands are SAI NOVA LISTA
 	 * BOLEIA CONSULTA REMOVE
+	 * 
+	 * @param option - the command to be run
+	 * @param in     - Object that handles the I/O needed for the user
+	 * @param ch     - The object that handles the users, and the operations
+	 *               regarding rides
 	 */
-
 	private static void executeOptionSessionMode(String option, Scanner in, CarpoolHandler ch) {
 		switch (option) {
 
@@ -195,25 +215,51 @@ public class Main {
 		}
 	}
 
-	private static void retira(Scanner in, CarpoolHandler ch) {
-		String date = in.next().trim();
+	private static void regista(Scanner in, CarpoolHandler ch) {
+		boolean passValid = false;
+		String name;
+		String password = null;
+		String email = in.next();
 		in.nextLine();
 
 		try {
-			ch.removeFromRide(new DateClass(date));
-			System.out.println(ch.getCurrUser().getName() + " boleia retirada.");
+
+			ch.hasUser(email);
+			System.out.print(NAME);
+			name = in.nextLine();
+			for (int i = 1; !passValid && i <= 3; i++) {
+				System.out.print(PASSWORD);
+				password = in.nextLine();
+				if (ch.validPassaword(password, i))
+					passValid = true;
+			}
+
+			ch.register(email, name, password);
+			System.out.printf(N_USERS, ch.nUsers());
+
 		}
 
-		catch (InvalidDateException e) {
-			System.out.println("Data invalida.");
+		catch (AlreadyExistsElementException e) {
+			System.out.println(USER_EXISTS);
 		}
 
-		catch (NonExistingElementException e) {
-			System.out.println(ch.getCurrUser().getName() + " nesta data nao tem registo de boleia.");
+		catch (InvalidPasswordException e) {
+			System.out.println(NO_REGIST);
 		}
-
 	}
 
+	/**
+	 * After executing command ENTRADA, the user must input its email and password
+	 * so it can access its rides and lifts. If the user misses its password 3 times
+	 * the program will return to its initial state previous of running the command
+	 * ENTRADA. If the user types the password correctly, the program will run in
+	 * session mode, having additional commands. run AJUDA to see new commands when
+	 * in session mode.
+	 * 
+	 * @param in - Object that handles the I/O needed for the user
+	 * @param ch - The object that handles the users, and the operations regarding
+	 *           rides
+	 */
 	private static void entrada(Scanner in, CarpoolHandler ch) {
 		boolean passCorrect = false;
 		String password = null;
@@ -241,6 +287,54 @@ public class Main {
 
 	}
 
+	/**
+	 * After executing command RETIRA while in session mode, the user must provide a
+	 * date in the format d-m-y, being d day, m month, y year. Given the date, if
+	 * the date is not correctly formatted, it will print on console "Data
+	 * invalida.". If the date is correctly formatted the user does not have a lift
+	 * in that date it will print on console "UserName nesta data nao tem registo de
+	 * boleia.". If there is a lift in the provided date, the lift will be removed
+	 * and then it will be printed on console "UserName boleia retirada."
+	 * 
+	 * @param in - Object that handles the I/O needed for the user
+	 * @param ch - The object that handles the users, and the operations regarding
+	 *           rides
+	 */
+	private static void retira(Scanner in, CarpoolHandler ch) {
+		String date = in.next().trim();
+		in.nextLine();
+
+		try {
+			ch.removeFromRide(new DateClass(date));
+			System.out.printf("%s boleia retirada.\n", ch.getCurrUser().getName());
+		}
+
+		catch (InvalidDateException e) {
+			System.out.println("Data invalida.");
+		}
+
+		catch (NonExistingElementException e) {
+			System.out.printf("%s nesta data nao tem registo de boleia.\n", ch.getCurrUser().getName());
+		}
+
+	}
+
+	/**
+	 * After executing command REMOVE while in session mode, the user must provide a
+	 * date in the format d-m-y, being d day, m month, y year. Given the date, if
+	 * the date is not correctly formatted, it will print on console "Data
+	 * invalida.". If the date is correctly formatted the user does not have a ride
+	 * in that date it will print on console "UserName nesta data nao tem registo de
+	 * deslocacao.". If there is a ride in the provided date, but it already has
+	 * other users registered in it, will be printed on console "UserName ja nao
+	 * pode eliminar esta deslocacao.". If there is a ride in the provided date with
+	 * no registered users, it will be removed and then be printed on console
+	 * "Deslocacao removida."
+	 * 
+	 * @param in - Object that handles the I/O needed for the user
+	 * @param ch - The object that handles the users, and the operations regarding
+	 *           rides
+	 */
 	private static void remove(Scanner in, CarpoolHandler ch) {
 		String date = in.next().trim();
 		in.nextLine();
@@ -251,13 +345,21 @@ public class Main {
 		} catch (InvalidDateException e) {
 			System.out.println("Data invalida.");
 		} catch (NonExistingElementException e) {
-			System.out.println(ch.getCurrUser().getName() + " nesta data nao tem registo de deslocacao.");
+			System.out.printf("%s nesta data nao tem registo de deslocacao.\n", ch.getCurrUser().getName());
 		} catch (AlreadyExistsElementException e) {
-			System.out.println(ch.getCurrUser().getName() + " ja nao pode eliminar esta deslocacao.");
+			System.out.printf("%s ja nao pode eliminar esta deslocacao.\n", ch.getCurrUser().getName());
 		}
 
 	}
 
+	/**
+	 * After executing command REMOVE while in session mode, the user must provide a
+	 * date in the format d-m-y, being d day, m month, y year, and a valid email.
+	 * 
+	 * @param in - Object that handles the I/O needed for the user
+	 * @param ch - The object that handles the users, and the operations regarding
+	 *           rides
+	 */
 	private static void consulta(Scanner in, CarpoolHandler ch) {
 		String email = in.next().trim();
 		String date = in.next().trim();
@@ -510,45 +612,6 @@ public class Main {
 
 		System.out.println(GOODBYE);
 
-	}
-
-	/**
-	 * Command REGISTA register new user
-	 * 
-	 * @throws NonExistingElementException
-	 */
-
-	private static void regista(Scanner in, CarpoolHandler ch) {
-		boolean passValid = false;
-		String name;
-		String password = null;
-		String email = in.next();
-		in.nextLine();
-
-		try {
-
-			ch.hasUser(email);
-			System.out.print(NAME);
-			name = in.nextLine();
-			for (int i = 1; !passValid && i <= 3; i++) {
-				System.out.print(PASSWORD);
-				password = in.nextLine();
-				if (ch.validPassaword(password, i))
-					passValid = true;
-			}
-
-			ch.register(email, name, password);
-			System.out.printf(N_USERS, ch.nUsers());
-
-		}
-
-		catch (AlreadyExistsElementException e) {
-			System.out.println(USER_EXISTS);
-		}
-
-		catch (InvalidPasswordException e) {
-			System.out.println(NO_REGIST);
-		}
 	}
 
 	private static CarpoolHandler loadFile() {

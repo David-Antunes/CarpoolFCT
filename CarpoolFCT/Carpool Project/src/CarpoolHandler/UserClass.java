@@ -2,11 +2,11 @@
 package CarpoolHandler;
 
 import java.io.Serializable;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.TreeMap;
 
+import dataStructures.Iterator;
 import dataStructures.NoElementException;
+import dataStructures.SortedMap;
+import dataStructures.SortedMapWithJavaClass;
 
 public class UserClass implements User, Comparable<Object>, Serializable {
 
@@ -14,8 +14,8 @@ public class UserClass implements User, Comparable<Object>, Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -1733272791991809198L;
-	private Map<Date, Ride> rides;
-	private Map<Date, Ride> lifts;
+	private SortedMap<Date, Ride> rides;
+	private SortedMap<Date, Ride> lifts;
 	private int visits;
 
 	private String email;
@@ -26,8 +26,8 @@ public class UserClass implements User, Comparable<Object>, Serializable {
 		this.email = email;
 		this.name = name;
 		this.password = password;
-		rides = new TreeMap<Date, Ride>();
-		lifts = new TreeMap<Date, Ride>();
+		rides = new SortedMapWithJavaClass<Date, Ride>();
+		lifts = new SortedMapWithJavaClass<Date, Ride>();
 		visits = 0;
 	}
 
@@ -58,10 +58,10 @@ public class UserClass implements User, Comparable<Object>, Serializable {
 
 	@Override
 	public boolean hasSomething(Date date) {
-		if (rides.containsKey(date))
+		if (rides.find(date) != null)
 			return true;
-		if (lifts.containsKey(date)) {
-			Ride ride = lifts.get(date);
+		if (lifts.find(date) != null) {
+			Ride ride = lifts.find(date);
 			if (ride.hasSeat(this))
 				return true;
 			else
@@ -72,30 +72,30 @@ public class UserClass implements User, Comparable<Object>, Serializable {
 
 	@Override
 	public boolean hasRide(Date date) {
-		return rides.containsKey(date);
+		return rides.find(date) != null;
 	}
 
 	public boolean hasLift(Date date) {
-		return lifts.containsKey(date);
+		return lifts.find(date) != null;
 	}
 
 	@Override
 	public void registerRide(Ride lift) {
-		lifts.put(lift.getDate(), lift);
+		lifts.insert(lift.getDate(), lift);
 	}
 
 	@Override
 	public void createRide(Ride ride) {
-		rides.put(ride.getDate(), ride);
+		rides.insert(ride.getDate(), ride);
 	}
 
 	@Override
 	public Ride getRide(Date date) {
-		return rides.get(date);
+		return rides.find(date);
 	}
 
 	public boolean rideHasLift(Date date) {
-		Ride ride = rides.get(date);
+		Ride ride = rides.find(date);
 		return ride.hasUsers();
 	}
 
@@ -144,7 +144,7 @@ public class UserClass implements User, Comparable<Object>, Serializable {
 		if (rides.isEmpty())
 			throw new NoElementException();
 
-		return rides.values().iterator();
+		return rides.values();
 
 	}
 
@@ -153,7 +153,7 @@ public class UserClass implements User, Comparable<Object>, Serializable {
 		if (lifts.isEmpty())
 			throw new NoElementException();
 
-		return lifts.values().iterator();
+		return lifts.values();
 
 	}
 
