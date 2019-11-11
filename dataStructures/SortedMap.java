@@ -1,15 +1,19 @@
-
+/**
+ * 
+ */
 package dataStructures;
 
-
-public interface Map<K, V> {
-	
+/**
+ * @author AED_19_20
+ *
+ */
+public interface SortedMap<K, V> {
 	// Returns true iff the map contains no entries.
 	boolean isEmpty( );
 	 
 	// Returns the number of entries in the map.
 	int size( );
-	  
+	 
 	// Returns an iterator of the keys in the map.
 	Iterator<K> keys( ) throws NoElementException;
 	 
@@ -31,4 +35,13 @@ public interface Map<K, V> {
 	// If there is an entry in the map whose key is the specified key,
 	// removes it from the map and returns its value; otherwise, returns null.
 	V remove( K key );
+	
+	// Returns the entry with the smallest key in the SortedMap.
+	// @throws NoElementException if isEmpty()
+	Entry<K,V> minEntry( ) throws NoElementException;
+	
+	// Returns the entry with the largest key in the SortedMap.
+	// @throws NoElementException if isEmpty()
+	Entry<K,V> maxEntry( ) throws NoElementException;
+
 }
