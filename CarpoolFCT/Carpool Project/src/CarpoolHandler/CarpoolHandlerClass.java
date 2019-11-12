@@ -2,43 +2,76 @@ package CarpoolHandler;
 
 import java.io.Serializable;
 
+import CarpoolExceptions.AlreadyExistsElementException;
+import CarpoolExceptions.InvalidArgsException;
+import CarpoolExceptions.InvalidDateException;
+import CarpoolExceptions.InvalidPasswordException;
+import CarpoolExceptions.NoRideException;
+import CarpoolExceptions.NonExistingElementException;
+import CarpoolExceptions.SameUserException;
+import Date.Date;
+import Rides.Ride;
+import Rides.RideClass;
+import Users.User;
+import Users.UserClass;
 import dataStructures.Entry;
 import dataStructures.Iterator;
+import dataStructures.Map;
+import dataStructures.MapWithJavaHashTableMap;
 import dataStructures.NoElementException;
 import dataStructures.SortedMap;
 import dataStructures.SortedMapWithJavaClass;
 
+/**
+ * 
+ * @author David Antunes, 55045
+ * @author Carolina Duarte, 55645
+ *
+ */
 public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 7927190217409345889L;
-	private SortedMap<String, User> users;
+
+	private Map<String, User> users;
+
+	/**
+	 * Holds the various rides in each different date
+	 */
 	private SortedMap<Date, SortedMap<String, Ride>> ridesInDates;
+
+	/**
+	 * Holds the current user in session
+	 */
 	private User currUser;
 
 	public CarpoolHandlerClass() {
 		currUser = null;
-		users = new SortedMapWithJavaClass<String, User>();
+		users = new MapWithJavaHashTableMap<String, User>();
 		ridesInDates = new SortedMapWithJavaClass<Date, SortedMap<String, Ride>>();
 	}
 
+	@Override
 	public User getCurrUser() {
 		return currUser;
 	}
 
+	@Override
 	public void hasUser(String email) throws AlreadyExistsElementException {
 		if (users.find(email) != null)
 			throw new AlreadyExistsElementException();
 
 	}
 
+	@Override
 	public void userExists(String email) throws NonExistingElementException {
 		if (users.find(email) == null)
 			throw new NonExistingElementException();
 	}
 
+	@Override
 	public boolean hasCurrUser() {
 		if (currUser != null)
 			return true;
@@ -53,6 +86,7 @@ public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 		users.insert(email, user);
 	}
 
+	@Override
 	public int nUsers() {
 		return users.size();
 	}
@@ -112,6 +146,7 @@ public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 		}
 	}
 
+	@Override
 	public int addLift(String email, Date date) throws SameUserException, NonExistingElementException,
 			InvalidDateException, NoRideException, AlreadyExistsElementException {
 
@@ -169,6 +204,7 @@ public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 		return user.getRide(date);
 	}
 
+	@Override
 	public String userEmail() throws NonExistingElementException {
 		if (currUser == null) {
 			throw new NonExistingElementException();
@@ -176,32 +212,7 @@ public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 		return currUser.getEmail();
 	}
 
-	public boolean validPassaword(String password, int i) throws InvalidPasswordException {
-
-		if (!(password.length() <= 6 && password.length() >= 4 && password.matches("[a-zA-Z0-9]*"))) {
-			if (i == 3)
-				throw new InvalidPasswordException();
-			else
-				return false;
-		} else
-			return true;
-
-	}
-
-	public boolean isPassCorrect(String email, String password, int i) throws InvalidPasswordException {
-
-		User user = users.find(email);
-		if (!user.getPassword().equals(password)) {
-			if (i == 3)
-				throw new InvalidPasswordException();
-			else
-				return false;
-		}
-
-		else
-			return true;
-	}
-
+	@Override
 	public int nVisitas() {
 		return currUser.getVisits();
 	}
@@ -243,6 +254,34 @@ public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 
 		return ridesInDates.iterator();
 
+	}
+
+	@Override
+	public boolean validPassaword(String password, int i) throws InvalidPasswordException {
+
+		if (!(password.length() <= 6 && password.length() >= 4 && password.matches("[a-zA-Z0-9]*"))) {
+			if (i == 3)
+				throw new InvalidPasswordException();
+			else
+				return false;
+		} else
+			return true;
+
+	}
+
+	@Override
+	public boolean isPassCorrect(String email, String password, int i) throws InvalidPasswordException {
+
+		User user = users.find(email);
+		if (!user.getPassword().equals(password)) {
+			if (i == 3)
+				throw new InvalidPasswordException();
+			else
+				return false;
+		}
+
+		else
+			return true;
 	}
 
 }

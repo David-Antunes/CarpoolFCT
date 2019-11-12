@@ -1,7 +1,13 @@
 package dataStructures;
 
-public class QueueInList<E> implements Queue<E> {
+import java.io.Serializable;
+
+public class QueueInList<E> implements Queue<E>, Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	protected List<E> elements;
 	
 	public QueueInList(){

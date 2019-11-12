@@ -6,24 +6,29 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Scanner;
 
-import CarpoolHandler.AlreadyExistsElementException;
+import CarpoolExceptions.AlreadyExistsElementException;
+import CarpoolExceptions.InvalidArgsException;
+import CarpoolExceptions.InvalidDateException;
+import CarpoolExceptions.InvalidPasswordException;
+import CarpoolExceptions.NoRideException;
+import CarpoolExceptions.NonExistingElementException;
+import CarpoolExceptions.SameUserException;
 import CarpoolHandler.CarpoolHandler;
 import CarpoolHandler.CarpoolHandlerClass;
-import CarpoolHandler.Date;
-import CarpoolHandler.DateClass;
-import CarpoolHandler.InvalidArgsException;
-import CarpoolHandler.InvalidDateException;
-import CarpoolHandler.InvalidPasswordException;
-import CarpoolHandler.NoRideException;
-import CarpoolHandler.NonExistingElementException;
-import CarpoolHandler.Ride;
-import CarpoolHandler.SameUserException;
-import CarpoolHandler.User;
+import Date.Date;
+import Date.DateClass;
+import Rides.Ride;
+import Users.User;
 import dataStructures.Entry;
 import dataStructures.Iterator;
 import dataStructures.NoElementException;
 import dataStructures.SortedMap;
-
+/**
+ * 
+ * @author David Antunes, 55045
+ * @author Carolina Duarte, 55645
+ *
+ */
 public class Main {
 
 	private static final String FILENAME = "savefile";
@@ -628,13 +633,11 @@ public class Main {
 			Iterator<Ride> it = ch.iterateUserJoinedRides();
 			while (it.hasNext()) {
 				Ride ride = it.next();
-				if (ride.hasSeat(ch.getCurrUser())) {
-					System.out.println(ride.getUser().getEmail());
-					System.out.printf(LOCATION_FORMAT, ride.getOrigin(), ride.getDestination());
-					System.out.printf(RIDE_INFO_FORMAT, ride.getDate().getFullDate(), ride.getHour(), ride.getMinutes(),
-							ride.getDuration());
-					System.out.println();
-				}
+				System.out.println(ride.getUser().getEmail());
+				System.out.printf(LOCATION_FORMAT, ride.getOrigin(), ride.getDestination());
+				System.out.printf(RIDE_INFO_FORMAT, ride.getDate().getFullDate(), ride.getHour(), ride.getMinutes(),
+						ride.getDuration());
+				System.out.println();
 			}
 		} catch (NoElementException e) {
 			System.out.println(SEM_DESLOCACOES);
