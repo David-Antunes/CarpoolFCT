@@ -104,9 +104,11 @@ public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 
 		if (!date.isDateValid(date.getFullDate()))
 			throw new InvalidDateException();
-		if (!currUser.hasRide(date))
+
+		Ride ride = currUser.getRide(date);
+		if (ride == null)
 			throw new NonExistingElementException();
-		if (currUser.rideHasLift(date)) {
+		if (ride.hasUsers()) {
 			throw new AlreadyExistsElementException();
 		}
 
@@ -133,34 +135,34 @@ public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 
 		Ride ride = new RideClass(currUser, origin, destiny, date, hour, minutes, duration, seats);
 		currUser.createRide(ride);
-
-		if (ridesInDates.find(date) != null) {
-			ridesInDates.find(date).insert(currUser.getEmail(), ride);
+		SortedMap<String, Ride> DateInfo = ridesInDates.find(date);
+		if (DateInfo != null) {
+			DateInfo.insert(currUser.getEmail(), ride);
 		} else {
 			SortedMap<String, Ride> list = new SortedMapWithJavaClass<String, Ride>();
 			list.insert(currUser.getEmail(), ride);
 			ridesInDates.insert(date, list);
 		}
-		if (currUser.hasLift(date)) {
-			currUser.removeJoinedRide(date);
-		}
+//		if (currUser.hasLift(date)) {
+//			currUser.removeJoinedRide(date);
+//		}
 	}
 
 	@Override
 	public int addLift(String email, Date date) throws SameUserException, NonExistingElementException,
 			InvalidDateException, NoRideException, AlreadyExistsElementException {
 
-		if (users.find(email) == null)
+		User user = users.find(email);
+
+		if (user == null)
 			throw new NonExistingElementException();
 		if (!date.isDateValid(date.getFullDate()))
 			throw new InvalidDateException();
 
-		User user = users.find(email);
-
-		if (!user.hasRide(date))
-			throw new NoRideException();
-
 		Ride ride = user.getRide(date);
+
+		if (ride == null)
+			throw new NoRideException();
 
 		if (ride.getUser().getEmail().equals(currUser.getEmail()))
 			throw new SameUserException();
@@ -180,10 +182,12 @@ public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 
 		if (!date.isDateValid(date.getFullDate()))
 			throw new InvalidDateException();
-		if (!currUser.hasLift(date))
-			throw new NonExistingElementException();
 
 		Ride ride = currUser.removeJoinedRide(date);
+
+		if (ride == null)
+			throw new NonExistingElementException();
+
 		ride.removeUser(currUser.getName());
 	}
 
@@ -191,17 +195,19 @@ public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 	public Ride check(String email, Date date)
 			throws NoRideException, NonExistingElementException, InvalidDateException {
 
-		if (users.find(email) == null)
+		User user = users.find(email);
+
+		if (user == null)
 			throw new NonExistingElementException();
 		if (!date.isDateValid(date.getFullDate()))
 			throw new InvalidDateException();
 
-		User user = users.find(email);
+		Ride ride = user.getRide(date);
 
-		if (!user.hasRide(date))
+		if (ride == null)
 			throw new NoRideException();
 
-		return user.getRide(date);
+		return ride;
 	}
 
 	@Override
@@ -236,17 +242,19 @@ public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 
 	@Override
 	public Iterator<Ride> iterateRidesThroEmails(String email) throws NonExistingElementException, NoElementException {
-		if (users.find(email) == null)
+		User user = users.find(email);
+		if (user == null)
 			throw new NonExistingElementException();
-		return users.find(email).iterateCreatedRides();
+		return user.iterateCreatedRides();
 	}
 
 	@Override
 	public Iterator<Ride> iterateRidesThroDays(Date date) throws NoElementException {
-		if (ridesInDates.find(date) == null)
+		SortedMap<String, Ride> DateInfo = ridesInDates.find(date);
+		if (DateInfo == null)
 			throw new NoElementException();
 
-		return ridesInDates.find(date).values();
+		return DateInfo.values();
 	}
 
 	@Override

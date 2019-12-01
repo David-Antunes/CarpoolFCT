@@ -55,23 +55,23 @@ public interface User {
 	 */
 	boolean hasSomething(Date date);
 
-	/**
-	 * Checks if the user has any rides in the given date
-	 * 
-	 * @param date date
-	 * @return <code>true</code> if the user has or <code>false</code> if does not
-	 *         have any ride
-	 */
-	boolean hasRide(Date date);
-
-	/**
-	 * Checks if the user has any lifts in the given date
-	 * 
-	 * @param date date
-	 * @return <code>true</code> if the user has or <code>false</code> if does not
-	 *         have any lift
-	 */
-	public boolean hasLift(Date date);
+//	/**
+//	 * Checks if the user has any rides in the given date
+//	 * 
+//	 * @param date date
+//	 * @return <code>true</code> if the user has or <code>false</code> if does not
+//	 *         have any ride
+//	 */
+//	boolean hasRide(Date date);
+//
+//	/**
+//	 * Checks if the user has any lifts in the given date
+//	 * 
+//	 * @param date date
+//	 * @return <code>true</code> if the user has or <code>false</code> if does not
+//	 *         have any lift
+//	 */
+//	public boolean hasLift(Date date);
 
 	/**
 	 * Registers another lift to the user
@@ -134,12 +134,12 @@ public interface User {
 	 */
 	int getNumberOfRides();
 
-	/**
-	 * Checks if the ride whit the given name has any lifts from other users
-	 * 
-	 * @param date date
-	 * @return <code>true</code> if it has or <code>false</code> if does not have
-	 *         any
-	 */
-	public boolean rideHasLift(Date date);
+//	/**
+//	 * Checks if the ride whit the given name has any lifts from other users
+//	 * 
+//	 * @param date date
+//	 * @return <code>true</code> if it has or <code>false</code> if does not have
+//	 *         any
+//	 */
+//	public boolean rideHasLift(Date date);
 }

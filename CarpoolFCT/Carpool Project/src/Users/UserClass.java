@@ -74,14 +74,14 @@ public class UserClass implements User, Comparable<Object>, Serializable {
 		return false;
 	}
 
-	@Override
-	public boolean hasRide(Date date) {
-		return rides.find(date) != null;
-	}
-
-	public boolean hasLift(Date date) {
-		return lifts.find(date) != null;
-	}
+//	@Override
+//	public boolean hasRide(Date date) {
+//		return rides.find(date) != null;
+//	}
+//
+//	public boolean hasLift(Date date) {
+//		return lifts.find(date) != null;
+//	}
 
 	@Override
 	public void registerRide(Ride lift) {
@@ -98,10 +98,10 @@ public class UserClass implements User, Comparable<Object>, Serializable {
 		return rides.find(date);
 	}
 
-	public boolean rideHasLift(Date date) {
-		Ride ride = rides.find(date);
-		return ride.hasUsers();
-	}
+//	public boolean rideHasLift(Date date) {
+//		Ride ride = rides.find(date);
+//		return ride.hasUsers();
+//	}
 
 	@Override
 	public Ride removeCreatedRide(Date date) {
