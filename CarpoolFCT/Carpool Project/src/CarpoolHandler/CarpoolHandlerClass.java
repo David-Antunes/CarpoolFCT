@@ -14,13 +14,13 @@ import Rides.Ride;
 import Rides.RideClass;
 import Users.User;
 import Users.UserClass;
-import dataStructures.Entry;
+import dataStructures.AVL;
 import dataStructures.Iterator;
 import dataStructures.Map;
-import dataStructures.MapWithJavaHashTableMap;
 import dataStructures.NoElementException;
+import dataStructures.RideIterator;
+import dataStructures.SepChainHashTable;
 import dataStructures.SortedMap;
-import dataStructures.SortedMapWithJavaClass;
 
 /**
  * 
@@ -49,8 +49,8 @@ public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 
 	public CarpoolHandlerClass() {
 		currUser = null;
-		users = new MapWithJavaHashTableMap<String, User>();
-		ridesInDates = new SortedMapWithJavaClass<Date, SortedMap<String, Ride>>();
+		users = new SepChainHashTable<String, User>(10000);
+		ridesInDates = new AVL<Date, SortedMap<String, Ride>>();
 	}
 
 	@Override
@@ -73,10 +73,7 @@ public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 
 	@Override
 	public boolean hasCurrUser() {
-		if (currUser != null)
-			return true;
-		else
-			return false;
+		return (currUser != null) ? true : false;
 	}
 
 	@Override
@@ -139,7 +136,7 @@ public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 		if (DateInfo != null) {
 			DateInfo.insert(currUser.getEmail(), ride);
 		} else {
-			SortedMap<String, Ride> list = new SortedMapWithJavaClass<String, Ride>();
+			SortedMap<String, Ride> list = new AVL<String, Ride>();
 			list.insert(currUser.getEmail(), ride);
 			ridesInDates.insert(date, list);
 		}
@@ -258,9 +255,9 @@ public class CarpoolHandlerClass implements CarpoolHandler, Serializable {
 	}
 
 	@Override
-	public Iterator<Entry<Date, SortedMap<String, Ride>>> iterateAll() {
+	public Iterator<Ride> iterateAll() {
 
-		return ridesInDates.iterator();
+		return new RideIterator<>(ridesInDates);
 
 	}
 

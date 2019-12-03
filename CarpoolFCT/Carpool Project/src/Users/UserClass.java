@@ -5,10 +5,10 @@ import java.io.Serializable;
 
 import Date.Date;
 import Rides.Ride;
+import dataStructures.AVL;
 import dataStructures.Iterator;
 import dataStructures.NoElementException;
 import dataStructures.SortedMap;
-import dataStructures.SortedMapWithJavaClass;
 
 /**
  * 
@@ -34,8 +34,8 @@ public class UserClass implements User, Comparable<Object>, Serializable {
 		this.email = email;
 		this.name = name;
 		this.password = password;
-		rides = new SortedMapWithJavaClass<Date, Ride>();
-		lifts = new SortedMapWithJavaClass<Date, Ride>();
+		rides = new AVL<Date, Ride>();
+		lifts = new AVL<Date, Ride>();
 		visits = 0;
 	}
 

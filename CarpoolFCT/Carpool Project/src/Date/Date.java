@@ -5,7 +5,7 @@ package Date;
  * @author Carolina Duarte, 55645
  *
  */
-public interface Date{
+public interface Date extends Comparable<Date>{
 	
 	/**
 	 * Returns the day of the date

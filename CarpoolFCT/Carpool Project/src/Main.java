@@ -19,10 +19,8 @@ import Date.Date;
 import Date.DateClass;
 import Rides.Ride;
 import Users.User;
-import dataStructures.Entry;
 import dataStructures.Iterator;
 import dataStructures.NoElementException;
-import dataStructures.SortedMap;
 /**
  * 
  * @author David Antunes, 55045
@@ -695,7 +693,7 @@ public class Main {
 	 *           rides
 	 */
 	private static void listaTodas(CarpoolHandler ch) {
-
+/**
 		Iterator<Entry<Date, SortedMap<String, Ride>>> dates = ch.iterateAll();
 		while (dates.hasNext()) {
 			Entry<Date, SortedMap<String, Ride>> entry = dates.next();
@@ -706,6 +704,14 @@ public class Main {
 				System.out.println();
 			}
 
+		}
+		*/
+		
+		Iterator<Ride> rides = ch.iterateAll();
+		while(rides.hasNext()) {
+			Ride ride = rides.next();
+			System.out.println(ride.getDate().getFullDate() + " " + ride.getUser().getEmail());
+			System.out.println();
 		}
 
 	}

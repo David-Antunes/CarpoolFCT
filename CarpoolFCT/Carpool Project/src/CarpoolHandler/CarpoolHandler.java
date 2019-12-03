@@ -10,10 +10,8 @@ import CarpoolExceptions.SameUserException;
 import Date.Date;
 import Rides.Ride;
 import Users.User;
-import dataStructures.Entry;
 import dataStructures.Iterator;
 import dataStructures.NoElementException;
-import dataStructures.SortedMap;
 
 /**
  * 
@@ -60,11 +58,11 @@ public interface CarpoolHandler {
 	Iterator<Ride> iterateRidesThroDays(Date date) throws NoElementException;
 
 	/**
-	 * Returns a iterator with all the date where are rides
+	 * Returns a iterator with all the rides
 	 * 
-	 * @return iterator of dates
+	 * @return iterator of rides
 	 */
-	Iterator<Entry<Date, SortedMap<String, Ride>>> iterateAll();
+	Iterator<Ride> iterateAll();
 
 	/**
 	 * Registers a new user to the program with the given email, name ande password
