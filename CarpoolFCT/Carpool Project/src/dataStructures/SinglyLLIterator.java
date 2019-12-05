@@ -7,34 +7,53 @@ public class SinglyLLIterator<E> implements Iterator<E> {
 	// Node with the next element in the iteration.
 	private SListNode<E> nextToReturn;
 	
-	
+	/*Temporal Complexity:
+	 * best case : O(1)
+	 * worst case : O(1)
+	 * Medium case : O(1)
+	 */
 	public SinglyLLIterator(SListNode<E> head) {
 		firstNode = head;
 		rewind();
 	}
 
+	/*Temporal Complexity:
+	 * best case : O(1)
+	 * worst case : O(1)
+	 * Medium case : O(1)
+	 */
 	@Override
 	public boolean hasNext() {
-		// TODO Auto-generated method stub
+		
 		return nextToReturn != null;
 	}
 
+	/*Temporal Complexity:
+	 * best case : O(1)
+	 * worst case : O(1)
+	 * Medium case : O(1)
+	 */
 	@Override
 	public E next() throws NoSuchElementException {
-		// TODO Auto-generated method stub
+		
 		if ( !this.hasNext() )
 			throw new NoSuchElementException("No more elements.");
 		E element = nextToReturn.getElement();
-		//TODO
+		
 		nextToReturn = nextToReturn.getNext();
 	
 		
 		return element;
 	}
 
+	/*Temporal Complexity:
+	 * best case : O(1)
+	 * worst case : O(1)
+	 * Medium case : O(1)
+	 */
 	@Override
 	public void rewind() {
-		// TODO Auto-generated method stub
+		
 		nextToReturn = firstNode;
 
 	}

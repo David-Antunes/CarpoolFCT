@@ -13,6 +13,7 @@ public class ArrayIterator<E> implements Iterator<E> {
 	private int counter;
 	private int current;
 
+	
 	public ArrayIterator(E[] vector, int counter) {
 		this.vector = vector;
 		this.counter = counter;

@@ -7,11 +7,9 @@ import CarpoolExceptions.InvalidPasswordException;
 import CarpoolExceptions.NoRideException;
 import CarpoolExceptions.NonExistingElementException;
 import CarpoolExceptions.SameUserException;
-import Date.Date;
-import Rides.Ride;
-import Users.User;
 import dataStructures.Iterator;
 import dataStructures.NoElementException;
+
 
 /**
  * 
@@ -27,7 +25,7 @@ public interface CarpoolHandler {
 	 * @return iterator of rides
 	 * @throws NoElementException when the current user does not have any rides
 	 */
-	Iterator<Ride> iterateUserCreatedRides() throws NoElementException;
+	Iterator<RideWrapper> iterateUserCreatedRides() throws NoElementException;
 
 	/**
 	 * Returns a iterator of lifts of the current user
@@ -35,7 +33,7 @@ public interface CarpoolHandler {
 	 * @return iterator of lifts
 	 * @throws NoElementException when the current user does not have any lifts
 	 */
-	Iterator<Ride> iterateUserJoinedRides() throws NoElementException;
+	Iterator<RideWrapper> iterateUserJoinedRides() throws NoElementException;
 
 	/**
 	 * Returns a iterator of rides of the user with the given email
@@ -46,7 +44,7 @@ public interface CarpoolHandler {
 	 *                                     given email
 	 * @throws NoElementException          when the user does not have any rides
 	 */
-	Iterator<Ride> iterateRidesThroEmails(String email) throws NonExistingElementException, NoElementException;
+	Iterator<RideWrapper> iterateRidesThroEmails(String email) throws NonExistingElementException, NoElementException;
 
 	/**
 	 * Returns a iterator of the rides that happen in the given date
@@ -55,14 +53,14 @@ public interface CarpoolHandler {
 	 * @return iterator of rides
 	 * @throws NoElementException when there are not any dates in the given date
 	 */
-	Iterator<Ride> iterateRidesThroDays(Date date) throws NoElementException;
+	Iterator<RideWrapper> iterateRidesThroDays(Date date) throws NoElementException;
 
 	/**
 	 * Returns a iterator with all the rides
 	 * 
 	 * @return iterator of rides
 	 */
-	Iterator<Ride> iterateAll();
+	Iterator<RideWrapper> iterateAll();
 
 	/**
 	 * Registers a new user to the program with the given email, name ande password
@@ -169,7 +167,7 @@ public interface CarpoolHandler {
 	 *                                     given
 	 * @throws InvalidDateException        when the date is invalid
 	 */
-	Ride check(String email, Date date) throws NoRideException, NonExistingElementException, InvalidDateException;
+	RideWrapper check(String email, Date date) throws NoRideException, NonExistingElementException, InvalidDateException;
 
 	/**
 	 * Checks if there is any user whit the session initiated
@@ -198,7 +196,7 @@ public interface CarpoolHandler {
 	 * 
 	 * @return current user
 	 */
-	public User getCurrUser();
+	public UserWrapper getCurrUser();
 
 	/**
 	 * Checks if the password given is valid

@@ -14,21 +14,41 @@ public class QueueInList<E> implements Queue<E>, Serializable {
 		elements= new SinglyLinkedList<E>();
 	}
 
+	/*Temporal Complexity:
+	 * best case : O(1)
+	 * worst case : O(1)
+	 * Medium case : O(1)
+	 */
 	@Override
 	public boolean isEmpty() {
 		return elements.isEmpty();
 	}
 
+	/*Temporal Complexity:
+	 * best case : O(1)
+	 * worst case : O(1)
+	 * Medium case : O(1)
+	 */
 	@Override
 	public int size() {
 		return elements.size();
 	}
 
+	/*Temporal Complexity:
+	 * best case : O(1)
+	 * worst case : O(1)
+	 * Medium case : O(1)
+	 */
 	@Override
 	public void enqueue(E element) {
 		elements.addLast(element);
 	}
 
+	/*Temporal Complexity:
+	 * best case : O(1)
+	 * worst case : O(1)
+	 * Medium case : O(1)
+	 */
 	@Override
 	public E dequeue() throws NoElementException {
 		if (isEmpty())

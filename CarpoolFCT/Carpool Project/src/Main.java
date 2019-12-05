@@ -15,12 +15,11 @@ import CarpoolExceptions.NonExistingElementException;
 import CarpoolExceptions.SameUserException;
 import CarpoolHandler.CarpoolHandler;
 import CarpoolHandler.CarpoolHandlerClass;
-import Date.Date;
-import Date.DateClass;
-import Rides.Ride;
-import Users.User;
+import CarpoolHandler.*;
+
 import dataStructures.Iterator;
 import dataStructures.NoElementException;
+
 /**
  * 
  * @author David Antunes, 55045
@@ -174,10 +173,10 @@ public class Main {
 			ajuda(in, ch);
 			break;
 
-		case TERMINA:
+		/*case TERMINA:
 			terminar();
 			break;
-
+*/
 		case REGISTA:
 			regista(in, ch);
 			break;
@@ -493,7 +492,7 @@ public class Main {
 		in.nextLine();
 
 		try {
-			Ride ride = ch.check(email, new DateClass(date));
+			RideWrapper ride = ch.check(email, new DateClass(date));
 
 			System.out.println(ride.getUser().getEmail());
 			System.out.printf(LOCATION_FORMAT, ride.getOrigin(), ride.getDestination());
@@ -501,10 +500,10 @@ public class Main {
 					ride.getDuration());
 			System.out.printf(LUGARES_VAGOS_D, ride.getRemainingSeats());
 			if (ride.hasUsers()) {
-				Iterator<User> it = ride.iterateUsers();
+				Iterator<String> it = ride.iterateUsers();
 				System.out.print(BOLEIAS);
 				while (it.hasNext()) {
-					System.out.print(it.next().getEmail());
+					System.out.print(it.next());
 					if (it.hasNext())
 						System.out.print("; ");
 				}
@@ -572,9 +571,9 @@ public class Main {
 	 */
 	private static void listaEmail(CarpoolHandler ch, String email) {
 		try {
-			Iterator<Ride> it = ch.iterateRidesThroEmails(email);
+			Iterator<RideWrapper> it = ch.iterateRidesThroEmails(email);
 			while (it.hasNext()) {
-				Ride ride = it.next();
+				RideWrapper ride = it.next();
 				System.out.println(ride.getUser().getEmail());
 				System.out.printf(LOCATION_FORMAT, ride.getOrigin(), ride.getDestination());
 				System.out.printf(RIDE_INFO_FORMAT, ride.getDate().getFullDate(), ride.getHour(), ride.getMinutes(),
@@ -603,9 +602,9 @@ public class Main {
 			if (!arg.isDateValid(arg.getFullDate()))
 				System.out.println(DATA_INVALIDA);
 			else {
-				Iterator<Ride> it = ch.iterateRidesThroDays(arg);
+				Iterator<RideWrapper> it = ch.iterateRidesThroDays(arg);
 				while (it.hasNext()) {
-					Ride ride = it.next();
+					RideWrapper ride = it.next();
 					if (ride.getRemainingSeats() > 0) {
 						System.out.println(ride.getUser().getEmail());
 						System.out.println();
@@ -628,9 +627,9 @@ public class Main {
 	 */
 	private static void listaBoleias(CarpoolHandler ch) {
 		try {
-			Iterator<Ride> it = ch.iterateUserJoinedRides();
+			Iterator<RideWrapper> it = ch.iterateUserJoinedRides();
 			while (it.hasNext()) {
-				Ride ride = it.next();
+				RideWrapper ride = it.next();
 				System.out.println(ride.getUser().getEmail());
 				System.out.printf(LOCATION_FORMAT, ride.getOrigin(), ride.getDestination());
 				System.out.printf(RIDE_INFO_FORMAT, ride.getDate().getFullDate(), ride.getHour(), ride.getMinutes(),
@@ -655,9 +654,9 @@ public class Main {
 	 */
 	private static void listaMinhas(CarpoolHandler ch) {
 		try {
-			Iterator<Ride> it = ch.iterateUserCreatedRides();
+			Iterator<RideWrapper> it = ch.iterateUserCreatedRides();
 			while (it.hasNext()) {
-				Ride ride = it.next();
+				RideWrapper ride = it.next();
 				System.out.println(ride.getUser().getEmail());
 				System.out.printf(LOCATION_FORMAT, ride.getOrigin(), ride.getDestination());
 				System.out.printf(RIDE_INFO_FORMAT, ride.getDate().getFullDate(), ride.getHour(), ride.getMinutes(),
@@ -665,10 +664,10 @@ public class Main {
 				System.out.printf(LUGARES_VAGOS_D, ride.getRemainingSeats());
 
 				if (ride.hasUsers()) {
-					Iterator<User> users = ride.iterateUsers();
+					Iterator<String> users = ride.iterateUsers();
 					System.out.print(BOLEIAS);
 					while (users.hasNext()) {
-						System.out.print(users.next().getEmail());
+						System.out.print(users.next());
 						if (users.hasNext())
 							System.out.print("; ");
 					}
@@ -693,23 +692,11 @@ public class Main {
 	 *           rides
 	 */
 	private static void listaTodas(CarpoolHandler ch) {
-/**
-		Iterator<Entry<Date, SortedMap<String, Ride>>> dates = ch.iterateAll();
-		while (dates.hasNext()) {
-			Entry<Date, SortedMap<String, Ride>> entry = dates.next();
-			Iterator<Ride> ride = entry.getValue().values();
-			Date date = entry.getKey();
-			while (ride.hasNext()) {
-				System.out.println(date.getFullDate() + " " + ride.next().getUser().getEmail());
-				System.out.println();
-			}
 
-		}
-		*/
 		
-		Iterator<Ride> rides = ch.iterateAll();
+		Iterator<RideWrapper> rides = ch.iterateAll();
 		while(rides.hasNext()) {
-			Ride ride = rides.next();
+			RideWrapper ride = rides.next();
 			System.out.println(ride.getDate().getFullDate() + " " + ride.getUser().getEmail());
 			System.out.println();
 		}
@@ -756,12 +743,12 @@ public class Main {
 	/**
 	 * Command TERMINA prints goodbye message when the program stops executing
 	 */
-	private static void terminar() {
+	/*private static void terminar() {
 
 		System.out.println(GOODBYE);
 
 	}
-
+*/
 	/**
 	 * Loads a CarpoolHandler object from the file "savefile" if it is created. If
 	 * there is no file, returns an empty CarpoolHandler object.

@@ -4,14 +4,14 @@ import java.io.Serializable;
 
 public class BST<K extends Comparable<K>,V> implements SortedMap<K,V>, Serializable {
 	 /**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 
 	static class BSTNode<E> implements Serializable {
-		
+
 		/**
-		 * 
+		 *
 		 */
 		private static final long serialVersionUID = 1L;
 		protected BSTNode<E> parent;
@@ -19,7 +19,7 @@ public class BST<K extends Comparable<K>,V> implements SortedMap<K,V>, Serializa
 		protected BSTNode<E> right;
 		protected E element;
 
-		
+
 		BSTNode(E elem,BSTNode<E> parent,BSTNode<E> left,BSTNode<E> right){
 			this.parent=parent;
 			this.left=left;
@@ -29,7 +29,7 @@ public class BST<K extends Comparable<K>,V> implements SortedMap<K,V>, Serializa
 		BSTNode(E elem){
 			this(elem,null,null,null);
 		}
-		
+
 		E getElement() {
 			return element;
 		}
@@ -37,7 +37,7 @@ public class BST<K extends Comparable<K>,V> implements SortedMap<K,V>, Serializa
 		BSTNode<E> getLeft() {
 			return left;
 		}
-		
+
 		BSTNode<E> getRight() {
 			return right;
 		}
@@ -48,15 +48,15 @@ public class BST<K extends Comparable<K>,V> implements SortedMap<K,V>, Serializa
 		boolean isInternal() {
 			return (left != null || right != null);
 		}
-		
+
 		boolean isLeftChild() {
 			return parent.left == this;
 		}
-		
+
 		boolean isRightChild() {
 			return parent.right == this;
 		}
-		
+
 		int numberOfChildren() {
 			int n = 0;
 			if(left != null)
@@ -65,7 +65,7 @@ public class BST<K extends Comparable<K>,V> implements SortedMap<K,V>, Serializa
 				n++;
 			return n;
 		}
-		
+
 		BSTNode<E> getSon() {
 			if(numberOfChildren() == 2)
 				return left;
@@ -73,49 +73,49 @@ public class BST<K extends Comparable<K>,V> implements SortedMap<K,V>, Serializa
 				return right;
 			else if(right == null)
 				return left;
-			else 
+			else
 				return null;
 		}
-		
+
 		void removeChild(BSTNode<E> child) {
 			if(left == child)
 				left = null;
 			else
 				right = null;
 		}
-		
+
 	}
 
 	//The root
 	protected BSTNode<Entry<K,V>> root;
-		
+
 	//Number of elements
 	protected int currentSize;
-	
+
 	public BST() {
 		root = null;
 		currentSize = 0;
 	}
-	
+
 	@Override
 	public Iterator<Entry<K,V>> iterator() {
 		return new BSTOrderIterator<K,V>(root);
 	}
-	
+
 	@Override
 	public Iterator<K> keys() throws NoElementException {
-		
-		return new BSTKeyIterator<>(iterator());
+
+		return new KeyIterator<>(iterator());
 	}
 	@Override
 	public Iterator<V> values() throws NoElementException {
-		return new BSTValueIterator<>(iterator());
+		return new ValueIterator<>(iterator());
 	}
-	
+
 	protected BSTNode<Entry<K,V>> findNode(BSTNode<Entry<K,V>> n, K key) {
 		BSTNode<Entry<K,V>> res=null;
 		if (n!=null) {
-			int num= key.compareTo(n.getElement().getKey());	
+			int num= key.compareTo(n.getElement().getKey());
 			if (num==0)
 				res=n;
 			else if (num<0)
@@ -125,26 +125,26 @@ public class BST<K extends Comparable<K>,V> implements SortedMap<K,V>, Serializa
 		}
 		return res;
 	}
-	
-	
+
+
 	protected BSTNode<Entry<K,V>> findFatherNode(K key) {
 		return findFatherNode(null,root,key);
 	}
-	
+
 	protected BSTNode<Entry<K,V>> findFatherNode(BSTNode<Entry<K,V>> p, BSTNode<Entry<K,V>> n, K key) {
 		BSTNode<Entry<K,V>> res=p;
 		if (n!=null) {
-			int num= key.compareTo(n.getElement().getKey());;	
+			int num= key.compareTo(n.getElement().getKey());;
 			if (num==0)
 				res=n.getParent();
-			else if (num<0) 
+			else if (num<0)
 				res=findFatherNode(n,n.getLeft(),key);
 			else
 				res=findFatherNode(n,n.getRight(),key);
 		}
 		return res;
 	}
-	
+
 	@Override
 	public V find(K key) {
 		BSTNode<Entry<K,V>> res=findNode(root,key);
@@ -154,18 +154,18 @@ public class BST<K extends Comparable<K>,V> implements SortedMap<K,V>, Serializa
 	}
 	@Override
 	public V insert(K key, V value) {
-		// TODO 
+		// TODO
 		V v = null;
 		if (isEmpty()) {
 			root = new BSTNode<Entry<K, V>>(new EntryClass<K,V>(key,value), null, null, null);
 			currentSize ++;
 			return v;
-			
+
 		}
-		
+
 		BSTNode<Entry<K,V>> father = findFatherNode(key);
 		int num = key.compareTo(father.getElement().getKey());
-		
+
 		if(num < 0) {
 			if(father.left == null) {
 				father.left = new BSTNode<Entry<K,V>>(new EntryClass<K,V>(key,value),father,null,null);
@@ -181,7 +181,7 @@ public class BST<K extends Comparable<K>,V> implements SortedMap<K,V>, Serializa
 			}
 		}
 		else {
-			if(father.right == null) { 
+			if(father.right == null) {
 				father.right = new BSTNode<Entry<K,V>>(new EntryClass<K,V>(key,value),father,null,null);
 				currentSize ++;
 				return v;
@@ -195,7 +195,7 @@ public class BST<K extends Comparable<K>,V> implements SortedMap<K,V>, Serializa
 			}
 		}
 
-		
+
 	}
 	@Override
 	public V remove(K key) {
@@ -205,9 +205,9 @@ public class BST<K extends Comparable<K>,V> implements SortedMap<K,V>, Serializa
 		if(remove == null){
 			return v;
 		}
-		
+
 		v = remove.getElement().getValue();
-		
+
 		if(root == remove) {
 			if(currentSize == 1) {
 				root = null;
@@ -220,10 +220,10 @@ public class BST<K extends Comparable<K>,V> implements SortedMap<K,V>, Serializa
 				return v;
 			}
 		}
-		
+
 		else { // root != remove
 			BSTNode<Entry<K, V>> parent = remove.parent;
-			
+
 			if(remove.numberOfChildren() == 0) {
 				parent.removeChild(remove);
 				currentSize--;
@@ -241,7 +241,7 @@ public class BST<K extends Comparable<K>,V> implements SortedMap<K,V>, Serializa
 				return v;
 			}
 		}
-			
+
 		BSTNode<Entry<K,V>> replace = maxNode(remove.left);
 		remove(replace.getElement().getKey());
 		remove.element = replace.element;
@@ -261,13 +261,13 @@ public class BST<K extends Comparable<K>,V> implements SortedMap<K,V>, Serializa
 			throw new NoElementException();
 		return this.maxNode(root).getElement();
 	}
-	
+
 	protected BSTNode<Entry<K,V>> minNode(BSTNode<Entry<K,V>> node) {
 		if ( node.getLeft() == null )
 			return node;
 		return this.minNode(node.getLeft());
 	}
-	
+
 	// Precondition: node != null.
 	protected BSTNode<Entry<K,V>> maxNode( BSTNode<Entry<K,V>> node ){
 		if ( node.getRight() == null )
@@ -284,6 +284,6 @@ public class BST<K extends Comparable<K>,V> implements SortedMap<K,V>, Serializa
 	public int size() {
 		return currentSize;
 	}
-	
+
 
 }

@@ -17,7 +17,11 @@ public class SinglyLinkedList<E> implements List<E>, Serializable {
 	// Number of elements in the list.
 	protected int currentSize;
 		
-
+	/*Temporal Complexity:
+	 * best case : O(1)
+	 * worst case : O(1)
+	 * Medium case : O(1)
+	 */
 	public SinglyLinkedList() {
 		head = null;
 		tail = null;
@@ -25,16 +29,31 @@ public class SinglyLinkedList<E> implements List<E>, Serializable {
 	}
 	
 	@Override
+	/*Temporal Complexity:
+	 * best case : O(1)
+	 * worst case : O(1)
+	 * Medium case : O(1)
+	 */
 	public boolean isEmpty() {
 		return currentSize == 0;
 	}
 
 	@Override
+	/*Temporal Complexity:
+	 * best case : O(1)
+	 * worst case : O(1)
+	 * Medium case : O(1)
+	 */
 	public int size() {
 		return currentSize;
 	}
 
 	@Override
+	/*Temporal Complexity:
+	 * best case : O(1)
+	 * worst case : O(1)
+	 * Medium case : O(1)
+	 */
 	public Iterator<E> iterator() throws NoElementException {
 		
 		if (currentSize==0) throw new NoElementException("List is empty.");
@@ -43,6 +62,11 @@ public class SinglyLinkedList<E> implements List<E>, Serializable {
 	}
 
 	@Override
+	/*Temporal Complexity:
+	 * best case : O(1)
+	 * worst case : O(n)
+	 * Medium case : O(n/2)
+	 */
 	public int find(E element) {
 		
 		int pos=0;
@@ -62,6 +86,11 @@ public class SinglyLinkedList<E> implements List<E>, Serializable {
 		
 	}
 
+	/*Temporal Complexity:
+	 * best case : O(1)
+	 * worst case : O(1)
+	 * Medium case : O(1)
+	 */
 	@Override
 	public E getFirst() throws NoElementException {
 		if (currentSize==0) {
@@ -71,6 +100,11 @@ public class SinglyLinkedList<E> implements List<E>, Serializable {
 		
 	}
 
+	/*Temporal Complexity:
+	 * best case : O(1)
+	 * worst case : O(1)
+	 * Medium case : O(1)
+	 */
 	@Override
 	public E getLast() throws NoElementException {
 		if (currentSize==0) {
@@ -79,7 +113,12 @@ public class SinglyLinkedList<E> implements List<E>, Serializable {
 		return tail.getElement();
 		
 	}
-
+	
+	/*Temporal Complexity:
+	 * best case : O(1)
+	 * worst case : O(n)
+	 * Medium case : O(n/2)
+	 */
 	@Override
 	public E get(int position) throws InvalidPositionException {
 
@@ -89,6 +128,11 @@ public class SinglyLinkedList<E> implements List<E>, Serializable {
 		return getNode(position).getElement();
 	}
 
+	/*Temporal Complexity:
+	 * best case : O(1)
+	 * worst case : O(1)
+	 * Medium case : O(1)
+	 */
 	@Override
 	public void addFirst(E element) {
 		
@@ -107,6 +151,11 @@ public class SinglyLinkedList<E> implements List<E>, Serializable {
 
 	}
 
+	/*Temporal Complexity:
+	 * best case : O(1)
+	 * worst case : O(1)
+	 * Medium case : O(1)
+	 */
 	@Override
 	public void addLast(E element) {
 		
@@ -125,6 +174,11 @@ public class SinglyLinkedList<E> implements List<E>, Serializable {
 
 	}
 
+	/*Temporal Complexity:
+	 * best case : O(1)
+	 * worst case : O(n)
+	 * Medium case : O(n/2)
+	 */
 	@Override
 	public void add(int position, E element) throws InvalidPositionException {
 		
@@ -139,7 +193,7 @@ public class SinglyLinkedList<E> implements List<E>, Serializable {
 				addLast(element);
 		}
 			else {
-				SListNode<E> aux=getNode(position);
+				SListNode<E> aux=getNode(position-1);
 	
 				SListNode<E> s = new SListNode<E>(element,aux.getNext());
 				aux.setNext(s);
@@ -148,6 +202,11 @@ public class SinglyLinkedList<E> implements List<E>, Serializable {
 		
 	}
 
+	/*Temporal Complexity:
+	 * best case : O(1)
+	 * worst case : O(1)
+	 * Medium case : O(1)
+	 */
 	@Override
 	public E removeFirst() throws NoElementException {
 		
@@ -166,6 +225,11 @@ public class SinglyLinkedList<E> implements List<E>, Serializable {
 		return s.getElement();
 	}
 
+	/*Temporal Complexity:
+	 * best case : O(n)
+	 * worst case : O(n)
+	 * Medium case : O(n)
+	 */
 	@Override
 	public E removeLast() throws NoElementException {
 		
@@ -178,7 +242,7 @@ public class SinglyLinkedList<E> implements List<E>, Serializable {
 			tail = null;
 		}
 		else {
-			SListNode<E> nodeTail = getNode(currentSize-1);
+			SListNode<E> nodeTail = getNode(currentSize-2);
 			nodeTail.setNext(null);
 			tail = nodeTail;
 		}
@@ -186,6 +250,11 @@ public class SinglyLinkedList<E> implements List<E>, Serializable {
 		return s.getElement();
 	}
 
+	/*Temporal Complexity:
+	 * best case : O(1)
+	 * worst case : O(n)
+	 * Medium case : O(n/2)
+	 */
 	@Override
 	public E remove(int position) throws InvalidPositionException {
 		
@@ -198,7 +267,7 @@ public class SinglyLinkedList<E> implements List<E>, Serializable {
 		if (position==currentSize-1) {
 			return removeLast();
 		}
-		SListNode<E> aux = getNode(position);
+		SListNode<E> aux = getNode(position-1);
 		SListNode<E> s = aux.getNext();
 		
 		aux.setNext(s.getNext());
@@ -208,9 +277,14 @@ public class SinglyLinkedList<E> implements List<E>, Serializable {
 	
 	}
 	
+	/*Temporal Complexity:
+	 * best case : O(1)
+	 * worst case : O(n)
+	 * Medium case : O(n/2)
+	 */
 	private SListNode<E> getNode(int position){
 		SListNode<E> aux=head;
-		for(int i=1;i<position;i++) {
+		for(int i=0;i<position;i++) {
 			aux=aux.getNext();
 		}
 		return aux;

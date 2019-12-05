@@ -22,11 +22,21 @@ public class EntryClass<K, V> implements Entry<K, V>, Serializable {
 		value=v;
 	}
 
+	/*Temporal Complexity:
+	 * best case : O(1)
+	 * worst case : O(1)
+	 * Medium case : O(1)
+	 */
 	@Override
 	public K getKey() {
 		return key;
 	}
 
+	/*Temporal Complexity:
+	 * best case : O(1)
+	 * worst case : O(1)
+	 * Medium case : O(1)
+	 */
 	@Override
 	public V getValue() {
 		return value;

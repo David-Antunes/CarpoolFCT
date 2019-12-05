@@ -3,18 +3,13 @@
  */
 package dataStructures;
 
-import java.io.Serializable;
+import java.util.Comparator;
 
 /**
  * @author AED_19_20
  *
  */
-public class Array<E> implements List<E>,Serializable{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
+public class Array<E> implements List<E>{
 	private static final int DEFAULT_SIZE = 50;
 	 
 	/** O array generico
@@ -125,6 +120,10 @@ public class Array<E> implements List<E>,Serializable{
 	
 	public boolean isFull() {
 		return counter == array.length;
+	}
+
+	public static <E> void xSort( E[] vec, int vecSize, Comparator<E> c){
+		//TODO
 	}
 
 	public int capacity() {
