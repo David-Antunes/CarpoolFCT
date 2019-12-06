@@ -4,7 +4,14 @@
 package dataStructures;
 
 import java.io.Serializable;
-
+/**
+ * @author AED_19_20
+ * @author David Antunes, 55045
+ * @author Carolina Duarte, 55645
+ * 
+ * 
+ *
+ */
 class SListNode<E> implements Serializable {
 	/**
 	 * 

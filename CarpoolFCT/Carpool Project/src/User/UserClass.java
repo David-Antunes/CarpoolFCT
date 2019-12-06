@@ -1,19 +1,20 @@
 
-package Users;
+package User;
 
 import java.io.Serializable;
 
 import Date.Date;
-import Rides.Ride;
-import dataStructures.AVL;
+import Ride.Ride;
 import dataStructures.Iterator;
 import dataStructures.NoElementException;
+import dataStructures.RB;
 import dataStructures.SortedMap;
-
 /**
  * 
  * @author David Antunes, 55045
  * @author Carolina Duarte, 55645
+ * 
+ * 
  *
  */
 public class UserClass implements User, Comparable<Object>, Serializable {
@@ -30,40 +31,62 @@ public class UserClass implements User, Comparable<Object>, Serializable {
 	private String name;
 	private String password;
 
+	/*
+	 * Temporal Complexity: best case : O(1) worst case : O(1) Medium case : O(1)
+	 */
 	public UserClass(String email, String name, String password) {
 		this.email = email;
 		this.name = name;
 		this.password = password;
-		rides = new AVL<Date, Ride>();
-		lifts = new AVL<Date, Ride>();
+		rides = new RB<Date, Ride>();
+		lifts = new RB<Date, Ride>();
 		visits = 0;
 	}
 
+	/*
+	 * Temporal Complexity: best case : O(1) worst case : O(1) Medium case : O(1)
+	 */
 	@Override
 	public String getName() {
 		return name;
 	}
 
+	/*
+	 * Temporal Complexity: best case : O(1) worst case : O(1) Medium case : O(1)
+	 */
 	@Override
 	public String getEmail() {
 		return email;
 	}
 
+	/*
+	 * Temporal Complexity: best case : O(1) worst case : O(1) Medium case : O(1)
+	 */
 	@Override
 	public String getPassword() {
 		return password;
 	}
 
+	/*
+	 * Temporal Complexity: best case : O(1) worst case : O(1) Medium case : O(1)
+	 */
 	@Override
 	public int getVisits() {
 		return visits;
 	}
 
+	/*
+	 * Temporal Complexity: best case : O(1) worst case : O(1) Medium case : O(1)
+	 */
 	@Override
 	public void addVisit() {
 		visits++;
 	}
 
+	/*
+	 * Temporal Complexity: best case : O(1) worst case : O(log(R)) Medium case :
+	 * O(log(L))
+	 */
 	@Override
 	public boolean hasSomething(Date date) {
 		if (rides.find(date) != null)
@@ -74,51 +97,63 @@ public class UserClass implements User, Comparable<Object>, Serializable {
 		return false;
 	}
 
-//	@Override
-//	public boolean hasRide(Date date) {
-//		return rides.find(date) != null;
-//	}
-//
-//	public boolean hasLift(Date date) {
-//		return lifts.find(date) != null;
-//	}
-
+	/*
+	 * Temporal Complexity: best case : O(1) worst case : O(log(L)) Medium case :
+	 * O(log(L))
+	 */
 	@Override
 	public void registerRide(Ride lift) {
 		lifts.insert(lift.getDate(), lift);
 	}
 
+	/*
+	 * Temporal Complexity: best case : O(1) worst case : O(log(R)) Medium case :
+	 * O(log(R))
+	 */
 	@Override
 	public void createRide(Ride ride) {
 		rides.insert(ride.getDate(), ride);
 	}
 
+	/*
+	 * Temporal Complexity: best case : O(1) worst case : O(log(R)) Medium case :
+	 * O(log(R))
+	 */
 	@Override
 	public Ride getRide(Date date) {
 		return rides.find(date);
 	}
 
-//	public boolean rideHasLift(Date date) {
-//		Ride ride = rides.find(date);
-//		return ride.hasUsers();
-//	}
-
+	/*
+	 * Temporal Complexity: best case : O(1) worst case : O(log(R)) Medium case :
+	 * O(log(R))
+	 */
 	@Override
 	public Ride removeCreatedRide(Date date) {
 		return rides.remove(date);
 	}
 
+	/*
+	 * Temporal Complexity: best case : O(1) worst case : O(log(R)) Medium case :
+	 * O(log(L))
+	 */
 	@Override
 	public Ride removeJoinedRide(Date date) {
 		return lifts.remove(date);
 
 	}
 
+	/*
+	 * Temporal Complexity: best case : O(1) worst case : O(1) Medium case : O(1)
+	 */
 	@Override
 	public int getNumberOfRides() {
 		return rides.size();
 	}
 
+	/*
+	 * Temporal Complexity: best case : O(1) worst case : O(1) Medium case : O(1)
+	 */
 	@Override
 	public int compareTo(Object o) {
 		if (this == o)
@@ -143,6 +178,10 @@ public class UserClass implements User, Comparable<Object>, Serializable {
 		return 0;
 	}
 
+	/*
+	 * Temporal Complexity: best case : O(1) worst case : O(Log(R)) average case :
+	 * O(Log(R))
+	 */
 	@Override
 	public Iterator<Ride> iterateCreatedRides() throws NoElementException {
 		if (rides.isEmpty())
@@ -152,6 +191,10 @@ public class UserClass implements User, Comparable<Object>, Serializable {
 
 	}
 
+	/*
+	 * Temporal Complexity: best case : O(1) worst case : O(Log(L)) average case :
+	 * O(Log(L))
+	 */
 	@Override
 	public Iterator<Ride> iterateJoinedRides() throws NoElementException {
 		if (lifts.isEmpty())

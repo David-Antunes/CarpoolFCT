@@ -9,11 +9,6 @@ package dataStructures;
  */
 public interface Stack<E> {
 	// Returns true iff the stack contains no elements.
-	/*Temporal Complexity:
-	 * best case : 
-	 * worst case :
-	 * Medium case :
-	 */
 	boolean isEmpty( );
 	 
 	// Returns the number of elements in the stack.

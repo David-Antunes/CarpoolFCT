@@ -1,7 +1,14 @@
-package CarpoolHandler;
+package Ride;
 
-
-
+import User.User;
+/**
+ * 
+ * @author David Antunes, 55045
+ * @author Carolina Duarte, 55645
+ * 
+ * 
+ *
+ */
 public interface Ride extends RideWrapper{
 
 

@@ -1,5 +1,12 @@
-package CarpoolHandler;
-
+package User;
+/**
+ * 
+ * @author David Antunes, 55045
+ * @author Carolina Duarte, 55645
+ * 
+ * 
+ *
+ */
 public interface UserWrapper {
 	
 	/**

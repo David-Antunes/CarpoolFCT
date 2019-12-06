@@ -7,6 +7,10 @@ import java.io.Serializable;
 
 /**
  * @author AED_19_20
+ * @author David Antunes, 55045
+ * @author Carolina Duarte, 55645
+ * 
+ * 
  *
  */
 public class EntryClass<K, V> implements Entry<K, V>, Serializable {

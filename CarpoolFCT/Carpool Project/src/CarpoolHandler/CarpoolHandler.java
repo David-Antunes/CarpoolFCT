@@ -7,6 +7,9 @@ import CarpoolExceptions.InvalidPasswordException;
 import CarpoolExceptions.NoRideException;
 import CarpoolExceptions.NonExistingElementException;
 import CarpoolExceptions.SameUserException;
+import Date.Date;
+import Ride.RideWrapper;
+import User.UserWrapper;
 import dataStructures.Iterator;
 import dataStructures.NoElementException;
 

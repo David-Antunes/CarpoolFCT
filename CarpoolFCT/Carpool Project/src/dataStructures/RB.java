@@ -1,5 +1,13 @@
 package dataStructures;
 
+/**
+ * @author AED_19_20
+ * @author David Antunes, 55045
+ * @author Carolina Duarte, 55645
+ * 
+ * 
+ *
+ */
 public class RB<K extends Comparable<K>, V> extends AdvancedBST<K, V> implements SortedMap<K, V> {
 	/**
 	 * 
@@ -14,37 +22,59 @@ public class RB<K extends Comparable<K>, V> extends AdvancedBST<K, V> implements
 		private static final long serialVersionUID = 1L;
 		protected boolean isRed;// we add a color field to a BTNode
 
+		/*
+		 * Temporal Complexity: best case : O(1) worst case : O(1) average case : O(1)
+		 */
 		public RBNode(E elem) {
 			super(elem);
 			isRed = true;
 		}
 
+		/*
+		 * Temporal Complexity: best case : O(1) worst case : O(1) average case : O(1)
+		 */
 		public RBNode(E element, RBNode<E> parent, RBNode<E> left, RBNode<E> right) {
 			super(element, parent, left, right);
 			isRed = true;
 		}
 
+		/*
+		 * Temporal Complexity: best case : O(1) worst case : O(1) average case : O(1)
+		 */
 		public void setColour(boolean colour) {
 			isRed = colour;
 		}
 
+		/*
+		 * Temporal Complexity: best case : O(1) worst case : O(1) average case : O(1)
+		 */
 		public boolean isRed() {
 			return isRed;
 		}
 
 	}
 
+	/*
+	 * Temporal Complexity: best case : O(1) worst case : O(1) average case : O(1)
+	 */
 	protected RB(RBNode<Entry<K, V>> n) {
 		root = n;
 	}
 
+	/*
+	 * Temporal Complexity: best case : O(1) worst case : O(1) average case : O(1)
+	 */
 	public RB() {
 		this(null);
 	}
 
+	/*
+	 * Temporal Complexity: best case : O(1) worst case : O(log(n)) average case :
+	 * O(log(n))
+	 */
 	@Override
 	public V insert(K key, V value) {
-		// TODO
+
 		V valueToReturn = null;
 		RBNode<Entry<K, V>> newNode = null;
 
@@ -87,8 +117,6 @@ public class RB<K extends Comparable<K>, V> extends AdvancedBST<K, V> implements
 			}
 		}
 
-		// insert the new Entry (if find(key)==null)
-		// or set the new value (if find(key)!=null)
 		newNode.setColour(true); // Red
 		if (newNode.getParent() == null)
 			newNode.setColour(false); // Black
@@ -97,9 +125,12 @@ public class RB<K extends Comparable<K>, V> extends AdvancedBST<K, V> implements
 		return valueToReturn;
 	}
 
+	/*
+	 * Temporal Complexity: best case : O(1) worst case : O(log(n)) average case :
+	 * O(1)
+	 */
 	// pre: !isRoot(posZ)
 	private void remedyDoubleRed(RBNode<Entry<K, V>> posZ) {
-		// TODO
 		boolean isUncleBlack = true;
 		RBNode<Entry<K, V>> uncle, node = null;
 		RBNode<Entry<K, V>> posV = (RBNode<Entry<K, V>>) posZ.getParent();
@@ -137,33 +168,13 @@ public class RB<K extends Comparable<K>, V> extends AdvancedBST<K, V> implements
 			}
 		}
 
+		// we have a double red: posZ and posV
+		// Case black uncle ou null: trinode restructuring
+		// Case red uncle: recoloring
 	}
-
-	// we have a double red: posZ and posV
-	// Case black uncle ou null: trinode restructuring
-	// Case red uncle: recoloring
 
 	@Override
 	public V remove(K key) {
-//		// TODO
-//		// Remove as BST remove
-//		RBNode<Entry<K, V>> node = ;
-//
-//		if (node == null)
-//			return null;
-//
-//		V valueToReturn = node.element.getValue();
-//		super.remove(key);
-//		if (!node.isRed()) {
-//			if (!node.isInternal()) {
-//				remedyDoubleBlack(node);
-//			} else {
-//				if (node.left != null)
-//					((RBNode<Entry<K, V>>) node.left).setColour(false);
-//				if (node.right != null)
-//					((RBNode<Entry<K, V>>) node.right).setColour(false);
-//			}
-//		}
 
 		V valueToReturn = null;
 		RBNode<Entry<K, V>> node = null;
@@ -216,19 +227,23 @@ public class RB<K extends Comparable<K>, V> extends AdvancedBST<K, V> implements
 			if (!remove.isInternal()) {
 				remedyDoubleBlack(remove);
 			} else {
-				if (node.left != null)
-					((RBNode<Entry<K, V>>) node.left).setColour(false);
-				if (node.right != null)
-					((RBNode<Entry<K, V>>) node.right).setColour(false);
+				if (remove.left != null)
+					((RBNode<Entry<K, V>>) remove.left).setColour(false);
+				if (remove.right != null)
+					((RBNode<Entry<K, V>>) remove.right).setColour(false);
 			}
 		}
 
 		// case red node: end
-		// case black node with a red children: recoloring (set children black)
 		// case black node without child: remedyDoubleBlack(node)
+		// case black node with a red children: recoloring (set children black)
 		return valueToReturn;
 	}
 
+	/*
+	 * Temporal Complexity: best case : O(1) worst case : O(log(n)) average case :
+	 * O(log(n))
+	 */
 	/** Remedies a double black violation at a given node caused by removal. */
 	protected void remedyDoubleBlack(RBNode<Entry<K, V>> posR) {
 		RBNode<Entry<K, V>> node, sibling, father;
@@ -273,54 +288,14 @@ public class RB<K extends Comparable<K>, V> extends AdvancedBST<K, V> implements
 				}
 			}
 		} else {
-			if(sibling.isLeftChild())
-			restructure(sibling.left);
+			if (sibling.isLeftChild())
+				restructure(sibling.left);
 			else
 				restructure(sibling.right);
 			sibling.setColour(false);
 			father.setColour(true);
 			remedyDoubleBlack(posR);
 		}
-
-//		RBNode<Entry<K, V>> node, sibling, father;
-//		node = posR;
-//		father = (RBNode<Entry<K, V>>) node.getParent();
-//		sibling = (RBNode<Entry<K, V>>) ((node.isLeftChild()) ? father.right : father.left);
-//		boolean isSiblingBlack = !sibling.isRed;
-//
-//		if (isSiblingBlack) {
-//			if (!sibling.isInternal()) {
-//				sibling.setColour(true);
-//			} else {
-//				if (sibling.left != null) {
-//					if (((RBNode<Entry<K, V>>) sibling.left).isRed()) {
-//						restructure(sibling.left);
-//					} else if (sibling.right != null) {
-//						if (((RBNode<Entry<K, V>>) sibling.right).isRed())
-//							restructure(sibling.right);
-//					} else {
-//						sibling.setColour(true);
-//					}
-//
-//				} else if (sibling.right != null) {
-//					if (((RBNode<Entry<K, V>>) sibling.right).isRed()) {
-//						restructure(sibling.right);
-//						((RBNode<Entry<K, V>>) sibling).setColour(false);
-//						((RBNode<Entry<K, V>>) father).setColour(false);
-//					} else
-//						sibling.setColour(true);
-//				} else {
-//					sibling.setColour(true);
-//				}
-//			}
-//		} else {
-//			restructure(sibling);
-//			sibling.setColour(false);
-//			father.setColour(true);
-//			remedyDoubleBlack(father);
-//		}
-
-		// TODO
 		// Case sibling is black and has a red children: trinode restructuring
 		// Case sibling is black and has two black children: recoloring
 		// Case red sibling: adjustment + remedyDoubleBlack(posR)

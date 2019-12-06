@@ -15,6 +15,9 @@ import CarpoolExceptions.NonExistingElementException;
 import CarpoolExceptions.SameUserException;
 import CarpoolHandler.CarpoolHandler;
 import CarpoolHandler.CarpoolHandlerClass;
+import Date.Date;
+import Date.DateClass;
+import Ride.RideWrapper;
 import CarpoolHandler.*;
 
 import dataStructures.Iterator;
@@ -116,9 +119,14 @@ public class Main {
 	 * Writes the respective prompt, regarding if it is in session mode or not, and
 	 * reads the command that we want to execute
 	 * 
-	 * @param in
-	 * @param ch
-	 * @return the
+	 * Temporal Complexity: best case : O(1) worst case : O(1) average case : O(1)
+	 * 
+	 * @param in - Object that handles the I/O needed for the user
+	 * @param ch - The object that handles the users, and the operations regarding
+	 *           ride
+	 * @return the in.next in upper case
+	 * 
+	 *
 	 */
 	private static String readOption(Scanner in, CarpoolHandler ch) {
 		printPrompt(ch);
@@ -129,8 +137,11 @@ public class Main {
 	 * Prints prompt whit email if session is initiated and without it if the
 	 * session is not
 	 * 
+	 * Temporal Complexity: best case : O(1) worst case : O(1) average case : O(1)
+	 * 
 	 * @param ch - The object that handles the users, and the operations regarding
 	 *           rides
+	 * 
 	 */
 	private static void printPrompt(CarpoolHandler ch) {
 
@@ -144,6 +155,8 @@ public class Main {
 	/**
 	 * Executes the option with two different ways depending if the session is
 	 * initiated or not
+	 * 
+	 * Temporal Complexity: best case : O(1) worst case : O(1) average case : O(1)
 	 * 
 	 * @param option - the command to be run
 	 * @param in     - Object that handles the I/O needed for the user
@@ -161,6 +174,8 @@ public class Main {
 	 * Executes commands when session is not initiated Commands are AJUDA TERMINA
 	 * REGISTA ENTRADA
 	 * 
+	 * Temporal Complexity: best case : O(1) worst case : O(1) average case : O(1)
+	 * 
 	 * @param option - the command to be run
 	 * @param in     - Object that handles the I/O needed for the user
 	 * @param ch     - The object that handles the users, and the operations
@@ -173,10 +188,9 @@ public class Main {
 			ajuda(in, ch);
 			break;
 
-		/*case TERMINA:
-			terminar();
-			break;
-*/
+		/*
+		 * case TERMINA: terminar(); break;
+		 */
 		case REGISTA:
 			regista(in, ch);
 			break;
@@ -196,6 +210,8 @@ public class Main {
 	/**
 	 * Executes commands when session is not initiated Commands are SAI NOVA LISTA
 	 * BOLEIA CONSULTA REMOVE
+	 * 
+	 * Temporal Complexity: best case : O(1) worst case : O(1) average case : O(1)
 	 * 
 	 * @param option - the command to be run
 	 * @param in     - Object that handles the I/O needed for the user
@@ -255,6 +271,8 @@ public class Main {
 	 * meet the requirements, the user will be prompted 2 more times till the
 	 * program returns to its initial state before running REGISTA command.
 	 * 
+	 * Temporal Complexity: best case : O(1) worst case : O(1) average case : O(1)
+	 * 
 	 * @param in - Object that handles the I/O needed for the user
 	 * @param ch - The object that handles the users, and the operations regarding
 	 *           rides
@@ -300,6 +318,8 @@ public class Main {
 	 * session mode, having additional commands. run AJUDA to see new commands when
 	 * in session mode.
 	 * 
+	 * Temporal Complexity: best case : O(1) worst case : O(3) average case : O(1)
+	 * 
 	 * @param in - Object that handles the I/O needed for the user
 	 * @param ch - The object that handles the users, and the operations regarding
 	 *           rides
@@ -335,8 +355,11 @@ public class Main {
 	 * After executing command NOVA while in session mode, the user must provide the
 	 * name of the origin and destination of the ride; a date in the format d-m-y,
 	 * being d day, m month, y year; a timer in the format hh:mm; the duration of
-	 * the ride; and its available seats. If there are errors in the input the ride
+	 * the ride; and its availsable seats. If there are errors in the input the ride
 	 * will not be registered.
+	 * 
+	 * Temporal Complexity: Temporal Complexity of ch.Ride(origin, destiny, new
+	 * DateClass(date), hour, minutes, duration, seats)
 	 * 
 	 * @param in - Object that handles the I/O needed for the user
 	 * @param ch - The object that handles the users, and the operations regarding
@@ -383,6 +406,8 @@ public class Main {
 	 * no registered users, it will be removed and then be printed on console
 	 * "Deslocacao removida."
 	 * 
+	 * Temporal Complexity: Temporal Complexity of ch.remove(new DateClass(date))
+	 * 
 	 * @param in - Object that handles the I/O needed for the user
 	 * @param ch - The object that handles the users, and the operations regarding
 	 *           rides
@@ -410,6 +435,9 @@ public class Main {
 	 * the user with the given email has a ride created in the given date, the
 	 * current user will join the ride. If the ride is full, the current user will
 	 * be put on the waiting line.
+	 * 
+	 * Temporal Complexity: Temporal Complexity of ch.addLift(email, new
+	 * DateClass(date))
 	 * 
 	 * @param in - Object that handles the I/O needed for the user
 	 * @param ch - The object that handles the users, and the operations regarding
@@ -448,6 +476,9 @@ public class Main {
 	 * boleia.". If there is a lift in the provided date, the lift will be removed
 	 * and then it will be printed on console "UserName boleia retirada."
 	 * 
+	 * Temporal Complexity: Temporal Complexity of ch.removeFromRide(new
+	 * DateClass(date))
+	 * 
 	 * @param in - Object that handles the I/O needed for the user
 	 * @param ch - The object that handles the users, and the operations regarding
 	 *           rides
@@ -481,6 +512,11 @@ public class Main {
 	 * (duration)\n" "Lugares vagos: (remaining seats)\n" "Boleias : (user email
 	 * n1); (user email n2); ...\n" if there are no users on registered users; "Sem
 	 * boleias registadas.\n"
+	 * 
+	 * Temporal Complexity: Temporal Complexity of ch.check(email, new
+	 * DateClass(date)) + best Case: O(1) / worst Case: (UIR) / Medium Case: (UIR)
+	 * 
+	 * n - number of users on the ride
 	 * 
 	 * @param in - Object that handles the I/O needed for the user
 	 * @param ch - The object that handles the users, and the operations regarding
@@ -527,6 +563,8 @@ public class Main {
 	 * format d-m-y, being d day, m month, y year; "minhas", "todas", "boleias".
 	 * Provided the respective argument, it will be run the respective command.
 	 * 
+	 * Temporal Complexity: Temporal Complexity dependent on which case it is chosen
+	 * 
 	 * @param in - Object that handles the I/O needed for the user
 	 * @param ch - The object that handles the users, and the operations regarding
 	 *           rides
@@ -565,6 +603,9 @@ public class Main {
 	 * * "(user email)\n" "(origin)-(destination)\n" "(date) (hour):(minutes)
 	 * (duration)\n"
 	 * 
+	 * Temporal Complexity: Temporal Complexity of ch.iterateRidesThroEmails(email)
+	 * + best Case: O(RIU) / worst Case: (RIU) / Medium Case: (RIU)
+	 * 
 	 * @param email - email to show the information of its rides
 	 * @param ch    - The object that handles the users, and the operations
 	 *              regarding rides
@@ -592,6 +633,9 @@ public class Main {
 	 * 
 	 * * "(user email)\n" "(origin)-(destination)\n" "(date) (hour):(minutes)
 	 * (duration)\n"
+	 * 
+	 * Temporal Complexity: Temporal Complexity of ch.iterateRidesThroDays(arg) +
+	 * best Case: O(DIR) / worst Case: (DIR) / Medium Case: (DIR)
 	 * 
 	 * @param arg - date of the rides to be shown
 	 * @param ch  - The object that handles the users, and the operations regarding
@@ -622,6 +666,9 @@ public class Main {
 	 * * "(user email)\n" "(origin)-(destination)\n" "(date) (hour):(minutes)
 	 * (duration)\n"
 	 * 
+	 * Temporal Complexity: Temporal Complexity of ch.iterateUserJoinedRides() +
+	 * best Case: O(LIU) / worst Case: (LIU) / Medium Case: (LIU)
+	 * 
 	 * @param ch - The object that handles the users, and the operations regarding
 	 *           rides
 	 */
@@ -648,6 +695,9 @@ public class Main {
 	 * (duration)\n" "Lugares vagos: (remaining seats)\n" "Boleias : (user email
 	 * n1); (user email n2); ...\n" if there are no users on registered users; "Sem
 	 * boleias registadas.\n"
+	 * 
+	 * Temporal Complexity: Temporal Complexity of ch.iterateUserCreatedRides() +
+	 * best Case: O(RIU*UIR) / worst Case: (RIU*UIR) / Medium Case: (RIU*UIR)
 	 * 
 	 * @param ch - The object that handles the users, and the operations regarding
 	 *           rides
@@ -688,14 +738,16 @@ public class Main {
 	 * 
 	 * * "(user email) (date)\n"
 	 * 
+	 * Temporal Complexity: Temporal Complexity of ch.iterateAll() + best Case: O(R)
+	 * / worst Case: (R) / Medium Case: (R)
+	 * 
 	 * @param ch - The object that handles the users, and the operations regarding
 	 *           rides
 	 */
 	private static void listaTodas(CarpoolHandler ch) {
 
-		
 		Iterator<RideWrapper> rides = ch.iterateAll();
-		while(rides.hasNext()) {
+		while (rides.hasNext()) {
 			RideWrapper ride = rides.next();
 			System.out.println(ride.getDate().getFullDate() + " " + ride.getUser().getEmail());
 			System.out.println();
@@ -705,6 +757,8 @@ public class Main {
 
 	/**
 	 * Prints a message when the user session ends
+	 * 
+	 * Temporal Complexity: best Case: O(1) / worst Case: (1) / Medium Case: (1)
 	 * 
 	 * @param ch - The object that handles the users, and the operations regarding
 	 *           rides
@@ -716,6 +770,8 @@ public class Main {
 
 	/**
 	 * Command AJUDA Prints menus when the program is in session or not
+	 * 
+	 * Temporal Complexity: best Case: O(1) / worst Case: (1) / Medium Case: (1)
 	 * 
 	 * @param arg - date of the rides to be shown
 	 * @param ch  - The object that handles the users, and the operations regarding
@@ -741,17 +797,11 @@ public class Main {
 	}
 
 	/**
-	 * Command TERMINA prints goodbye message when the program stops executing
-	 */
-	/*private static void terminar() {
-
-		System.out.println(GOODBYE);
-
-	}
-*/
-	/**
 	 * Loads a CarpoolHandler object from the file "savefile" if it is created. If
 	 * there is no file, returns an empty CarpoolHandler object.
+	 * 
+	 * Temporal Complexity: best Case: O(1) / worst Case: (D + R + U + L) / Medium
+	 * Case: ((D + R + U + L)/2)
 	 * 
 	 * @return CarpoolHandler object
 	 */
@@ -777,6 +827,9 @@ public class Main {
 
 	/**
 	 * Writes the CarpoolHandler Object into the file "savefile".
+	 * 
+	 * Temporal Complexity: best Case: O(1) / worst Case: (D + R + U + L) / Medium
+	 * Case: ((D + R + U + L)/2)
 	 * 
 	 * @param ch - The object that handles the users, and the operations regarding
 	 *           rides

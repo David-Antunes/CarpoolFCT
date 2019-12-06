@@ -1,5 +1,12 @@
 package dataStructures;
-
+/**
+ * @author AED_19_20
+ * @author David Antunes, 55045
+ * @author Carolina Duarte, 55645
+ * 
+ * 
+ *
+ */
 public class SinglyLLIterator<E> implements Iterator<E> {
 
 	// Node with the first element in the iteration.

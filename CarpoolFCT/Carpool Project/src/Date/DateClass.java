@@ -2,13 +2,16 @@
 package Date;
 
 import java.io.Serializable;
+
 /**
  * 
  * @author David Antunes, 55045
  * @author Carolina Duarte, 55645
+ * 
+ * 
  *
  */
-public class DateClass implements Date, Comparable<Date>, Serializable {
+public class DateClass implements Date, Serializable {
 
 	/**
 	 * 
@@ -18,6 +21,9 @@ public class DateClass implements Date, Comparable<Date>, Serializable {
 	private String month;
 	private String year;
 
+	/*
+	 * Temporal Complexity: best case : O(1) worst case : O(1) Medium case : O(1)
+	 */
 	public DateClass(String date) {
 		String[] split = date.split("-");
 		day = split[0];
@@ -25,26 +31,41 @@ public class DateClass implements Date, Comparable<Date>, Serializable {
 		year = split[2];
 	}
 
+	/*
+	 * Temporal Complexity: best case : O(1) worst case : O(1) Medium case : O(1)
+	 */
 	@Override
 	public String getDay() {
 		return day;
 	}
 
+	/*
+	 * Temporal Complexity: best case : O(1) worst case : O(1) Medium case : O(1)
+	 */
 	@Override
 	public String getMonth() {
 		return month;
 	}
 
+	/*
+	 * Temporal Complexity: best case : O(1) worst case : O(1) Medium case : O(1)
+	 */
 	@Override
 	public String getYear() {
 		return year;
 	}
 
+	/*
+	 * Temporal Complexity: best case : O(1) worst case : O(1) Medium case : O(1)
+	 */
 	@Override
 	public String getFullDate() {
 		return day + "-" + month + "-" + year;
 	}
 
+	/*
+	 * Temporal Complexity: best case : O(1) worst case : O(1) Medium case : O(1)
+	 */
 	@Override
 	public boolean isDateValid(String date) {
 		String[] split = date.split("-");
@@ -83,6 +104,9 @@ public class DateClass implements Date, Comparable<Date>, Serializable {
 		return res;
 	}
 
+	/*
+	 * Temporal Complexity: best case : O(1) worst case : O(1) Medium case : O(1)
+	 */
 	@Override
 	public int compareTo(Date o) {
 

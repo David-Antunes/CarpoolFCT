@@ -1,7 +1,14 @@
 package dataStructures;
 
 import java.io.Serializable;
-
+/**
+ * @author AED_19_20
+ * @author David Antunes, 55045
+ * @author Carolina Duarte, 55645
+ * 
+ * 
+ *
+ */
 public class SinglyLinkedList<E> implements List<E>, Serializable {
 	/**
 	 * 

@@ -1,26 +1,28 @@
-package dataStructures;
+/**
+ * 
+ */
+package Ride;
+
+import dataStructures.Iterator;
+import dataStructures.NoSuchElementException;
 
 /**
- * @author AED_19_20
+ * 
  * @author David Antunes, 55045
  * @author Carolina Duarte, 55645
  * 
  * 
+ *
  */
-public class ValueIterator<K, V> implements Iterator<V> {
+public class RideInMainIterator implements Iterator<RideWrapper> {
 
-	/*
-	 * The complexities of the methods used in this class are going to depend on the
-	 * complexities of the iterator that is sent to the constructor
-	 */
-
-	Iterator<Entry<K, V>> it;
+	Iterator<Ride> it;
 
 	/*
 	 * Temporal Complexity: best case : O(1) worst case : O(1) average case : O(1)
 	 */
-	public ValueIterator(Iterator<Entry<K, V>> it) {
-		this.it = it;
+	public RideInMainIterator(Iterator<Ride> rides) {
+		it = rides;
 	}
 
 	/*
@@ -39,9 +41,9 @@ public class ValueIterator<K, V> implements Iterator<V> {
 	 * O(1 * complexity of it.next()) average case : O(1 * complexity of it.next())
 	 */
 	@Override
-	public V next() throws NoSuchElementException {
+	public RideWrapper next() throws NoSuchElementException {
 
-		return it.next().getValue();
+		return it.next();
 	}
 
 	/*

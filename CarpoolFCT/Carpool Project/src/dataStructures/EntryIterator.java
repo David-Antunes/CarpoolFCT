@@ -1,5 +1,12 @@
 package dataStructures;
-
+/**
+ * @author AED_19_20
+ * @author David Antunes, 55045
+ * @author Carolina Duarte, 55645
+ * 
+ * 
+ *
+ */
 public class EntryIterator<K,V> implements Iterator<Entry<K,V>> {
 
 	ArrayIterator<Map<K,V>> table;

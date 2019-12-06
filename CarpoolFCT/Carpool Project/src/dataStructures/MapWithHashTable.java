@@ -2,7 +2,15 @@ package dataStructures;
 
 import java.io.Serializable;
 
-public abstract class MapWithHashTable<K, V> implements Map<K, V> ,Serializable  {
+/**
+ * @author AED_19_20
+ * @author David Antunes, 55045
+ * @author Carolina Duarte, 55645
+ * 
+ * 
+ *
+ */
+public abstract class MapWithHashTable<K, V> implements Map<K, V>, Serializable {
 
 	/**
 	 * 
@@ -11,81 +19,63 @@ public abstract class MapWithHashTable<K, V> implements Map<K, V> ,Serializable 
 
 	// Default size of the hash table.
 	public static final int DEFAULTCAPACITY = 50;
-	
+
 	// Number of entries in the hash table.
 	protected int currentSize;
-	
+
 	// Maximum number of entries.
 	protected int maxSize;
-	
+
 	// Public Static Methods
-	
-	/*Temporal Complexity:
-	 * best case : O(n)
-	 * worst case : O(n)
-	 * Medium case : O(n)
+
+	/*
+	 * Temporal Complexity: best case : O(n) worst case : O(n) Medium case : O(n)
 	 */
 	// Returns the hash code of the specified key,
 	// which is an integer in the range 0, ..., b-1.
-	public static int hash( String key )
-	{
+	public static int hash(String key) {
 		int a = 127;
 		// a is a prime number.
 		int b = 2147483647;
 		// b is a prime number.
 		int hashCode = 0;
-		for ( int i = 0; i < key.length(); i++ )
-			hashCode = ( hashCode * a + key.charAt(i) ) % b;
+		for (int i = 0; i < key.length(); i++)
+			hashCode = (hashCode * a + key.charAt(i)) % b;
 		return hashCode;
 	}
-	
-	/*Temporal Complexity:
-	 * best case : O(1)
-	 * worst case : O(n)
-	 * Medium case : O(n/2)
+
+	/*
+	 * Temporal Complexity: best case : O(1) worst case : O(n) Medium case : O(n/2)
 	 */
 	// Returns a prime number that is not less than the specified number;
 	// or zero if all such primes are greater than Integer.MAX VALUE.
-	protected static int nextPrime( int number ){
-		for ( int i = 0; i < PRIMES.length; i++ )
-				if ( PRIMES[i] >= number )
-					return PRIMES[i];
+	protected static int nextPrime(int number) {
+		for (int i = 0; i < PRIMES.length; i++)
+			if (PRIMES[i] >= number)
+				return PRIMES[i];
 		return 0;
 	}
-	
-	
-	protected static final int[] 
-	PRIMES={11, 19, 31, 47, 73,
-	        113, 181, 277, 421, 643, 967,
-	        1451, 2179, 3299, 4951, 7433,
-	        11173, 16763, 25163, 37747, 56671, 85009,
-	        127529, 191299, 287003, 430517, 645787, 968689,
-	        1453043, 2179571, 3269377, 4904077, 7356119, 
-	        11034223, 16551361, 24827059, 37240597, 55860923, 83791441,
-	        125687173, 188530777, 282796177, 424194271, 636291413, 954437161,
-	        1431655751, 2147483647
-	        };
-	
-	/*Temporal Complexity:
-	 * best case : O(1)
-	 * worst case : O(1)
-	 * Medium case : O(1)
+
+	protected static final int[] PRIMES = { 11, 19, 31, 47, 73, 113, 181, 277, 421, 643, 967, 1451, 2179, 3299, 4951,
+			7433, 11173, 16763, 25163, 37747, 56671, 85009, 127529, 191299, 287003, 430517, 645787, 968689, 1453043,
+			2179571, 3269377, 4904077, 7356119, 11034223, 16551361, 24827059, 37240597, 55860923, 83791441, 125687173,
+			188530777, 282796177, 424194271, 636291413, 954437161, 1431655751, 2147483647 };
+
+	/*
+	 * Temporal Complexity: best case : O(1) worst case : O(1) Medium case : O(1)
 	 */
 	@Override
 	public boolean isEmpty() {
 		return currentSize == 0;
 	}
-	
-	/*Temporal Complexity:
-	 * best case : O(1)
-	 * worst case : O(1)
-	 * Medium case : O(1)
+
+	/*
+	 * Temporal Complexity: best case : O(1) worst case : O(1) Medium case : O(1)
 	 */
 	@Override
 	public int size() {
 		return currentSize;
 	}
-	
 
 	@Override
 	public abstract Iterator<K> keys() throws NoElementException;
@@ -94,8 +84,8 @@ public abstract class MapWithHashTable<K, V> implements Map<K, V> ,Serializable 
 	public abstract Iterator<V> values() throws NoElementException;
 
 	@Override
-	public abstract Iterator<Entry<K,V>> iterator() throws NoElementException;
-	
+	public abstract Iterator<Entry<K, V>> iterator() throws NoElementException;
+
 	@Override
 	public abstract V find(K key);
 
@@ -106,14 +96,12 @@ public abstract class MapWithHashTable<K, V> implements Map<K, V> ,Serializable 
 	public abstract V remove(K key);
 
 	// Protected Instance Methods
-	
-	/*Temporal Complexity:
-	 * best case : O(1)
-	 * worst case : O(1)
-	 * Medium case : O(1)
+
+	/*
+	 * Temporal Complexity: best case : O(1) worst case : O(1) Medium case : O(1)
 	 */
 	// Returns true iff the hash table cannot contain more entries.
-	protected boolean isFull( ){
+	protected boolean isFull() {
 		return currentSize == maxSize;
 	}
 }
